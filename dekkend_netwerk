@@ -1,0 +1,1304 @@
+createOrReplace
+
+	model Model
+		culture: nl-NL
+		defaultPowerBIDataSourceVersion: powerBI_V3
+		sourceQueryCulture: nl-NL
+		dataAccessOptions
+			legacyRedirects
+			returnErrorValuesAsNull
+
+		table dekkend_netwerk_stacked
+			lineageTag: 59b1c47f-c013-4f04-90f2-f2116c0b4c00
+
+			column bevoegd
+				dataType: string
+				lineageTag: 455a11a9-f1f6-497c-8642-3cb0f4f660c0
+				summarizeBy: none
+				sourceColumn: bevoegd
+
+				annotation SummarizationSetBy = Automatic
+
+			column vestiging
+				dataType: string
+				lineageTag: 7c5d17a0-f2f9-46a5-bfba-190f3d28e2cc
+				summarizeBy: none
+				sourceColumn: vestiging
+
+				annotation SummarizationSetBy = Automatic
+
+			column Titel
+				dataType: string
+				lineageTag: 24f6dd6e-9572-4ba6-a8e4-2ecc897152e2
+				summarizeBy: none
+				sourceColumn: Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column bekostigingsniveau
+				dataType: string
+				lineageTag: 338bdc1a-52b6-4e7c-8c2b-eecea73eff60
+				summarizeBy: none
+				sourceColumn: bekostigingsniveau
+
+				annotation SummarizationSetBy = Automatic
+
+			column schooltype
+				dataType: string
+				lineageTag: ed13693d-27e9-4e7b-8fe0-d1b7054b9d47
+				summarizeBy: none
+				sourceColumn: schooltype
+
+				annotation SummarizationSetBy = Automatic
+
+			column ondersteuningsvraag
+				dataType: string
+				lineageTag: ef49f84f-7508-4341-ae0b-14a17a0f3da7
+				summarizeBy: none
+				sourceColumn: ondersteuningsvraag
+
+				annotation SummarizationSetBy = Automatic
+
+			column status
+				dataType: string
+				lineageTag: 08fe0149-44d6-4f7a-9d7c-12baa4947c93
+				summarizeBy: none
+				sourceColumn: status
+
+				annotation SummarizationSetBy = Automatic
+
+			column schooljaar
+				dataType: string
+				lineageTag: e4a0f8b5-a0dc-40b7-97d0-3e14a4331f54
+				summarizeBy: none
+				sourceColumn: schooljaar
+
+				annotation SummarizationSetBy = Automatic
+
+			column vestigingscode
+				dataType: string
+				lineageTag: f8dab63a-efe8-46e6-b6cf-ebcf0fceefb6
+				summarizeBy: none
+				sourceColumn: vestigingscode
+
+				annotation SummarizationSetBy = Automatic
+
+			column arrangementscode
+				dataType: string
+				lineageTag: 52414561-29ac-47c9-acec-6aa2c8f0611e
+				summarizeBy: none
+				sourceColumn: arrangementscode
+
+				annotation SummarizationSetBy = Automatic
+
+			column aantal
+				dataType: int64
+				formatString: 0
+				lineageTag: b3420d74-9bcf-469c-9e24-5657d053fb15
+				summarizeBy: sum
+				sourceColumn: aantal
+
+				annotation SummarizationSetBy = Automatic
+
+			column tarief_id
+				dataType: string
+				lineageTag: 3506554d-0156-4f2b-8cde-ee8bf09dd25d
+				summarizeBy: none
+				sourceColumn: tarief_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column 'dekkend_netwerk_tarieven.tarief'
+				dataType: decimal
+				formatString: "€"\ #,0.###############;#,0.###############\ -"€";"€"\ #,0.###############
+				lineageTag: 80e9279b-d9c1-4d98-b173-461322476109
+				summarizeBy: sum
+				sourceColumn: dekkend_netwerk_tarieven.tarief
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			column jaarbedrag
+				dataType: decimal
+				formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+				lineageTag: 0cf89af0-b2a1-461b-aa8b-432c6f2ce092
+				summarizeBy: none
+				sourceColumn: jaarbedrag
+
+				annotation SummarizationSetBy = User
+
+			column jan-jul
+				dataType: decimal
+				formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+				lineageTag: 80f0157c-aa3a-4131-b255-b2bb52b17074
+				summarizeBy: none
+				sourceColumn: jan-jul
+
+				annotation SummarizationSetBy = User
+
+			column aug-dec
+				dataType: decimal
+				formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+				lineageTag: b93206ff-d91a-473b-822d-993ae33610e1
+				summarizeBy: none
+				sourceColumn: aug-dec
+
+				annotation SummarizationSetBy = User
+
+			column 'dekkend_netwerk_tarieven.t2'
+				dataType: decimal
+				formatString: "€"\ #,0.###############;#,0.###############\ -"€";"€"\ #,0.###############
+				lineageTag: 033bd690-c13e-43a2-98cb-6f2f92a42ca8
+				summarizeBy: none
+				sourceColumn: dekkend_netwerk_tarieven.t2
+
+				annotation SummarizationSetBy = User
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			column Id
+				dataType: int64
+				formatString: 0
+				lineageTag: efe58c74-3725-4ade-a922-12bd0ee69b5a
+				summarizeBy: none
+				sourceColumn: Id
+
+				annotation SummarizationSetBy = Automatic
+
+			column samengesteld_arrid_tariefid
+				dataType: string
+				lineageTag: d3ce701c-7180-4584-bc26-5910ee1f85d4
+				summarizeBy: none
+				sourceColumn: samengesteld_arrid_tariefid
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dekkend_netwerk_stacked = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/Dashboards/", [Implementation="2.0", ViewMode="All"]),
+						    Items = Bron{[Id="489154f1-06dd-4684-bcb0-079a738c68df"]}[Items],
+						
+						    Selectie = Table.SelectColumns(Items,{
+						        "Id","bevoegd","vestiging","Titel","bekostigingsniveau",
+						        "splitsing_1","splitsing_2","splitsing_3", "splitsing_4", "schooltype","ondersteuningsvraag",
+						        "status","schooljaar","vestigingscode","arrangementscode"
+						    }),
+						
+						    // Alles in één keer: split + zip + expand voorbereiden
+						    Combined = Table.AddColumn(Selectie, "Combined", each
+						        let
+						            bek = try Text.Split(Text.Clean([bekostigingsniveau]), ";") otherwise {},
+						            splits = { [splitsing_1], [splitsing_2], [splitsing_3], [splitsing_4] }
+						        in
+						            List.Zip({bek, splits})
+						    , type list),
+						
+						    Removed = Table.RemoveColumns(Combined,{"bekostigingsniveau","splitsing_1","splitsing_2", "splitsing_3","splitsing_4"}),
+						
+						    Expanded = Table.ExpandListColumn(Removed, "Combined"),
+						
+						    FinalCols = Table.ExpandRecordColumn(
+						        Table.TransformColumns(Expanded, {
+						            {"Combined", each [
+						                bekostigingsniveau = _{0}?,
+						                splitsing = _{1}?
+						            ]}
+						        }),
+						        "Combined",
+						        {"bekostigingsniveau","splitsing"}
+						    ),
+						    #"Ingevoegde tekst achter scheidingsteken" = Table.AddColumn(FinalCols, "Tekst achter scheidingsteken", each Text.AfterDelimiter([bekostigingsniveau], " ", {0, RelativePosition.FromEnd}), type text),
+						    #"Namen van kolommen gewijzigd" = Table.RenameColumns(#"Ingevoegde tekst achter scheidingsteken",{{"Tekst achter scheidingsteken", "tarief_id"}}),
+						    #"Type gewijzigd" = Table.TransformColumnTypes(#"Namen van kolommen gewijzigd",{{"tarief_id", Int64.Type}}),
+						    #"Query's samengevoegd" = Table.NestedJoin(#"Type gewijzigd", {"tarief_id"}, dekkend_netwerk_tarieven, {"Id"}, "dekkend_netwerk_tarieven", JoinKind.LeftOuter),
+						    #"dekkend_netwerk_tarieven uitgevouwen" = Table.ExpandTableColumn(#"Query's samengevoegd", "dekkend_netwerk_tarieven", {"tarief", "t2"}, {"dekkend_netwerk_tarieven.tarief", "dekkend_netwerk_tarieven.t2"}),
+						    #"Aangepaste kolom toegevoegd" = Table.AddColumn(#"dekkend_netwerk_tarieven uitgevouwen", "jaarbedrag", each [splitsing] * [dekkend_netwerk_tarieven.tarief]),
+						    #"Aangepaste kolom toegevoegd1" = Table.AddColumn(#"Aangepaste kolom toegevoegd", "jan-jul", each [jaarbedrag] /12 * 7),
+						    #"Aangepaste kolom toegevoegd2" = Table.AddColumn(#"Aangepaste kolom toegevoegd1", "aug-dec", each [jaarbedrag] /12*5),
+						    #"Type gewijzigd1" = Table.TransformColumnTypes(#"Aangepaste kolom toegevoegd2",{{"jaarbedrag", type number}, {"jan-jul", type number}, {"aug-dec", type number}}),
+						    #"Namen van kolommen gewijzigd1" = Table.RenameColumns(#"Type gewijzigd1",{{"splitsing", "aantal"}}),
+						    #"Rijen gefilterd" = Table.SelectRows(#"Namen van kolommen gewijzigd1", each ([bekostigingsniveau] <> null)),
+						    #"Type gewijzigd2" = Table.TransformColumnTypes(#"Rijen gefilterd",{{"dekkend_netwerk_tarieven.tarief", Currency.Type}, {"jaarbedrag", Currency.Type}, {"jan-jul", Currency.Type}, {"aug-dec", Currency.Type}}),
+						    #"Rijen gesorteerd" = Table.Sort(#"Type gewijzigd2",{{"arrangementscode", Order.Ascending}}),
+						    #"Type gewijzigd3" = Table.TransformColumnTypes(#"Rijen gesorteerd",{{"aantal", Int64.Type}, {"Id", type text}, {"tarief_id", type text}}),
+						    #"Aangepaste kolom toegevoegd3" = Table.AddColumn(#"Type gewijzigd3", "Aangepast", each [Id]&[tarief_id]),
+						    #"Namen van kolommen gewijzigd2" = Table.RenameColumns(#"Aangepaste kolom toegevoegd3",{{"Aangepast", "samengesteld_arrid_tariefid"}}),
+						    #"Type gewijzigd4" = Table.TransformColumnTypes(#"Namen van kolommen gewijzigd2",{{"Id", Int64.Type}})
+						in
+						    #"Type gewijzigd4"
+
+			annotation PBI_ResultType = Table
+
+			annotation PBI_NavigationStepName = Navigatie
+
+		table dekkend_netwerk_tarieven
+			lineageTag: 802416fa-06c3-4c61-9709-1fed03fb19f2
+
+			column Id
+				dataType: int64
+				formatString: 0
+				lineageTag: d8cd6340-181a-4d11-8ad3-ae4b8a9bc2c5
+				summarizeBy: none
+				sourceColumn: Id
+
+				annotation SummarizationSetBy = Automatic
+
+			column bekostigingstype
+				dataType: string
+				lineageTag: c9d88a89-8015-4597-a9d9-fd6e5f471c46
+				summarizeBy: none
+				sourceColumn: bekostigingstype
+
+				annotation SummarizationSetBy = Automatic
+
+			column Titel
+				dataType: string
+				lineageTag: 0aeb6b85-46ee-4fc2-a2a4-4af6e8cdf6b3
+				summarizeBy: none
+				sourceColumn: Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column tariefcode
+				dataType: string
+				lineageTag: 0dd8beea-cfda-42a5-af40-fbb75d1d9aef
+				summarizeBy: none
+				sourceColumn: tariefcode
+
+				annotation SummarizationSetBy = Automatic
+
+			column tarief
+				dataType: decimal
+				formatString: "€"\ #,0.###############;#,0.###############\ -"€";"€"\ #,0.###############
+				lineageTag: 34bf31f0-bbbc-4012-a50d-ecb14c310add
+				summarizeBy: none
+				sourceColumn: tarief
+
+				annotation SummarizationSetBy = User
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			column t2
+				dataType: decimal
+				formatString: "€"\ #,0.###############;#,0.###############\ -"€";"€"\ #,0.###############
+				lineageTag: 4b4442ba-b3a0-428b-bb21-fe1ae2bc3690
+				summarizeBy: none
+				sourceColumn: t2
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			column test = CALCULATE(MAX(dekkend_netwerk_tarieven[t2]))
+				formatString: "€"\ #,0.###############;#,0.###############\ -"€";"€"\ #,0.###############
+				lineageTag: 6fb72f54-a6a7-494d-ba6c-a8578afb6fb5
+				summarizeBy: none
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			column duiding
+				dataType: string
+				lineageTag: fec1c64a-4847-4a99-b91e-086f855208a4
+				summarizeBy: none
+				sourceColumn: duiding
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dekkend_netwerk_tarieven = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/Dashboards/", [Implementation="2.0", ViewMode="All"]),
+						    #"031920bf-db62-4e1f-817f-398e0fd8c847" = Bron{[Id="031920bf-db62-4e1f-817f-398e0fd8c847"]}[Items],
+						    #"Andere kolommen verwijderd" = Table.SelectColumns(#"031920bf-db62-4e1f-817f-398e0fd8c847",{"Id", "bekostigingstype", "Titel", "duiding", "tariefcode", "tarief", "t2"})
+						in
+						    #"Andere kolommen verwijderd"
+
+			annotation PBI_NavigationStepName = Navigatie
+
+			annotation PBI_ResultType = Table
+
+		table dimscholen
+			lineageTag: c53677c9-325b-4b9b-816e-a59061fcbc6f
+
+			column title
+				dataType: string
+				lineageTag: 5eaecec5-b5a2-40b6-930a-5ae682223f7f
+				summarizeBy: none
+				sourceColumn: title
+
+				annotation SummarizationSetBy = Automatic
+
+			column vestigingsnummer
+				dataType: string
+				lineageTag: 9703d3c4-1a41-4b8d-a77c-70a8880d7a41
+				summarizeBy: none
+				sourceColumn: vestigingsnummer
+
+				annotation SummarizationSetBy = Automatic
+
+			column vestigingsnaam
+				dataType: string
+				lineageTag: 541bbee6-eaa9-44d2-ac56-1492024ea450
+				summarizeBy: none
+				sourceColumn: vestigingsnaam
+
+				annotation SummarizationSetBy = Automatic
+
+			column indigonaam
+				dataType: string
+				lineageTag: d694886b-4393-428a-ad53-04869613d329
+				summarizeBy: none
+				sourceColumn: indigonaam
+
+				annotation SummarizationSetBy = Automatic
+
+			column adres
+				dataType: string
+				lineageTag: 6f2afb85-75e1-47de-be71-1d0a1076f20f
+				summarizeBy: none
+				sourceColumn: adres
+
+				annotation SummarizationSetBy = Automatic
+
+			column postcode
+				dataType: string
+				lineageTag: 89471de0-3a36-4f29-ae68-d29dc70838ee
+				summarizeBy: none
+				sourceColumn: postcode
+
+				annotation SummarizationSetBy = Automatic
+
+			column plaats
+				dataType: string
+				lineageTag: f84bd16d-f0e3-4fb5-b6e7-336bc316003b
+				summarizeBy: none
+				sourceColumn: plaats
+
+				annotation SummarizationSetBy = Automatic
+
+			column povo
+				dataType: string
+				lineageTag: ea5b3bb2-7d92-40eb-b9c6-9d07f9a5c30b
+				summarizeBy: none
+				sourceColumn: povo
+
+				annotation SummarizationSetBy = Automatic
+
+			column swv
+				dataType: string
+				lineageTag: 5bc24025-da2b-4371-8da7-b695563756e4
+				summarizeBy: none
+				sourceColumn: swv
+
+				annotation SummarizationSetBy = Automatic
+
+			column wijk
+				dataType: string
+				lineageTag: 86b3b77e-dc05-4b39-a01a-af9238a4eaf9
+				summarizeBy: none
+				sourceColumn: wijk
+
+				annotation SummarizationSetBy = Automatic
+
+			column teammanager
+				dataType: string
+				lineageTag: 52fa7ff0-22c1-42e6-a14e-c033da33d9d3
+				summarizeBy: none
+				sourceColumn: teammanager
+
+				annotation SummarizationSetBy = Automatic
+
+			column bevoegd
+				dataType: string
+				lineageTag: 56908841-ea7c-45d7-b5a3-f9f5d754a307
+				summarizeBy: none
+				sourceColumn: bevoegd
+
+				annotation SummarizationSetBy = Automatic
+
+			column bevoegdnr
+				dataType: int64
+				formatString: 0
+				lineageTag: ada366f6-9c7a-4caf-8b20-139e96af1577
+				summarizeBy: none
+				sourceColumn: bevoegdnr
+
+				annotation SummarizationSetBy = Automatic
+
+			column binnenSWV
+				dataType: string
+				lineageTag: e83be5fe-b9f3-443c-8ea0-34a6be27af59
+				summarizeBy: none
+				sourceColumn: binnenSWV
+
+				annotation SummarizationSetBy = Automatic
+
+			column buurtnaam
+				dataType: string
+				lineageTag: 9c542ff9-0e6a-4fb3-947d-72ebec0dab6d
+				summarizeBy: none
+				sourceColumn: buurtnaam
+
+				annotation SummarizationSetBy = Automatic
+
+			column buurtcode
+				dataType: string
+				lineageTag: 66a34528-3285-434d-9062-24cd3121eabb
+				summarizeBy: none
+				sourceColumn: buurtcode
+
+				annotation SummarizationSetBy = Automatic
+
+			column wijkcode
+				dataType: string
+				lineageTag: 10432dd6-3f82-4e5c-9757-affc7f7970dd
+				summarizeBy: none
+				sourceColumn: wijkcode
+
+				annotation SummarizationSetBy = Automatic
+
+			column wijknaam
+				dataType: string
+				lineageTag: 52a59af7-b685-4db2-98f6-990ccf7254c0
+				summarizeBy: none
+				sourceColumn: wijknaam
+
+				annotation SummarizationSetBy = Automatic
+
+			column lat
+				dataType: string
+				lineageTag: 701f58f2-817b-49d4-b2bc-64ffcc24ccfd
+				summarizeBy: none
+				sourceColumn: lat
+
+				annotation SummarizationSetBy = Automatic
+
+			column long
+				dataType: string
+				lineageTag: b4487872-64c9-4bd4-85af-5924f432a7a1
+				summarizeBy: none
+				sourceColumn: long
+
+				annotation SummarizationSetBy = Automatic
+
+			column regulier_stedelijk
+				dataType: string
+				lineageTag: 2cf34a6a-8878-4cf0-9f99-d7020c7c9c2b
+				summarizeBy: none
+				sourceColumn: regulier_stedelijk
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dimscholen = m
+				mode: import
+				source =
+						let
+						    Bron = Odbc.DataSource("dsn=PostgreSQL35W", [HierarchicalNavigation=true]),
+						    poa_Database = Bron{[Name="poa",Kind="Database"]}[Data],
+						    #"0_algemeen_Schema" = poa_Database{[Name="0_algemeen",Kind="Schema"]}[Data],
+						    dimscholen_Table = #"0_algemeen_Schema"{[Name="dimscholen",Kind="Table"]}[Data]
+						in
+						    dimscholen_Table
+
+			annotation PBI_ResultType = Table
+
+			annotation PBI_NavigationStepName = Navigatie
+
+		table 0_measures
+			lineageTag: daac2c1b-a1ee-44f7-a253-5102a2ff3f05
+
+			measure jaarbedrag_oorspronkelijk = ```
+					
+					CALCULATE(
+					SUMX(dekkend_netwerk_stacked, 
+					    dekkend_netwerk_stacked[dekkend_netwerk_tarieven.tarief]*dekkend_netwerk_stacked[aantal]
+					    ))
+					```
+				formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\oorspronkelijk
+				lineageTag: c91bbac1-2192-4742-b9bf-e3606973985c
+
+			measure jaarbedrag_jan_jul = [jaarbedrag_oorspronkelijk]*7/12
+				formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\oorspronkelijk
+				lineageTag: 35371979-bec8-464b-8779-f694d882cd73
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			measure jaarbedrag_aug_dec = [jaarbedrag_oorspronkelijk]*5/12
+				formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\oorspronkelijk
+				lineageTag: 94f39038-0f87-4e8e-98a2-7c031ae9e3f5
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			measure jaarbedrag_t2 = CALCULATE(SUMX(dekkend_netwerk_stacked, dekkend_netwerk_stacked[dekkend_netwerk_tarieven.t2]*dekkend_netwerk_stacked[aantal]))
+				formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\t2
+				lineageTag: 3c141495-a05b-4a84-8e1a-3ef6dfe4ac01
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			measure jaarbedrag_t2_jan_jul = [jaarbedrag_t2]*7/12
+				formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\t2
+				lineageTag: d6d65166-151c-400d-9ff1-ede3c0aae2b4
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			measure jaarbedrag_t2_aug_dec = [jaarbedrag_t2]*5/12
+				formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\t2
+				lineageTag: 1b0b4667-a5a2-46af-9751-33baf670a444
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			measure jan_jul_verschil_t1_t2 =
+					
+					VAR t1_jan_jul = [jaarbedrag_jan_jul]
+					VAR t2_jan_jul = [jaarbedrag_t2_jan_jul]
+					VAR result = t2_jan_jul - t1_jan_jul
+					RETURN result
+				formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+				displayFolder: 0_measures\berekeningen\t2
+				lineageTag: c755dce6-e5bb-46e5-970d-08836a5dd86a
+
+				annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+			measure indexering_t2 =
+					
+					VAR jaarbedrag_t1 = [jaarbedrag_oorspronkelijk]
+					VAR jaarbedrag_t2 = [jaarbedrag_t2]
+					VAR result = DIVIDE(jaarbedrag_t2, jaarbedrag_t1)
+					RETURN result
+				displayFolder: 0_measures\berekeningen\t2
+				lineageTag: 1e3a2103-cf47-44d1-9f01-fff41f201bbb
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			measure sum_plaatsen = SUM(dekkend_netwerk_stacked[aantal])
+				formatString: 0
+				displayFolder: 0_measures
+				lineageTag: 26b6abef-9280-4d3e-ad79-3df27b82a102
+
+			measure avg_cosy =
+					
+					AVERAGE('almeerse_matrix_v1 0'[cosy_rating])
+				formatString: 0.00
+				displayFolder: 0_measures
+				lineageTag: 4313f987-edf5-43b9-9579-cc05c7c09b00
+
+			measure avg_cota =
+					
+					AVERAGE('almeerse_matrix_v1 0'[cota_rating])
+				formatString: 0.00
+				displayFolder: 0_measures
+				lineageTag: 2b8a1af9-b55a-49df-9d4c-5d1f4a609e9d
+
+			measure avg_fymo =
+					
+					AVERAGE('almeerse_matrix_v1 0'[fymo_rating])
+				formatString: 0.00
+				displayFolder: 0_measures
+				lineageTag: a96eb1de-4894-462c-ac98-429ff944259a
+
+			measure avg_leco =
+					
+					AVERAGE('almeerse_matrix_v1 0'[leco_rating])
+				formatString: 0.00
+				displayFolder: 0_measures
+				lineageTag: c277b9da-44c0-4b26-8707-ecef45818a30
+
+			measure avg_soge =
+					
+					AVERAGE('almeerse_matrix_v1 0'[soge_rating])
+				formatString: 0.00
+				displayFolder: 0_measures
+				lineageTag: 6e6f53ac-6388-4669-9ee8-5dc2050a1633
+
+			measure avg_weta =
+					
+					AVERAGE('almeerse_matrix_v1 0'[weta_rating])
+				formatString: 0.00
+				displayFolder: 0_measures
+				lineageTag: 55b256f0-3109-4353-9847-ce97950ed089
+
+			partition 0_measures = m
+				mode: import
+				source =
+						let
+						    Bron = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Kolom 1" = _t]),
+						    #"Type gewijzigd" = Table.TransformColumnTypes(Bron,{{"Kolom 1", type text}}),
+						    #"Kolommen verwijderd" = Table.RemoveColumns(#"Type gewijzigd",{"Kolom 1"})
+						in
+						    #"Kolommen verwijderd"
+
+			annotation PBI_ResultType = Table
+
+		table dim_arrangementen
+			lineageTag: eb29fe81-f0fd-4bfc-a5dc-1b68e80a4712
+
+			column Titel
+				lineageTag: 6b9ffa8c-fe97-426a-927d-cc307e1e8932
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: dekkend_netwerk_stacked[Titel]
+				columnOrigin: dekkend_netwerk_stacked.Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_arrangementen = calculated
+				mode: import
+				source =
+						
+						FILTER(
+						    VALUES(dekkend_netwerk_stacked[Titel]),
+						    NOT ISBLANK(dekkend_netwerk_stacked[Titel]))
+
+			annotation PBI_Id = 56d632e46370455cb0c9c5e6dcaa8937
+
+		table dim_ondersteuningsvraag
+			lineageTag: c4c19d58-8d57-4ca4-be56-0bff01435e3b
+
+			column Titel
+				lineageTag: 97936b3b-169e-4e3a-a8f4-c05370b68a87
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: dekkend_netwerk_ondersteuningsvraag[Titel]
+				columnOrigin: dekkend_netwerk_ondersteuningsvraag.Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column Id
+				formatString: 0
+				lineageTag: 891bc479-6b00-4d90-aafe-fbbd85089a61
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: dekkend_netwerk_ondersteuningsvraag[Id]
+				columnOrigin: dekkend_netwerk_ondersteuningsvraag.Id
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_ondersteuningsvraag = calculated
+				mode: import
+				source =
+						
+						FILTER(
+						    dekkend_netwerk_ondersteuningsvraag,
+						    NOT ISBLANK(dekkend_netwerk_ondersteuningsvraag[Titel])
+						)
+
+			annotation PBI_Id = 0079e20fe5af4acd8e4584b1f555d0fc
+
+		table dekkend_netwerk_ondersteuningsvraag
+			lineageTag: 0734d77f-5fd0-49ef-bf5f-ecc0efe3b97a
+
+			column Titel
+				dataType: string
+				lineageTag: 48d1fe12-6116-46cc-b5fc-1a55ee67e2d4
+				summarizeBy: none
+				sourceColumn: Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column Id
+				dataType: int64
+				formatString: 0
+				lineageTag: b94a7fc7-dc66-4fba-a88e-fbcb61706830
+				summarizeBy: count
+				sourceColumn: Id
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dekkend_netwerk_ondersteuningsvraag = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/Dashboards/", [Implementation="2.0", ViewMode="All"]),
+						    #"216b7d75-4d93-467c-974d-cc31d6d492c3" = Bron{[Id="216b7d75-4d93-467c-974d-cc31d6d492c3"]}[Items],
+						    #"Andere kolommen verwijderd" = Table.SelectColumns(#"216b7d75-4d93-467c-974d-cc31d6d492c3",{"Titel", "Id"})
+						in
+						    #"Andere kolommen verwijderd"
+
+			annotation PBI_NavigationStepName = Navigatie
+
+			annotation PBI_ResultType = Table
+
+		table 'Onderwijsplekken v2'
+			isHidden
+			lineageTag: 05d5817f-0618-4d84-9d59-c74884bf6d14
+
+			column School
+				dataType: string
+				isHidden
+				lineageTag: a546ab63-9a6c-422c-8a5b-d334d6e9e6ae
+				summarizeBy: none
+				sourceColumn: School
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column 'Groep / Arrangement'
+				dataType: string
+				isHidden
+				lineageTag: 8f975c42-df46-486c-8265-7e41a93e56da
+				summarizeBy: none
+				sourceColumn: Groep / Arrangement
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column 'Huidig aantal'
+				dataType: double
+				isHidden
+				lineageTag: 4299eb9b-fc08-450c-9347-283abf0bd692
+				summarizeBy: sum
+				sourceColumn: Huidig aantal
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column Beschikbaar
+				dataType: double
+				isHidden
+				lineageTag: 7c65f759-7109-4d57-9719-f2975b3117c0
+				summarizeBy: sum
+				sourceColumn: Beschikbaar
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column 'beschikbare plekken 26-27'
+				dataType: double
+				isHidden
+				lineageTag: 7689d7f4-af65-4159-a34d-dd6467712777
+				summarizeBy: sum
+				sourceColumn: beschikbare plekken 26-27
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column plekken_25_26
+				dataType: double
+				isHidden
+				lineageTag: 1513a957-8ece-4cc1-9c91-06cec216de43
+				summarizeBy: sum
+				sourceColumn: plekken_25_26
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column Id
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 3885e9d7-7399-45df-927a-629068e33401
+				summarizeBy: count
+				sourceColumn: Id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column Vestigingsnummer
+				dataType: string
+				lineageTag: 0f954b40-da31-49c5-9f4d-19cf218f9671
+				summarizeBy: none
+				sourceColumn: Vestigingsnummer
+
+				annotation SummarizationSetBy = Automatic
+
+			partition 'Onderwijsplekken v2' = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/Onderwijsplekken", [Implementation="2.0", ViewMode="All"]),
+						    #"9160d835-0f6f-49e0-b7a6-d63f3d488a7c" = Bron{[Id="9160d835-0f6f-49e0-b7a6-d63f3d488a7c"]}[Items],
+						    #"Andere kolommen verwijderd" = Table.SelectColumns(#"9160d835-0f6f-49e0-b7a6-d63f3d488a7c",{"School", "Groep / Arrangement", "Huidig aantal", "Beschikbaar", "beschikbare plekken 26-27", "Vestigingsnummer", "plekken_25_26", "Id"}),
+						    #"Volgorde van kolommen gewijzigd" = Table.ReorderColumns(#"Andere kolommen verwijderd",{"Vestigingsnummer", "Groep / Arrangement", "School", "Huidig aantal", "Beschikbaar", "beschikbare plekken 26-27", "plekken_25_26", "Id"}),
+						    #"Waarde vervangen" = Table.ReplaceValue(#"Volgorde van kolommen gewijzigd","","Geen groep opgegeven",Replacer.ReplaceValue,{"Groep / Arrangement"})
+						in
+						    #"Waarde vervangen"
+
+			changedProperty = IsHidden
+
+			annotation PBI_NavigationStepName = Navigatie
+
+			annotation PBI_ResultType = Table
+
+		table 'Scholen en groepen'
+			lineageTag: 5c0760dd-c53a-4399-aa1d-d5a7d17e30a2
+
+			column Vestigingsnummer
+				dataType: string
+				lineageTag: 66c6049c-1e0f-4339-ad60-4161b1ed8f27
+				summarizeBy: none
+				sourceColumn: Vestigingsnummer
+
+				annotation SummarizationSetBy = Automatic
+
+			column Titel
+				dataType: string
+				lineageTag: 2afd3899-5f64-419a-8318-0d80534521a2
+				summarizeBy: none
+				sourceColumn: Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column Groep
+				dataType: string
+				lineageTag: fda04d94-9f4e-433c-ae27-6585400dbbe4
+				summarizeBy: none
+				sourceColumn: Groep
+
+				annotation SummarizationSetBy = Automatic
+
+			column arrangement_koppelcode
+				dataType: string
+				lineageTag: cec84078-cab4-4209-8caa-6279d2105229
+				summarizeBy: none
+				sourceColumn: arrangement_koppelcode
+
+				annotation SummarizationSetBy = Automatic
+
+			column arrangement_koppel_id
+				dataType: string
+				lineageTag: dfc01f28-a1b8-4750-8776-35ae5927641e
+				summarizeBy: none
+				sourceColumn: arrangement_koppel_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column 'Onderwijsplekken v2.Huidig aantal'
+				dataType: double
+				formatString: 0
+				lineageTag: 41997044-d654-4bb0-a7ff-3af7c7f56fc0
+				summarizeBy: none
+				sourceColumn: Onderwijsplekken v2.Huidig aantal
+
+				annotation SummarizationSetBy = User
+
+			column 'Onderwijsplekken v2.Beschikbaar'
+				dataType: double
+				formatString: 0
+				lineageTag: 9df4b0de-a65f-486c-9351-9cef29da8bde
+				summarizeBy: none
+				sourceColumn: Onderwijsplekken v2.Beschikbaar
+
+				annotation SummarizationSetBy = User
+
+			partition 'Scholen en groepen' = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/Onderwijsplekken", [Implementation="2.0", ViewMode="All"]),
+						    #"e0a814eb-14a0-4a6f-9643-9d23111781d1" = Bron{[Id="e0a814eb-14a0-4a6f-9643-9d23111781d1"]}[Items],
+						    #"Rijen gesorteerd1" = Table.Sort(#"e0a814eb-14a0-4a6f-9643-9d23111781d1",{{"Titel", Order.Ascending}}),
+						    #"Andere kolommen verwijderd" = Table.SelectColumns(#"Rijen gesorteerd1",{"Vestigingsnummer", "Titel", "Groep", "arrangement_koppelcode", "arrangement_koppel_id"}),
+						    #"Volgorde van kolommen gewijzigd" = Table.ReorderColumns(#"Andere kolommen verwijderd",{"Vestigingsnummer", "Groep", "Titel", "arrangement_koppelcode", "arrangement_koppel_id"}),
+						    #"Rijen gefilterd" = Table.SelectRows(#"Volgorde van kolommen gewijzigd", each ([Vestigingsnummer] <> "") and ([Groep] <> "")),
+						    #"Query's samengevoegd" = Table.NestedJoin(
+						        #"Rijen gefilterd",
+						        {"Vestigingsnummer", "Groep"},
+						        #"Onderwijsplekken v2",
+						        {"Vestigingsnummer", "Groep / Arrangement"},
+						        "Onderwijsplekken v2",
+						        JoinKind.LeftOuter
+						    ),
+						
+						    #"Lege tabellen verwijderd" = Table.SelectRows(
+						        #"Query's samengevoegd",
+						        each not Table.IsEmpty([Onderwijsplekken v2])
+						    ),
+						    #"Onderwijsplekken v2 uitgevouwen" = Table.ExpandTableColumn(#"Lege tabellen verwijderd", "Onderwijsplekken v2", {"Huidig aantal", "Beschikbaar"}, {"Onderwijsplekken v2.Huidig aantal", "Onderwijsplekken v2.Beschikbaar"}),
+						    #"Type gewijzigd" = Table.TransformColumnTypes(#"Onderwijsplekken v2 uitgevouwen",{{"arrangement_koppel_id", type text}})
+						in
+						    #"Type gewijzigd"
+
+			annotation PBI_NavigationStepName = Navigatie
+
+			annotation PBI_ResultType = Table
+
+		table schooljaar_uniek
+			lineageTag: cba27899-a399-4cd6-88b5-047c525e6053
+
+			column schooljaar
+				lineageTag: 6953fab1-5ee0-4c51-8089-f542d5db66c0
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: dekkend_netwerk_stacked[schooljaar]
+				columnOrigin: dekkend_netwerk_stacked.schooljaar
+
+				annotation SummarizationSetBy = Automatic
+
+			partition schooljaar_uniek = calculated
+				mode: import
+				source = ```
+						
+						FILTER(
+						    VALUES(dekkend_netwerk_stacked[schooljaar]),
+						    NOT ISBLANK(dekkend_netwerk_stacked[schooljaar])
+						)
+						
+						```
+
+			annotation PBI_Id = 394e59ba5dd54202b728a19e535047dc
+
+		table 'almeerse_matrix_v1 0'
+			lineageTag: 40531372-89ff-4297-bc84-b0f4724591cb
+
+			column vestigingscode
+				dataType: string
+				lineageTag: e9a7ca02-88e2-4b10-a116-806c9312a5ac
+				summarizeBy: none
+				sourceColumn: vestigingscode
+
+				annotation SummarizationSetBy = Automatic
+
+			column Titel
+				dataType: string
+				lineageTag: 909b19af-cf98-45c3-b63a-2874eb103243
+				summarizeBy: none
+				sourceColumn: Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column groep
+				dataType: string
+				lineageTag: c70790c5-7453-48e2-9d89-5fea55ae6cc5
+				summarizeBy: none
+				sourceColumn: groep
+
+				annotation SummarizationSetBy = Automatic
+
+			column groepscode
+				dataType: string
+				lineageTag: 391c829b-25a6-48d0-9e82-7819b7480b8b
+				summarizeBy: none
+				sourceColumn: groepscode
+
+				annotation SummarizationSetBy = Automatic
+
+			column leco_rating
+				dataType: double
+				lineageTag: 190a6686-9ecb-4b01-9ef2-59a74cc9f7c5
+				summarizeBy: sum
+				sourceColumn: leco_rating
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column weta_rating
+				dataType: double
+				lineageTag: 43d7dd0a-69d8-47d9-be43-0b78f2d5387a
+				summarizeBy: sum
+				sourceColumn: weta_rating
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column soge_rating
+				dataType: double
+				lineageTag: b7608f4c-c6ae-4bc4-8aae-b7f6a1bf8203
+				summarizeBy: sum
+				sourceColumn: soge_rating
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column cosy_rating
+				dataType: double
+				lineageTag: 790c875d-df4a-40dc-9de4-a4496628fde1
+				summarizeBy: sum
+				sourceColumn: cosy_rating
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column fymo_rating
+				dataType: double
+				lineageTag: 929e7892-fee0-48c3-b524-f57da68b0e8d
+				summarizeBy: sum
+				sourceColumn: fymo_rating
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column cota_rating
+				dataType: double
+				lineageTag: d9d0c146-c140-4dd9-b6a8-98f14a797ff3
+				summarizeBy: sum
+				sourceColumn: cota_rating
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column bevoegd
+				dataType: string
+				lineageTag: db6c57b2-5b63-4c1b-8399-baeaa7618350
+				summarizeBy: none
+				sourceColumn: bevoegd
+
+				annotation SummarizationSetBy = Automatic
+
+			column povo
+				dataType: string
+				lineageTag: 9025c2ee-2a50-4eb3-9966-b8236c9c7b11
+				summarizeBy: none
+				sourceColumn: povo
+
+				annotation SummarizationSetBy = Automatic
+
+			column Id
+				dataType: int64
+				formatString: 0
+				lineageTag: edb1de80-7834-4dfe-b10b-4cd3c6db8de7
+				summarizeBy: count
+				sourceColumn: Id
+
+				annotation SummarizationSetBy = Automatic
+
+			column arrangement_koppel_id
+				dataType: double
+				lineageTag: 140c80da-7540-4bef-8797-78d4456f7db9
+				summarizeBy: none
+				sourceColumn: arrangement_koppel_id
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			partition 'almeerse_matrix_v1 0' = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/AlmeerseMatrix", [Implementation="2.0", ViewMode="All"]),
+						    #"ddbc6271-3259-48a3-9dc0-c81779c4bcf4" = Bron{[Id="ddbc6271-3259-48a3-9dc0-c81779c4bcf4"]}[Items],
+						    #"Andere kolommen verwijderd" = Table.SelectColumns(#"ddbc6271-3259-48a3-9dc0-c81779c4bcf4",{"vestigingscode", "Titel", "groep", "groepscode", "leco_rating", "weta_rating", "soge_rating", "cosy_rating", "fymo_rating", "cota_rating", "bevoegd", "povo", "arrangement_koppel_id", "Id"})
+						in
+						    #"Andere kolommen verwijderd"
+
+			annotation PBI_NavigationStepName = Navigatie
+
+			annotation PBI_ResultType = Table
+
+		table dekkend_netwerk_basis
+			lineageTag: 136430ae-86cf-4ab4-94f1-74b54c01181b
+
+			column Id
+				dataType: int64
+				formatString: 0
+				lineageTag: 09f4e2cf-d1d0-4092-813a-4fb51a45b3b9
+				summarizeBy: none
+				sourceColumn: Id
+
+				annotation SummarizationSetBy = Automatic
+
+			column bevoegd
+				dataType: string
+				lineageTag: 9b33dc03-b8b9-45ae-b2ab-a4cb7f11343f
+				summarizeBy: none
+				sourceColumn: bevoegd
+
+				annotation SummarizationSetBy = Automatic
+
+			column vestiging
+				dataType: string
+				lineageTag: 37e4d229-de64-4e37-b412-b51fa29d248a
+				summarizeBy: none
+				sourceColumn: vestiging
+
+				annotation SummarizationSetBy = Automatic
+
+			column Titel
+				dataType: string
+				lineageTag: f8f99016-c8fa-4758-9384-ea3eb2172cc2
+				summarizeBy: none
+				sourceColumn: Titel
+
+				annotation SummarizationSetBy = Automatic
+
+			column bekostigingsniveau
+				dataType: string
+				lineageTag: 329aaa89-a17e-4f9b-9c05-5c793eb38df9
+				summarizeBy: none
+				sourceColumn: bekostigingsniveau
+
+				annotation SummarizationSetBy = Automatic
+
+			column splitsing_1
+				dataType: double
+				lineageTag: 5e7e2380-f95e-4bdf-9ca3-93a776057700
+				summarizeBy: sum
+				sourceColumn: splitsing_1
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column splitsing_2
+				dataType: double
+				lineageTag: 27b903a2-9a90-448a-ae31-3826f9634673
+				summarizeBy: sum
+				sourceColumn: splitsing_2
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column splitsing_3
+				dataType: double
+				lineageTag: 692f4852-265f-43ba-a8ec-bc56cf8c5603
+				summarizeBy: sum
+				sourceColumn: splitsing_3
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column splitsing_4
+				dataType: double
+				lineageTag: 7dad9b01-83f5-4779-a03c-3e91fbecb75d
+				summarizeBy: sum
+				sourceColumn: splitsing_4
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column schooltype
+				dataType: string
+				lineageTag: c8cff7f3-b220-41c0-9ef4-ff0681013af9
+				summarizeBy: none
+				sourceColumn: schooltype
+
+				annotation SummarizationSetBy = Automatic
+
+			column ondersteuningsvraag
+				dataType: string
+				lineageTag: 4f6541bf-e5f9-4bfd-aaa9-f110c9e98c93
+				summarizeBy: none
+				sourceColumn: ondersteuningsvraag
+
+				annotation SummarizationSetBy = Automatic
+
+			column status
+				dataType: string
+				lineageTag: 21cee052-1c03-4e76-a4e7-104157ccdb8f
+				summarizeBy: none
+				sourceColumn: status
+
+				annotation SummarizationSetBy = Automatic
+
+			column schooljaar
+				dataType: string
+				lineageTag: 8df93788-a45f-47a7-a354-8aa0a8e96227
+				summarizeBy: none
+				sourceColumn: schooljaar
+
+				annotation SummarizationSetBy = Automatic
+
+			column vestigingscode
+				dataType: string
+				lineageTag: fc5680cd-bfb2-4b9c-8dfd-55feb7366a43
+				summarizeBy: none
+				sourceColumn: vestigingscode
+
+				annotation SummarizationSetBy = Automatic
+
+			column arrangementscode
+				dataType: string
+				lineageTag: 43952e52-02bd-4159-8a11-45bcce02f96d
+				summarizeBy: none
+				sourceColumn: arrangementscode
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dekkend_netwerk_basis = m
+				mode: import
+				source =
+						let
+						    Bron = SharePoint.Tables("https://passendonderwijs.sharepoint.com/teams/Dashboards/", [Implementation="2.0", ViewMode="All"]),
+						    Items = Bron{[Id="489154f1-06dd-4684-bcb0-079a738c68df"]}[Items],
+						
+						    Selectie = Table.SelectColumns(Items,{
+						        "Id","bevoegd","vestiging","Titel","bekostigingsniveau",
+						        "splitsing_1","splitsing_2","splitsing_3", "splitsing_4", "schooltype","ondersteuningsvraag",
+						        "status","schooljaar","vestigingscode","arrangementscode"
+						    })
+						in
+						    Selectie
+
+			annotation PBI_NavigationStepName = Navigatie
+
+			annotation PBI_ResultType = Table
+
+		relationship 75134015-2758-b48c-58a5-6011b8533d0a
+			fromColumn: dekkend_netwerk_stacked.tarief_id
+			toColumn: dekkend_netwerk_tarieven.Id
+
+		relationship c4c13120-1680-211c-1f93-a798f74a26c8
+			fromColumn: dekkend_netwerk_basis.vestigingscode
+			toColumn: dimscholen.vestigingsnummer
+
+		relationship ec19a32e-a5a3-e2fb-ea4c-e12a69aaee7e
+			fromColumn: dekkend_netwerk_basis.schooljaar
+			toColumn: schooljaar_uniek.schooljaar
+
+		relationship 8f896bd8-7c1c-3d52-be41-47861c02d611
+			fromColumn: dekkend_netwerk_basis.ondersteuningsvraag
+			toColumn: dim_ondersteuningsvraag.Titel
+
+		relationship 73be57b7-a20e-dcdb-bbdb-7860961dbfb5
+			fromColumn: dekkend_netwerk_basis.Titel
+			toColumn: dim_arrangementen.Titel
+
+		relationship c4640788-54d8-1607-0fa7-b984efcea7dd
+			fromColumn: 'Scholen en groepen'.arrangement_koppel_id
+			toColumn: dekkend_netwerk_basis.Id
+
+		relationship 095f8495-b760-f3f7-bcb3-955a0bd547a2
+			fromColumn: dekkend_netwerk_stacked.Id
+			toColumn: dekkend_netwerk_basis.Id
+
+		relationship ef901fa1-963c-edad-81a8-6062253921b3
+			fromColumn: 'almeerse_matrix_v1 0'.arrangement_koppel_id
+			toColumn: dekkend_netwerk_basis.Id
+
+		cultureInfo nl-NL
+
+			linguisticMetadata = {"Version":"4.1.0","Language":"en-US","Entities":{"dekkend_netwerk":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"}},"State":"Generated","Terms":[{"dekkend netwerk":{"State":"Generated"}},{"dekkend_netwerk":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dekkend_netwerk.bevoegd":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"bevoegd"}},"State":"Generated","Terms":[{"bevoegd":{"State":"Generated"}}]},"dekkend_netwerk.vestiging":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"vestiging"}},"State":"Generated","Terms":[{"vestiging":{"State":"Generated"}}]},"dekkend_netwerk.titel":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"Titel"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"titel":{"State":"Generated"}},{"Arrangement":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"dekkend_netwerk.bekostigingsniveau":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"bekostigingsniveau"}},"State":"Generated","Terms":[{"bekostigingsniveau":{"State":"Generated"}}]},"dekkend_netwerk.schooltype":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"schooltype"}},"State":"Generated","Terms":[{"schooltype":{"State":"Generated"}}]},"dekkend_netwerk.ondersteuningsvraag":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"ondersteuningsvraag"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"ondersteuningsvraag":{"State":"Generated"}}]},"dekkend_netwerk.status":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"status"}},"State":"Generated","Terms":[{"status":{"State":"Generated"}},{"category":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"importance":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"prestige":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"prominence":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"condition":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"class":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"level":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"position":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}]},"dekkend_netwerk.schooljaar":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"schooljaar"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"schooljaar":{"State":"Generated"}}]},"dekkend_netwerk.vestigingscode":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"vestigingscode"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"vestigingscode":{"State":"Generated"}}]},"dekkend_netwerk.arrangementscode":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"arrangementscode"}},"State":"Generated","Terms":[{"arrangementscode":{"State":"Generated"}}]},"dekkend_netwerk.aantal":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"aantal"}},"State":"Generated","Terms":[{"aantal":{"State":"Generated"}}]},"dekkend_netwerk.tarief_id":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"tarief_id"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"tarief id":{"State":"Generated"}},{"tarief_id":{"Type":"Noun","State":"Generated","Weight":0.99}},{"tarief identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"tarief identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"tarief identifier":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"tarief credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.727}}]},"dekkend_netwerk.dekkend_netwerk_tarieven_tarief":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"dekkend_netwerk_tarieven.tarief"}},"State":"Generated","Terms":[{"dekkend_netwerk_tarieven.tarief":{"State":"Generated"}}]},"dekkend_netwerk.jaarbedrag":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"jaarbedrag"}},"State":"Generated","Terms":[{"jaarbedrag":{"State":"Generated"}}]},"dekkend_netwerk.janjul":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"jan-jul"}},"State":"Generated","Terms":[{"jan-jul":{"State":"Generated"}},{"jan jul":{"State":"Generated","Weight":0.97}},{"jul":{"State":"Generated","Weight":0.97}}]},"dekkend_netwerk.augdec":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"aug-dec"}},"State":"Generated","Terms":[{"aug-dec":{"State":"Generated"}},{"aug dec":{"State":"Generated","Weight":0.97}},{"dec":{"State":"Generated","Weight":0.97}}]},"dekkend_netwerk.dekkend_netwerk_tarieven_t2":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"dekkend_netwerk_tarieven.t2"}},"State":"Generated","Terms":[{"dekkend_netwerk_tarieven.t2":{"State":"Generated"}}]},"entity_0_measure.jaarbedrag_oorspronkelijk":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jaarbedrag_oorspronkelijk"}},"State":"Generated","Terms":[{"jaarbedrag oorspronkelijk":{"State":"Generated"}},{"jaarbedrag_oorspronkelijk":{"Type":"Noun","State":"Generated","Weight":0.99}},{"Jaarbedrag":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"dekkend_netwerk_tarieven":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"}},"State":"Generated","Terms":[{"dekkend netwerk tarieven":{"State":"Generated"}},{"dekkend_netwerk_tarieven":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dekkend_netwerk_tarieven.id":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"Id"}},"State":"Generated","Terms":[{"id":{"State":"Generated"}},{"identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"Tarief - Id":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}],"NameType":"Identifier"},"dekkend_netwerk_tarieven.bekostigingstype":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"bekostigingstype"}},"State":"Generated","Terms":[{"bekostigingstype":{"State":"Generated"}}]},"dekkend_netwerk_tarieven.titel":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"Titel"}},"State":"Generated","Terms":[{"titel":{"State":"Generated"}}]},"dekkend_netwerk_tarieven.tariefcode":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"tariefcode"}},"State":"Generated","Terms":[{"tariefcode":{"State":"Generated"}}]},"dekkend_netwerk_tarieven.tarief":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"tarief"}},"State":"Generated","Terms":[{"tarief":{"State":"Generated"}}]},"dekkend_netwerk_tarieven.t_2":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"t2"}},"State":"Generated","Terms":[{"t 2":{"State":"Generated"}},{"t2":{"Type":"Noun","State":"Generated","Weight":0.99}},{"Tarief_t2":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"dekkend_netwerk_tarieven.test":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven","ConceptualProperty":"test"}},"State":"Generated","Terms":[{"test":{"State":"Generated"}},{"examination":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"exam":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"investigation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"analysis":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"quiz":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"trial":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"check":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"experiment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"assay":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}}]},"dimscholen":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen"}},"State":"Generated","Terms":[{"dimscholen":{"State":"Generated"}}]},"dimscholen.title":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"title"}},"State":"Generated","Terms":[{"title":{"State":"Generated"}},{"designation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"award":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"call":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"heading":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}},{"label":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}]},"dimscholen.vestigingsnummer":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"vestigingsnummer"}},"State":"Generated","Terms":[{"vestigingsnummer":{"State":"Generated"}},{"Vestigingscode":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"dimscholen.vestigingsnaam":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"vestigingsnaam"}},"State":"Generated","Terms":[{"vestigingsnaam":{"State":"Generated"}}]},"dimscholen.indigonaam":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"indigonaam"}},"State":"Generated","Terms":[{"indigonaam":{"State":"Generated"}},{"School":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"dimscholen.adre":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"adres"}},"State":"Generated","Terms":[{"adre":{"State":"Generated"}}]},"dimscholen.postcode":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"postcode"}},"State":"Generated","Terms":[{"postcode":{"State":"Generated"}}]},"dimscholen.plaat":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"plaats"}},"State":"Generated","Terms":[{"plaat":{"State":"Generated"}}]},"dimscholen.povo":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"povo"}},"State":"Generated","Terms":[{"povo":{"State":"Generated"}}]},"dimscholen.swv":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"swv"}},"State":"Generated","Terms":[{"swv":{"State":"Generated"}}]},"dimscholen.wijk":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"wijk"}},"State":"Generated","Terms":[{"wijk":{"State":"Generated"}}]},"dimscholen.teammanager":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"teammanager"}},"State":"Generated","Terms":[{"teammanager":{"State":"Generated"}}]},"dimscholen.bevoegd":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"bevoegd"}},"State":"Generated","Terms":[{"bevoegd":{"State":"Generated"}},{"Bestuur":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"dimscholen.bevoegdnr":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"bevoegdnr"}},"State":"Generated","Terms":[{"bevoegdnr":{"State":"Generated"}}]},"dimscholen.binnen_SWV":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"binnenSWV"}},"State":"Generated","Terms":[{"binnen SWV":{"State":"Generated"}},{"binnenSWV":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dimscholen.buurtnaam":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"buurtnaam"}},"State":"Generated","Terms":[{"buurtnaam":{"State":"Generated"}}]},"dimscholen.buurtcode":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"buurtcode"}},"State":"Generated","Terms":[{"buurtcode":{"State":"Generated"}}]},"dimscholen.wijkcode":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"wijkcode"}},"State":"Generated","Terms":[{"wijkcode":{"State":"Generated"}}]},"dimscholen.wijknaam":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"wijknaam"}},"State":"Generated","Terms":[{"wijknaam":{"State":"Generated"}}]},"dimscholen.lat":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"lat"}},"State":"Generated","Terms":[{"lat":{"State":"Generated"}}]},"dimscholen.long":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"long"}},"State":"Generated","Terms":[{"long":{"State":"Generated"}},{"time-consuming":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.452}},{"lingering":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.452}}]},"dimscholen.regulier_stedelijk":{"Definition":{"Binding":{"ConceptualEntity":"dimscholen","ConceptualProperty":"regulier_stedelijk"}},"State":"Generated","Terms":[{"regulier stedelijk":{"State":"Generated"}},{"regulier_stedelijk":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"entity_0_measure":{"Definition":{"Binding":{"ConceptualEntity":"0_measures"}},"State":"Generated","Terms":[{"0 measure":{"State":"Generated"}},{"0_measures":{"Type":"Noun","State":"Generated","Weight":0.99}},{"measure":{"State":"Generated","Weight":0.97}},{"0 degree":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"0 quantity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"0 quota":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"0 extent":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"degree":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"quota":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"extent":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"0 amount":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"0 portion":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"0 ration":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}}]},"dim_arrangementen":{"Definition":{"Binding":{"ConceptualEntity":"dim_arrangementen"}},"State":"Generated","Terms":[{"dim arrangementen":{"State":"Generated"}},{"dim_arrangementen":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dim_arrangementen.titel":{"Definition":{"Binding":{"ConceptualEntity":"dim_arrangementen","ConceptualProperty":"Titel"}},"State":"Generated","Terms":[{"titel":{"State":"Generated"}},{"Arrangement":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.jaarbedrag_jan_jul":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jaarbedrag_jan_jul"}},"State":"Generated","Terms":[{"jaarbedrag jan jul":{"State":"Generated"}},{"jaarbedrag_jan_jul":{"Type":"Noun","State":"Generated","Weight":0.99}},{"Jan - Jul":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.jaarbedrag_aug_dec":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jaarbedrag_aug_dec"}},"State":"Generated","Terms":[{"jaarbedrag aug dec":{"State":"Generated"}},{"jaarbedrag_aug_dec":{"Type":"Noun","State":"Generated","Weight":0.99}},{"Aug - Dec":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.jaarbedrag_t_2":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jaarbedrag_t2"}},"State":"Generated","Terms":[{"jaarbedrag t 2":{"State":"Generated"}},{"jaarbedrag_t2":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"entity_0_measure.jaarbedrag_t_2_jan_jul":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jaarbedrag_t2_jan_jul"}},"State":"Generated","Terms":[{"jaarbedrag t 2 jan jul":{"State":"Generated"}},{"jaarbedrag_t2_jan_jul":{"Type":"Noun","State":"Generated","Weight":0.99}},{"Jan - Jul_t2":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.jaarbedrag_t_2_aug_dec":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jaarbedrag_t2_aug_dec"}},"State":"Generated","Terms":[{"jaarbedrag t 2 aug dec":{"State":"Generated"}},{"jaarbedrag_t2_aug_dec":{"Type":"Noun","State":"Generated","Weight":0.99}},{"Aug - Dec_t2":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.jan_jul_verschil_t_1_t_2":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"jan_jul_verschil_t1_t2"}},"State":"Generated","Terms":[{"jan jul verschil t 1 t 2":{"State":"Generated"}},{"jan_jul_verschil_t1_t2":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dekkend_netwerk.id":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked","ConceptualProperty":"Id"}},"State":"Generated","Terms":[{"id":{"State":"Generated"}},{"identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}],"NameType":"Identifier"},"entity_0_measure.indexering_t_2":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"indexering_t2"}},"State":"Generated","Terms":[{"indexering t 2":{"State":"Generated"}},{"indexering_t2":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"entity_0_measure.sum_plaatsen":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"sum_plaatsen"}},"State":"Generated","Terms":[{"sum plaatsen":{"State":"Generated"}},{"sum_plaatsen":{"Type":"Noun","State":"Generated","Weight":0.99}},{"summation plaatsen":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.6}},{"aggregation plaatsen":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.6}},{"total plaatsen":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"aggregate plaatsen":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"amount plaatsen":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}}]},"dim_ondersteuningsvraag":{"Definition":{"Binding":{"ConceptualEntity":"dim_ondersteuningsvraag"}},"State":"Generated","Terms":[{"dim ondersteuningsvraag":{"State":"Generated"}},{"dim_ondersteuningsvraag":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dim_ondersteuningsvraag.titel":{"Definition":{"Binding":{"ConceptualEntity":"dim_ondersteuningsvraag","ConceptualProperty":"Titel"}},"State":"Generated","Terms":[{"titel":{"State":"Generated"}}]},"dim_ondersteuningsvraag.id":{"Definition":{"Binding":{"ConceptualEntity":"dim_ondersteuningsvraag","ConceptualProperty":"Id"}},"State":"Generated","Terms":[{"id":{"State":"Generated"}},{"identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}],"NameType":"Identifier"},"dekkend_netwerk_ondersteuningsvraag":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_ondersteuningsvraag"}},"State":"Generated","Terms":[{"dekkend netwerk ondersteuningsvraag":{"State":"Generated"}},{"dekkend_netwerk_ondersteuningsvraag":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"dekkend_netwerk_ondersteuningsvraag.titel":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_ondersteuningsvraag","ConceptualProperty":"Titel"}},"State":"Generated","Terms":[{"titel":{"State":"Generated"}}]},"dekkend_netwerk_ondersteuningsvraag.id":{"Definition":{"Binding":{"ConceptualEntity":"dekkend_netwerk_ondersteuningsvraag","ConceptualProperty":"Id"}},"State":"Generated","Terms":[{"id":{"State":"Generated"}},{"identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}],"NameType":"Identifier"},"onderwijsplekken_v2":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"onderwijsplekken v2":{"State":"Generated"}}]},"onderwijsplekken_v2.school":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"School"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"school":{"State":"Generated"}},{"seminary":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"conservatory":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"faculty":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"department":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"university":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"college":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"institute":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"coterie":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.466}},{"brotherhood":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.466}},{"sisterhood":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.466}}]},"onderwijsplekken_v2.groep___arrangement":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"Groep / Arrangement"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"groep / arrangement":{"State":"Generated"}},{"groep arrangement":{"State":"Generated","Weight":0.97}},{"groep / preparation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.508}},{"groep / procedure":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.508}},{"groep / prearrangement":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.508}},{"groep / organization":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.508}},{"groep preparation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"groep procedure":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"groep prearrangement":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"groep organization":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"groep / plan":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.492}},{"groep / planning":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.492}}]},"onderwijsplekken_v2.huidig_aantal":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"Huidig aantal"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"huidig aantal":{"State":"Generated"}}]},"onderwijsplekken_v2.beschikbaar":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"Beschikbaar"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"beschikbaar":{"State":"Generated"}}]},"onderwijsplekken_v2.beschikbare_plekken_2627":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"beschikbare plekken 26-27"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"beschikbare plekken 26-27":{"State":"Generated"}},{"beschikbare plekken 26 27":{"State":"Generated","Weight":0.97}}]},"onderwijsplekken_v2.plekken_25_26":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"plekken_25_26"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"plekken 25 26":{"State":"Generated"}},{"plekken_25_26":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"onderwijsplekken_v2.id":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"Id"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"id":{"State":"Generated"}},{"identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}]},"scholen_en_groepen":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen"}},"State":"Generated","Terms":[{"scholen en groepen":{"State":"Generated"}}]},"scholen_en_groepen.vestigingsnummer":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"Vestigingsnummer"}},"State":"Generated","Terms":[{"vestigingsnummer":{"State":"Generated"}}]},"scholen_en_groepen.titel":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"Titel"}},"State":"Generated","Terms":[{"titel":{"State":"Generated"}}]},"scholen_en_groepen.groep":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"Groep"}},"State":"Generated","Terms":[{"groep":{"State":"Generated"}}]},"scholen_en_groepen.arrangement_koppelcode":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"arrangement_koppelcode"}},"State":"Generated","Terms":[{"arrangement koppelcode":{"State":"Generated"}},{"arrangement_koppelcode":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"scholen_en_groepen.arrangement_koppel_id":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"arrangement_koppel_id"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"arrangement koppel id":{"State":"Generated"}},{"arrangement_koppel_id":{"Type":"Noun","State":"Generated","Weight":0.99}},{"koppel":{"State":"Generated","Weight":0.97}},{"arrangement koppel":{"State":"Generated","Weight":0.97}},{"koppel id":{"State":"Generated","Weight":0.97}},{"arrangement koppel identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.762}},{"arrangement koppel identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.762}},{"arrangement koppel identifier":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.762}},{"koppel identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"koppel identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"koppel identifier":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"arrangement koppel credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.739}},{"koppel credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.727}}]},"scholen_en_groepen.onderwijsplekken_v2_huidig_aantal":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"Onderwijsplekken v2.Huidig aantal"}},"State":"Generated","Terms":[{"onderwijsplekken v2.huidig aantal":{"State":"Generated"}}]},"scholen_en_groepen.onderwijsplekken_v2_beschikbaar":{"Definition":{"Binding":{"ConceptualEntity":"Scholen en groepen","ConceptualProperty":"Onderwijsplekken v2.Beschikbaar"}},"State":"Generated","Terms":[{"onderwijsplekken v2.beschikbaar":{"State":"Generated"}}]},"schooljaar_uniek":{"Definition":{"Binding":{"ConceptualEntity":"schooljaar_uniek"}},"State":"Generated","Terms":[{"schooljaar uniek":{"State":"Generated"}},{"schooljaar_uniek":{"Type":"Noun","State":"Generated","Weight":0.99}}]},"schooljaar_uniek.schooljaar":{"Definition":{"Binding":{"ConceptualEntity":"schooljaar_uniek","ConceptualProperty":"schooljaar"}},"State":"Generated","Terms":[{"schooljaar":{"State":"Generated"}}]},"onderwijsplekken_v2.vestigingsnummer":{"Definition":{"Binding":{"ConceptualEntity":"Onderwijsplekken v2","ConceptualProperty":"Vestigingsnummer"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"vestigingsnummer":{"State":"Generated"}}]},"almeerse_matrix_v1_0":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"}},"State":"Generated","Terms":[{"almeerse_matrix_v1 0":{"State":"Generated"}}]},"almeerse_matrix_v1_0.vestigingscode":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"vestigingscode"}},"State":"Generated","Terms":[{"vestigingscode":{"State":"Generated"}}]},"almeerse_matrix_v1_0.titel":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"Titel"}},"State":"Generated","Terms":[{"titel":{"State":"Generated"}}]},"almeerse_matrix_v1_0.groep":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"groep"}},"State":"Generated","Terms":[{"groep":{"State":"Generated"}}]},"almeerse_matrix_v1_0.groepscode":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"groepscode"}},"State":"Generated","Terms":[{"groepscode":{"State":"Generated"}}]},"almeerse_matrix_v1_0.leco_rating":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"leco_rating"}},"State":"Generated","Terms":[{"leco rating":{"State":"Generated"}},{"leco_rating":{"Type":"Noun","State":"Generated","Weight":0.99}},{"leco assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"leco evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"leco score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"leco grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"leco ranking":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"leco mark":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"leco sailor":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"leco seaman":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"leco hand":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.461}}]},"almeerse_matrix_v1_0.weta_rating":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"weta_rating"}},"State":"Generated","Terms":[{"weta rating":{"State":"Generated"}},{"weta_rating":{"Type":"Noun","State":"Generated","Weight":0.99}},{"rating":{"State":"Generated","Weight":0.97}},{"weta assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"weta evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"weta score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"weta grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"weta ranking":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"weta mark":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}}]},"almeerse_matrix_v1_0.soge_rating":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"soge_rating"}},"State":"Generated","Terms":[{"soge rating":{"State":"Generated"}},{"soge_rating":{"Type":"Noun","State":"Generated","Weight":0.99}},{"soge assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"soge evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"soge score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"soge grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"soge ranking":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"soge mark":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"soge sailor":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"soge seaman":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"soge hand":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.461}}]},"almeerse_matrix_v1_0.cosy_rating":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"cosy_rating"}},"State":"Generated","Terms":[{"cosy rating":{"State":"Generated"}},{"cosy_rating":{"Type":"Noun","State":"Generated","Weight":0.99}},{"rating":{"State":"Generated","Weight":0.97}},{"cosy assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"cosy evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.491}},{"cosy score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cosy grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cosy ranking":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cosy mark":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}},{"grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.476}}]},"almeerse_matrix_v1_0.fymo_rating":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"fymo_rating"}},"State":"Generated","Terms":[{"fymo rating":{"State":"Generated"}},{"fymo_rating":{"Type":"Noun","State":"Generated","Weight":0.99}},{"fymo assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"fymo evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"fymo score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"fymo grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"fymo ranking":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"fymo mark":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"fymo sailor":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"fymo seaman":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"fymo hand":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.461}}]},"almeerse_matrix_v1_0.cota_rating":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"cota_rating"}},"State":"Generated","Terms":[{"cota rating":{"State":"Generated"}},{"cota_rating":{"Type":"Noun","State":"Generated","Weight":0.99}},{"cota assessment":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"cota evaluation":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.5}},{"cota score":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cota grade":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cota ranking":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cota mark":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.485}},{"cota sailor":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"cota seaman":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.475}},{"cota hand":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.461}}]},"almeerse_matrix_v1_0.bevoegd":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"bevoegd"}},"State":"Generated","Terms":[{"bevoegd":{"State":"Generated"}}]},"almeerse_matrix_v1_0.povo":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"povo"}},"State":"Generated","Terms":[{"povo":{"State":"Generated"}}]},"almeerse_matrix_v1_0.id":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"Id"}},"State":"Generated","Terms":[{"id":{"State":"Generated"}},{"identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.736}},{"credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.714}}],"NameType":"Identifier"},"almeerse_matrix_v1_0.arrangement_koppel_id":{"Definition":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0","ConceptualProperty":"arrangement_koppel_id"}},"State":"Generated","Visibility":{"Value":"Hidden"},"Terms":[{"arrangement koppel id":{"State":"Generated"}},{"arrangement_koppel_id":{"Type":"Noun","State":"Generated","Weight":0.99}},{"koppel":{"State":"Generated","Weight":0.97}},{"arrangement koppel":{"State":"Generated","Weight":0.97}},{"koppel id":{"State":"Generated","Weight":0.97}},{"arrangement koppel identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.762}},{"arrangement koppel identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.762}},{"arrangement koppel identifier":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.762}},{"koppel identification":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"koppel identity":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"koppel identifier":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.75}},{"arrangement koppel credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.739}},{"koppel credential":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.727}}]},"entity_0_measure.avg_cosy":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"avg_cosy"}},"State":"Generated","Terms":[{"avg cosy":{"State":"Generated"}},{"avg_cosy":{"Type":"Noun","State":"Generated","Weight":0.99}},{"average cosy":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"Context / systeem":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.avg_cota":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"avg_cota"}},"State":"Generated","Terms":[{"avg cota":{"State":"Generated"}},{"avg_cota":{"Type":"Noun","State":"Generated","Weight":0.99}},{"average cota":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"Communicatie / taal":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.avg_fymo":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"avg_fymo"}},"State":"Generated","Terms":[{"avg fymo":{"State":"Generated"}},{"avg_fymo":{"Type":"Noun","State":"Generated","Weight":0.99}},{"average fymo":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"Fysiek / motorisch":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.avg_leco":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"avg_leco"}},"State":"Generated","Terms":[{"avg leco":{"State":"Generated"}},{"avg_leco":{"Type":"Noun","State":"Generated","Weight":0.99}},{"average leco":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"Leren / cognitie":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.avg_soge":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"avg_soge"}},"State":"Generated","Terms":[{"avg soge":{"State":"Generated"}},{"avg_soge":{"Type":"Noun","State":"Generated","Weight":0.99}},{"average soge":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"Sociaal-emotioneel / gedrag":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]},"entity_0_measure.avg_weta":{"Definition":{"Binding":{"ConceptualEntity":"0_measures","ConceptualProperty":"avg_weta"}},"State":"Generated","Terms":[{"avg weta":{"State":"Generated"}},{"avg_weta":{"Type":"Noun","State":"Generated","Weight":0.99}},{"average weta":{"Type":"Noun","State":"Suggested","Source":{"Agent":"Thesaurus"},"Weight":0.582}},{"Werkhouding / taakaanpak":{"State":"Suggested","Source":{"Type":"External","Agent":"PowerBI.VisualColumnRename"},"Weight":0.9}}]}},"Relationships":{"almeerse_matrix_v1_0_has_id":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.id":{"Target":{"Entity":"almeerse_matrix_v1_0.id"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.id"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_ids"},{"Name":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Name":{"Role":"almeerse_matrix_v1_0.id"}},"State":"Generated","Weight":0.99,"ID":"ids_are_names_IDs_of_almeerse_matrix_v1_0"}]},"almeerse_matrix_v1_0_has_povo":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.povo":{"Target":{"Entity":"almeerse_matrix_v1_0.povo"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.povo"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_povos"}]},"almeerse_matrix_v1_0_has_bevoegd":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.bevoegd":{"Target":{"Entity":"almeerse_matrix_v1_0.bevoegd"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.bevoegd"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_bevoegds"}]},"almeerse_matrix_v1_0_has_cota_rating":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.cota_rating":{"Target":{"Entity":"almeerse_matrix_v1_0.cota_rating"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.cota_rating"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_cota_rating"}]},"almeerse_matrix_v1_0_has_fymo_rating":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.fymo_rating":{"Target":{"Entity":"almeerse_matrix_v1_0.fymo_rating"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.fymo_rating"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_fymo_rating"}]},"almeerse_matrix_v1_0_has_cosy_rating":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.cosy_rating":{"Target":{"Entity":"almeerse_matrix_v1_0.cosy_rating"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.cosy_rating"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_cosy_rating"}]},"almeerse_matrix_v1_0_has_soge_rating":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.soge_rating":{"Target":{"Entity":"almeerse_matrix_v1_0.soge_rating"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.soge_rating"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_soge_rating"}]},"almeerse_matrix_v1_0_has_weta_rating":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.weta_rating":{"Target":{"Entity":"almeerse_matrix_v1_0.weta_rating"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.weta_rating"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_weta_rating"}]},"almeerse_matrix_v1_0_has_leco_rating":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.leco_rating":{"Target":{"Entity":"almeerse_matrix_v1_0.leco_rating"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.leco_rating"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_leco_rating"}]},"almeerse_matrix_v1_0_has_groepscode":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.groepscode":{"Target":{"Entity":"almeerse_matrix_v1_0.groepscode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.groepscode"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_groepscodes"}]},"almeerse_matrix_v1_0_has_groep":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.groep":{"Target":{"Entity":"almeerse_matrix_v1_0.groep"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.groep"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_groeps"}]},"almeerse_matrix_v1_0_has_titel":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.titel":{"Target":{"Entity":"almeerse_matrix_v1_0.titel"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.titel"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_titels"}]},"almeerse_matrix_v1_0_has_vestigingscode":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"almeerse_matrix_v1_0.vestigingscode":{"Target":{"Entity":"almeerse_matrix_v1_0.vestigingscode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"almeerse_matrix_v1_0.vestigingscode"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_vestigingscodes"}]},"schooljaar_uniek_has_schooljaar":{"Binding":{"ConceptualEntity":"schooljaar_uniek"},"State":"Generated","Roles":{"schooljaar_uniek":{"Target":{"Entity":"schooljaar_uniek"}},"schooljaar_uniek.schooljaar":{"Target":{"Entity":"schooljaar_uniek.schooljaar"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"schooljaar_uniek"},"Object":{"Role":"schooljaar_uniek.schooljaar"}},"State":"Generated","Weight":0.99,"ID":"schooljaar_unieks_have_schooljaars"}]},"scholen_en_groepen_has_onderwijsplekken_v2_beschikbaar":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"scholen_en_groepen.onderwijsplekken_v2_beschikbaar":{"Target":{"Entity":"scholen_en_groepen.onderwijsplekken_v2_beschikbaar"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"scholen_en_groepen.onderwijsplekken_v2_beschikbaar"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_onderwijsplekken_v2_beschikbaars"}]},"scholen_en_groepen_has_onderwijsplekken_v2_huidig_aantal":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"scholen_en_groepen.onderwijsplekken_v2_huidig_aantal":{"Target":{"Entity":"scholen_en_groepen.onderwijsplekken_v2_huidig_aantal"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"scholen_en_groepen.onderwijsplekken_v2_huidig_aantal"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_onderwijsplekken_v2_huidig_aantals"}]},"scholen_en_groepen_has_arrangement_koppelcode":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"scholen_en_groepen.arrangement_koppelcode":{"Target":{"Entity":"scholen_en_groepen.arrangement_koppelcode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"scholen_en_groepen.arrangement_koppelcode"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_arrangement_koppelcodes"}]},"scholen_en_groepen_has_groep":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"scholen_en_groepen.groep":{"Target":{"Entity":"scholen_en_groepen.groep"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"scholen_en_groepen.groep"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_groeps"}]},"scholen_en_groepen_has_titel":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"scholen_en_groepen.titel":{"Target":{"Entity":"scholen_en_groepen.titel"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"scholen_en_groepen.titel"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_titels"}]},"scholen_en_groepen_has_vestigingsnummer":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"scholen_en_groepen.vestigingsnummer":{"Target":{"Entity":"scholen_en_groepen.vestigingsnummer"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"scholen_en_groepen.vestigingsnummer"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_vestigingsnummers"}]},"dekkend_netwerk_ondersteuningsvraag_has_id":{"Binding":{"ConceptualEntity":"dekkend_netwerk_ondersteuningsvraag"},"State":"Generated","Roles":{"dekkend_netwerk_ondersteuningsvraag":{"Target":{"Entity":"dekkend_netwerk_ondersteuningsvraag"}},"dekkend_netwerk_ondersteuningsvraag.id":{"Target":{"Entity":"dekkend_netwerk_ondersteuningsvraag.id"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_ondersteuningsvraag"},"Object":{"Role":"dekkend_netwerk_ondersteuningsvraag.id"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_ondersteuningsvraags_have_ids"},{"Name":{"Subject":{"Role":"dekkend_netwerk_ondersteuningsvraag"},"Name":{"Role":"dekkend_netwerk_ondersteuningsvraag.id"}},"State":"Generated","Weight":0.99,"ID":"ids_are_names_IDs_of_dekkend_netwerk_ondersteuningsvraags"}]},"dekkend_netwerk_ondersteuningsvraag_has_titel":{"Binding":{"ConceptualEntity":"dekkend_netwerk_ondersteuningsvraag"},"State":"Generated","Roles":{"dekkend_netwerk_ondersteuningsvraag":{"Target":{"Entity":"dekkend_netwerk_ondersteuningsvraag"}},"dekkend_netwerk_ondersteuningsvraag.titel":{"Target":{"Entity":"dekkend_netwerk_ondersteuningsvraag.titel"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_ondersteuningsvraag"},"Object":{"Role":"dekkend_netwerk_ondersteuningsvraag.titel"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_ondersteuningsvraags_have_titels"}]},"dim_ondersteuningsvraag_has_id":{"Binding":{"ConceptualEntity":"dim_ondersteuningsvraag"},"State":"Generated","Roles":{"dim_ondersteuningsvraag":{"Target":{"Entity":"dim_ondersteuningsvraag"}},"dim_ondersteuningsvraag.id":{"Target":{"Entity":"dim_ondersteuningsvraag.id"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dim_ondersteuningsvraag"},"Object":{"Role":"dim_ondersteuningsvraag.id"}},"State":"Generated","Weight":0.99,"ID":"dim_ondersteuningsvraags_have_ids"},{"Name":{"Subject":{"Role":"dim_ondersteuningsvraag"},"Name":{"Role":"dim_ondersteuningsvraag.id"}},"State":"Generated","Weight":0.99,"ID":"ids_are_names_IDs_of_dim_ondersteuningsvraags"}]},"dim_ondersteuningsvraag_has_titel":{"Binding":{"ConceptualEntity":"dim_ondersteuningsvraag"},"State":"Generated","Roles":{"dim_ondersteuningsvraag":{"Target":{"Entity":"dim_ondersteuningsvraag"}},"dim_ondersteuningsvraag.titel":{"Target":{"Entity":"dim_ondersteuningsvraag.titel"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dim_ondersteuningsvraag"},"Object":{"Role":"dim_ondersteuningsvraag.titel"}},"State":"Generated","Weight":0.99,"ID":"dim_ondersteuningsvraags_have_titels"}]},"dekkend_netwerk_has_entity_0_measure_sum_plaatsen":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.sum_plaatsen":{"Target":{"Entity":"entity_0_measure.sum_plaatsen"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.sum_plaatsen"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_sum_plaatsen"}]},"dekkend_netwerk_has_entity_0_measure_indexering_t_2":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.indexering_t_2":{"Target":{"Entity":"entity_0_measure.indexering_t_2"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.indexering_t_2"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_indexering_t_2"}]},"dekkend_netwerk_has_id":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.id":{"Target":{"Entity":"dekkend_netwerk.id"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.id"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_ids"},{"Name":{"Subject":{"Role":"dekkend_netwerk"},"Name":{"Role":"dekkend_netwerk.id"}},"State":"Generated","Weight":0.99,"ID":"ids_are_names_IDs_of_dekkend_netwerks"}]},"dekkend_netwerk_has_entity_0_measure_jan_jul_verschil_t_1_t_2":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jan_jul_verschil_t_1_t_2":{"Target":{"Entity":"entity_0_measure.jan_jul_verschil_t_1_t_2"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jan_jul_verschil_t_1_t_2"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jan_jul_verschil_t_1_t_2"}]},"dekkend_netwerk_has_entity_0_measure_jaarbedrag_t_2_aug_dec":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jaarbedrag_t_2_aug_dec":{"Target":{"Entity":"entity_0_measure.jaarbedrag_t_2_aug_dec"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jaarbedrag_t_2_aug_dec"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrag_t_2_aug_dec"}]},"dekkend_netwerk_has_entity_0_measure_jaarbedrag_t_2_jan_jul":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jaarbedrag_t_2_jan_jul":{"Target":{"Entity":"entity_0_measure.jaarbedrag_t_2_jan_jul"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jaarbedrag_t_2_jan_jul"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrag_t_2_jan_jul"}]},"dekkend_netwerk_has_entity_0_measure_jaarbedrag_t_2":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jaarbedrag_t_2":{"Target":{"Entity":"entity_0_measure.jaarbedrag_t_2"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jaarbedrag_t_2"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrag_t_2"}]},"dekkend_netwerk_has_entity_0_measure_jaarbedrag_aug_dec":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jaarbedrag_aug_dec":{"Target":{"Entity":"entity_0_measure.jaarbedrag_aug_dec"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jaarbedrag_aug_dec"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrag_aug_dec"}]},"dekkend_netwerk_has_entity_0_measure_jaarbedrag_jan_jul":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jaarbedrag_jan_jul":{"Target":{"Entity":"entity_0_measure.jaarbedrag_jan_jul"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jaarbedrag_jan_jul"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrag_jan_jul"}]},"dim_arrangementen_has_titel":{"Binding":{"ConceptualEntity":"dim_arrangementen"},"State":"Generated","Roles":{"dim_arrangementen":{"Target":{"Entity":"dim_arrangementen"}},"dim_arrangementen.titel":{"Target":{"Entity":"dim_arrangementen.titel"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dim_arrangementen"},"Object":{"Role":"dim_arrangementen.titel"}},"State":"Generated","Weight":0.99,"ID":"dim_arrangementens_have_titels"}]},"dimscholen_has_regulier_stedelijk":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.regulier_stedelijk":{"Target":{"Entity":"dimscholen.regulier_stedelijk"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.regulier_stedelijk"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_regulier_stedelijks"}]},"dimscholen_has_long":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.long":{"Target":{"Entity":"dimscholen.long"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.long"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_longs"}]},"dimscholen_has_lat":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.lat":{"Target":{"Entity":"dimscholen.lat"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.lat"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_lats"}]},"dimscholen_has_wijknaam":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.wijknaam":{"Target":{"Entity":"dimscholen.wijknaam"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.wijknaam"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_wijknaams"}]},"dimscholen_has_wijkcode":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.wijkcode":{"Target":{"Entity":"dimscholen.wijkcode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.wijkcode"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_wijkcodes"}]},"dimscholen_has_buurtcode":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.buurtcode":{"Target":{"Entity":"dimscholen.buurtcode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.buurtcode"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_buurtcodes"}]},"dimscholen_has_buurtnaam":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.buurtnaam":{"Target":{"Entity":"dimscholen.buurtnaam"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.buurtnaam"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_buurtnaams"}]},"dimscholen_has_binnen_SWV":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.binnen_SWV":{"Target":{"Entity":"dimscholen.binnen_SWV"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.binnen_SWV"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_binnen_SWVs"}]},"dimscholen_has_bevoegdnr":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.bevoegdnr":{"Target":{"Entity":"dimscholen.bevoegdnr"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.bevoegdnr"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_bevoegdnrs"}]},"dimscholen_has_bevoegd":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.bevoegd":{"Target":{"Entity":"dimscholen.bevoegd"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.bevoegd"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_bevoegds"}]},"dimscholen_has_teammanager":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.teammanager":{"Target":{"Entity":"dimscholen.teammanager"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.teammanager"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_teammanagers"}]},"dimscholen_has_wijk":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.wijk":{"Target":{"Entity":"dimscholen.wijk"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.wijk"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_wijks"}]},"dimscholen_has_swv":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.swv":{"Target":{"Entity":"dimscholen.swv"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.swv"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_swvs"}]},"dimscholen_has_povo":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.povo":{"Target":{"Entity":"dimscholen.povo"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.povo"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_povos"}]},"dimscholen_has_plaat":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.plaat":{"Target":{"Entity":"dimscholen.plaat"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.plaat"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_plaats"}]},"dimscholen_has_postcode":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.postcode":{"Target":{"Entity":"dimscholen.postcode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.postcode"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_postcodes"}]},"dimscholen_has_adre":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.adre":{"Target":{"Entity":"dimscholen.adre"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.adre"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_adres"}]},"dimscholen_has_indigonaam":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.indigonaam":{"Target":{"Entity":"dimscholen.indigonaam"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.indigonaam"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_indigonaams"}]},"dimscholen_has_vestigingsnaam":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.vestigingsnaam":{"Target":{"Entity":"dimscholen.vestigingsnaam"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.vestigingsnaam"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_vestigingsnaams"}]},"dimscholen_has_vestigingsnummer":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.vestigingsnummer":{"Target":{"Entity":"dimscholen.vestigingsnummer"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.vestigingsnummer"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_vestigingsnummers"}]},"dimscholen_has_title":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.title":{"Target":{"Entity":"dimscholen.title"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dimscholen.title"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_titles"}]},"dekkend_netwerk_tarieven_has_test":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.test":{"Target":{"Entity":"dekkend_netwerk_tarieven.test"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.test"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_tests"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk_tarieven.test"}},"State":"Generated","Weight":0.99,"ID":"test_indicates_how_expensive_dekkend_netwerk_tarievens_are"}]},"dekkend_netwerk_tarieven_has_t_2":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.t_2":{"Target":{"Entity":"dekkend_netwerk_tarieven.t_2"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.t_2"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_t_2"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk_tarieven.t_2"}},"State":"Generated","Weight":0.99,"ID":"t_2_indicates_how_expensive_dekkend_netwerk_tarievens_are"}]},"dekkend_netwerk_tarieven_has_tarief":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.tarief":{"Target":{"Entity":"dekkend_netwerk_tarieven.tarief"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.tarief"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_tariefs"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk_tarieven.tarief"}},"State":"Generated","Weight":0.99,"ID":"tarief_indicates_how_expensive_dekkend_netwerk_tarievens_are"}]},"dekkend_netwerk_tarieven_has_tariefcode":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.tariefcode":{"Target":{"Entity":"dekkend_netwerk_tarieven.tariefcode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.tariefcode"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_tariefcodes"}]},"dekkend_netwerk_tarieven_has_titel":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.titel":{"Target":{"Entity":"dekkend_netwerk_tarieven.titel"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.titel"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_titels"}]},"dekkend_netwerk_tarieven_has_bekostigingstype":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.bekostigingstype":{"Target":{"Entity":"dekkend_netwerk_tarieven.bekostigingstype"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.bekostigingstype"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_bekostigingstypes"}]},"dekkend_netwerk_tarieven_has_id":{"Binding":{"ConceptualEntity":"dekkend_netwerk_tarieven"},"State":"Generated","Roles":{"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}},"dekkend_netwerk_tarieven.id":{"Target":{"Entity":"dekkend_netwerk_tarieven.id"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk_tarieven.id"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_ids"},{"Name":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Name":{"Role":"dekkend_netwerk_tarieven.id"}},"State":"Generated","Weight":0.99,"ID":"ids_are_names_IDs_of_dekkend_netwerk_tarievens"}]},"dekkend_netwerk_has_entity_0_measure_jaarbedrag_oorspronkelijk":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"entity_0_measure.jaarbedrag_oorspronkelijk":{"Target":{"Entity":"entity_0_measure.jaarbedrag_oorspronkelijk"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"entity_0_measure.jaarbedrag_oorspronkelijk"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrag_oorspronkelijk"}]},"dekkend_netwerk_has_dekkend_netwerk_tarieven_t2":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.dekkend_netwerk_tarieven_t2":{"Target":{"Entity":"dekkend_netwerk.dekkend_netwerk_tarieven_t2"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.dekkend_netwerk_tarieven_t2"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_dekkend_netwerk_tarieven_t2"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk.dekkend_netwerk_tarieven_t2"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarieven_t2_indicates_how_expensive_dekkend_netwerks_are"}]},"dekkend_netwerk_has_augdec":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.augdec":{"Target":{"Entity":"dekkend_netwerk.augdec"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.augdec"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_augdec"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk.augdec"}},"State":"Generated","Weight":0.99,"ID":"augdec_indicates_how_expensive_dekkend_netwerks_are"}]},"dekkend_netwerk_has_janjul":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.janjul":{"Target":{"Entity":"dekkend_netwerk.janjul"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.janjul"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_janjul"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk.janjul"}},"State":"Generated","Weight":0.99,"ID":"janjul_indicates_how_expensive_dekkend_netwerks_are"}]},"dekkend_netwerk_has_jaarbedrag":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.jaarbedrag":{"Target":{"Entity":"dekkend_netwerk.jaarbedrag"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.jaarbedrag"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_jaarbedrags"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk.jaarbedrag"}},"State":"Generated","Weight":0.99,"ID":"jaarbedrag_indicates_how_expensive_dekkend_netwerks_are"}]},"dekkend_netwerk_has_dekkend_netwerk_tarieven_tarief":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.dekkend_netwerk_tarieven_tarief":{"Target":{"Entity":"dekkend_netwerk.dekkend_netwerk_tarieven_tarief"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.dekkend_netwerk_tarieven_tarief"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_dekkend_netwerk_tarieven_tariefs"},{"Adjective":{"Subject":{"Role":"dekkend_netwerk"},"Adjectives":[{"expensive":{"State":"Generated"}}],"Antonyms":[{"cheap":{"State":"Generated"}}],"Measurement":{"Role":"dekkend_netwerk.dekkend_netwerk_tarieven_tarief"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarieven_tarief_indicates_how_expensive_dekkend_netwerks_are"}]},"dekkend_netwerk_has_aantal":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.aantal":{"Target":{"Entity":"dekkend_netwerk.aantal"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.aantal"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_aantals"}]},"dekkend_netwerk_has_arrangementscode":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.arrangementscode":{"Target":{"Entity":"dekkend_netwerk.arrangementscode"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.arrangementscode"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_arrangementscodes"}]},"dekkend_netwerk_has_status":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.status":{"Target":{"Entity":"dekkend_netwerk.status"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.status"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_statuses"}]},"dekkend_netwerk_has_schooltype":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.schooltype":{"Target":{"Entity":"dekkend_netwerk.schooltype"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.schooltype"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_schooltypes"}]},"dekkend_netwerk_has_bekostigingsniveau":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.bekostigingsniveau":{"Target":{"Entity":"dekkend_netwerk.bekostigingsniveau"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.bekostigingsniveau"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_bekostigingsniveaus"}]},"dekkend_netwerk_has_vestiging":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.vestiging":{"Target":{"Entity":"dekkend_netwerk.vestiging"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.vestiging"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_vestigings"}]},"dekkend_netwerk_has_bevoegd":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk.bevoegd":{"Target":{"Entity":"dekkend_netwerk.bevoegd"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk.bevoegd"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_bevoegds"}]},"dimscholen_in_postcode":{"Binding":{"ConceptualEntity":"dimscholen"},"State":"Generated","Roles":{"dimscholen":{"Target":{"Entity":"dimscholen"}},"dimscholen.postcode":{"Target":{"Entity":"dimscholen.postcode"}}},"SemanticSlots":{"Where":{"Role":"dimscholen.postcode"}},"Phrasings":[{"Preposition":{"Subject":{"Role":"dimscholen"},"Prepositions":[{"in":{"State":"Generated"}}],"Object":{"Role":"dimscholen.postcode"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_are_in_postcodes"}]},"almeerse_matrix_v1_0_has_entity_0_measure_avg_cosy":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"entity_0_measure.avg_cosy":{"Target":{"Entity":"entity_0_measure.avg_cosy"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"entity_0_measure.avg_cosy"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_avg_cosy"}]},"almeerse_matrix_v1_0_has_entity_0_measure_avg_cota":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"entity_0_measure.avg_cota":{"Target":{"Entity":"entity_0_measure.avg_cota"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"entity_0_measure.avg_cota"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_avg_cota"}]},"almeerse_matrix_v1_0_has_entity_0_measure_avg_fymo":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"entity_0_measure.avg_fymo":{"Target":{"Entity":"entity_0_measure.avg_fymo"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"entity_0_measure.avg_fymo"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_avg_fymo"}]},"almeerse_matrix_v1_0_has_entity_0_measure_avg_leco":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"entity_0_measure.avg_leco":{"Target":{"Entity":"entity_0_measure.avg_leco"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"entity_0_measure.avg_leco"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_avg_leco"}]},"almeerse_matrix_v1_0_has_entity_0_measure_avg_soge":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"entity_0_measure.avg_soge":{"Target":{"Entity":"entity_0_measure.avg_soge"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"entity_0_measure.avg_soge"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_avg_soge"}]},"almeerse_matrix_v1_0_has_entity_0_measure_avg_weta":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"entity_0_measure.avg_weta":{"Target":{"Entity":"entity_0_measure.avg_weta"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"entity_0_measure.avg_weta"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_avg_weta"}]},"dekkend_netwerk_has_dekkend_netwerk_tarieven":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dekkend_netwerk_tarieven":{"Target":{"Entity":"dekkend_netwerk_tarieven"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dekkend_netwerk_tarieven"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_dekkend_netwerk_tarievens"},{"Attribute":{"Subject":{"Role":"dekkend_netwerk_tarieven"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerk_tarievens_have_dekkend_netwerks"}]},"dekkend_netwerk_has_dimscholen":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dimscholen":{"Target":{"Entity":"dimscholen"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dimscholen"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_dimscholens"},{"Attribute":{"Subject":{"Role":"dimscholen"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"dimscholens_have_dekkend_netwerks"}]},"dekkend_netwerk_has_dim_arrangementen":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dim_arrangementen":{"Target":{"Entity":"dim_arrangementen"},"Nouns":[{"Arrangement":{"State":"Generated"}}]}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dim_arrangementen"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_dim_arrangementens"},{"Attribute":{"Subject":{"Role":"dim_arrangementen"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"dim_arrangementens_have_dekkend_netwerks"}]},"dekkend_netwerk_has_dim_ondersteuningsvraag":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"dim_ondersteuningsvraag":{"Target":{"Entity":"dim_ondersteuningsvraag"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"dim_ondersteuningsvraag"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_dim_ondersteuningsvraags"},{"Attribute":{"Subject":{"Role":"dim_ondersteuningsvraag"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"dim_ondersteuningsvraags_have_dekkend_netwerks"}]},"dekkend_netwerk_has_schooljaar_uniek":{"Binding":{"ConceptualEntity":"dekkend_netwerk_stacked"},"State":"Generated","Roles":{"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"}},"schooljaar_uniek":{"Target":{"Entity":"schooljaar_uniek"}}},"Phrasings":[{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"schooljaar_uniek"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_schooljaar_unieks"},{"Attribute":{"Subject":{"Role":"schooljaar_uniek"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"schooljaar_unieks_have_dekkend_netwerks"}]},"scholen_en_groepen_has_dekkend_netwerk":{"Binding":{"ConceptualEntity":"Scholen en groepen"},"State":"Generated","Roles":{"scholen_en_groepen":{"Target":{"Entity":"scholen_en_groepen"}},"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"},"Nouns":[{"koppel":{"State":"Generated"}},{"arrangement koppel":{"State":"Generated"}}]}},"Phrasings":[{"Attribute":{"Subject":{"Role":"scholen_en_groepen"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"scholen_en_groepens_have_dekkend_netwerks"},{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"scholen_en_groepen"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_scholen_en_groepens"}]},"almeerse_matrix_v1_0_has_dekkend_netwerk":{"Binding":{"ConceptualEntity":"almeerse_matrix_v1 0"},"State":"Generated","Roles":{"almeerse_matrix_v1_0":{"Target":{"Entity":"almeerse_matrix_v1_0"}},"dekkend_netwerk":{"Target":{"Entity":"dekkend_netwerk"},"Nouns":[{"koppel":{"State":"Generated"}},{"arrangement koppel":{"State":"Generated"}}]}},"Phrasings":[{"Attribute":{"Subject":{"Role":"almeerse_matrix_v1_0"},"Object":{"Role":"dekkend_netwerk"}},"State":"Generated","Weight":0.99,"ID":"almeerse_matrix_v1_0_have_dekkend_netwerks"},{"Attribute":{"Subject":{"Role":"dekkend_netwerk"},"Object":{"Role":"almeerse_matrix_v1_0"}},"State":"Generated","Weight":0.99,"ID":"dekkend_netwerks_have_almeerse_matrix_v1_0"}]}},"Agents":{"Internal":{"Version":"1.1.0"}}}
+				contentType: json
+
+		annotation __PBI_TimeIntelligenceEnabled = 0
+
+		annotation PBI_QueryOrder = ["dekkend_netwerk_basis","dekkend_netwerk_stacked","dekkend_netwerk_tarieven","dimscholen","0_measures","dekkend_netwerk_ondersteuningsvraag","Scholen en groepen","Onderwijsplekken v2","almeerse_matrix_v1 0"]
+
+		annotation PBI_ProTooling = ["DaxQueryView_Desktop"]
+
