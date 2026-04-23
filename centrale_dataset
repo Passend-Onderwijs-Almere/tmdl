@@ -1,0 +1,3360 @@
+createOrReplace
+
+	ref table MeasureTable
+
+		/// Aantal dossiernummers geteld in inspectierapportage. Deze wordt gedeeld door het aantal leerlingen uit DUO.
+		/// leerling measure: Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo. Bij dit aantal zitten ook de leerlingen van buiten ons samenwerkingsverband inbegrepen die onderwijs volgen binnen ons swv.
+		measure %_aanvragen_tov_eigen_populatie =
+				
+				DIVIDE (
+				    [Aantal aanvragen],
+				    [aantal_leerlingen_po_sbo_vo],
+				    0
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv\inspectierapportage
+			lineageTag: b32a0923-3273-4460-89c4-be2cbb300bcc
+
+		/// aantal bekostigde leerlingen tov een jaar eerder
+		/// kopie van %_groei_aantal_so_leerlingen_tov_vorig_jaar
+		measure %_groei_aantal_leerlingen_onderstbek_tov_vorig_jaar =
+				
+				VAR huidig =
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] )
+				VAR vorig_jaar =
+				    CALCULATE (
+				        SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				        PREVIOUSYEAR ( psql_datumtabel[februaritelling] )
+				    )
+				RETURN
+				    IF ( ISBLANK ( vorig_jaar ), BLANK (), DIVIDE ( huidig, vorig_jaar ) - 1 )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 2c3eca84-8f34-4323-9cfc-381315d70f46
+
+		/// Aantal SBO povo leerlingen tov een jaar eerder
+		measure %_groei_aantal_leerlingen_tov_vorig_jaar =
+				
+				VAR huidig =
+				    SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] )
+				VAR vorig_jaar =
+				    CALCULATE (
+				        SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] ),
+				        PREVIOUSYEAR ( psql_datumtabel[februaritelling] )
+				    )
+				RETURN
+				    IF ( ISBLANK ( vorig_jaar ), BLANK (), DIVIDE ( huidig, vorig_jaar ) - 1 )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 76c7f972-f746-4405-b54f-d7f4344a442f
+
+		/// aantal bekostigde leerlingen tov een jaar eerder
+		/// kopie van %_groei_aantal_leerlingen_onderstbek_tov_vorig_jaar
+		measure %_groei_aantal_so_leerlingen_tov_vorig_jaar =
+				
+				VAR huidig =
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] )
+				VAR vorig_jaar =
+				    CALCULATE (
+				        SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				        PREVIOUSYEAR ( psql_datumtabel[februaritelling] )
+				    )
+				RETURN
+				    IF ( ISBLANK ( vorig_jaar ), BLANK (), DIVIDE ( huidig, vorig_jaar ) - 1 )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 4c8744b0-bc66-4b52-a796-99c976cddb77
+
+		/// Aantal sbo po vo leerlingen tov een jaar eerder
+		measure %_groei_krimp =
+				
+				IF (
+				    [aantal_leerlingen_po_sbo_vo] && [aantal_leerlingen_sply],
+				    DIVIDE ( [aantal_leerlingen_po_sbo_vo], [aantal_leerlingen_sply] ) - 1,
+				    ""
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: f5a5e165-451f-490f-b660-80354fdebe47
+
+		measure %_openstaand_verzuim_tov_totaal_aantal_leerlingen =
+				
+				
+				DIVIDE([verzuim_actief_alles], [aantal_leerlingen_po_sbo_vo_laatste_per_datum])
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_verzuim
+			lineageTag: c70b90d0-e46d-44fa-9466-5588d1361713
+
+		measure %aanvragen_mei_juli_vs_hele_jaar =
+				
+				DIVIDE (
+				    [aantal_aanvragen_afgegeven_tlv_mei_juli],
+				    [aantal_aanvragen_afgegeven_tlv]
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 9623a43d-246e-4dab-8d57-48c9ef8f597a
+
+		/// actief verzuim alles tov aantal po sbo vo leerlingen
+		measure %actief_verzuim_alles_tov_eigen_populatie =
+				
+				DIVIDE ( [verzuim_actief_alles], [aantal_leerlingen_po_sbo_vo] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 3d69a85b-7dc1-48c1-8240-085bdfeb85aa
+
+		measure %actief_verzuim_tov_eigen_populatie =
+				
+				DIVIDE ( [verzuim_actief], [aantal_leerlingen_po_sbo_vo] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 0faa1a8c-ec6b-4174-9b43-e70507082ab8
+
+		/// Percentage afgegeven en openstaande toelaatbaarheidsverklaringen ten opzichte van het aantal leerlingen van de populatie.
+		/// Is de optelsom van het aantal leerlingen op de scholen / besturen volgens DUO-telling.
+		/// Bij deze DUO-telling zitten ook de leerlingen van andere SWV's die onderwijs volgen op scholen van ons SWV.
+		measure %afgegeven_en_openstaand_tlv_eigen_pop =
+				
+				DIVIDE ( [tlv_prognose_afgegeven_en_openstaand], [aantal_leerlingen_po_sbo_vo] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 6967894d-054f-4116-af13-08d9008ef154
+
+		/// Verhouding tlv afgegeven measure tov aantal leerlingen measure
+		/// 
+		/// leerling measure: Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo. Bij dit aantal zitten ook de leerlingen van buiten ons samenwerkingsverband inbegrepen die onderwijs volgen binnen ons swv.
+		measure %afgegeven_tlv_eigen_pop =
+				
+				DIVIDE ( [aantal_aanvragen_afgegeven_tlv_besluitdatum], [aantal_leerlingen_po_sbo_vo] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 2f013b63-a6c1-4719-87e5-bdb8401c6599
+
+		/// Deelt het aantal afgegeven TLV's door het totaal aantal leerlingen binnen de filtercontext.
+		measure %afgegeven_tov_eigen_populatie = DIVIDE([tlv_afgegeven_pos_export],[aantal_leerlingen_po_sbo_vo])
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 458e40ed-24cb-40f4-aa2d-f4ad02fcd1ef
+
+		measure %praktijkonderwijs =
+				
+				DIVIDE ( [aantal_leerlingen_pro], [aantal_leerlingen_vo_exc_pro] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 90a98f74-5e86-4df1-853d-182248c34fab
+
+		measure %tlv_versus_eigen_pop = DIVIDE([aantal_aanvragen_afgegeven_tlv_besluitdatum], [aantal_leerlingen_po_sbo_vo])
+			formatString: 0.00%;-0.00%;0.00%
+			lineageTag: c9f2870f-4157-4d24-a99e-99cd5e4bba39
+
+		measure %uitgaand =
+				
+				DIVIDE ( [aantal_grens_uitgaand], [uniek_aantal_bekostigde_ll_povo] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_grensverkeer
+			lineageTag: d888dc35-5552-4e89-9b90-14fbd47c2b44
+
+		/// Aantal regels in indigo verzuim tabel...
+		measure aangemeld_verzuim =
+				
+				COALESCE(
+				COUNTROWS ( indigo_verzuim_povo ),0)
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 8eda8e28-be97-4bd3-a4cb-cdd9fe7e72c5
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal aanvragen (telt het aantal unieke inspectierapport dossiernummers)...
+		measure 'Aantal aanvragen' =
+				
+				CALCULATE ( DISTINCTCOUNT( 'indigo_inspectierapportage_povo'[dosnr] ) )
+			displayFolder: measures_tlv
+			lineageTag: c150a52e-2cf2-4210-a040-a4acb146ea9f
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// aantal unieke tlvs waarvan datum ontvangst tussen de maanden mei en juli ligt...
+		measure aantal_aanvragen_afgegeven_tlv_mei_juli =
+				
+				CALCULATE (
+				    [aantal_aanvragen_afgegeven_tlv],
+				    psql_datumtabel[maand] > 4
+				        && psql_datumtabel[maand] < 8
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: ab9b17d6-14c6-4dbd-89b8-569a9540e76e
+
+		/// Aantal dosier nummers van inspectierapport (dus aantal regels in de tabel)...
+		measure aantal_aanvragen_inspectierap =
+				
+				COUNT ( 'indigo_inspectierapportage_povo'[dosnr] )
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 7fd1bd10-a7d5-4f1b-ace1-bfe27561e0b4
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal dosier nummers van inspectierapport waarvan ontvangstdatum tussen de maanden mei en juli ligt...
+		measure aantal_aanvragen_inspectierap_tlv_mei_juli =
+				
+				CALCULATE (
+				    [aantal_aanvragen_inspectierap],
+				    psql_datumtabel[maand] > 4
+				        && psql_datumtabel[maand] < 8
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: a36868a8-0ccf-43d2-98d4-bdc50aa88174
+
+		/// Aantal aanvragen (telt het aantal inspectierapport dossiernummers die niet leeg zijn)...
+		/// (oftewel hoeveel regels de insprap tabel heeft)
+		/// kopie van aantal_aanvragen_inspectierap?
+		measure Aantal_aanvragen_insprap_exc_maatwerk_ondarr =
+				
+				CALCULATE ( COUNT ( 'indigo_inspectierapportage_povo'[dosnr] ) )
+			displayFolder: measures_tlv
+			lineageTag: 2b7c07ba-6513-4d4c-bb18-3f28b2c67b3a
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Alle actief verzuim zonder ingevuld einddatum tov aantal leerlingen per 1000 leerlingen...
+		measure aantal_actieve_thuiszitters_per_1000 =
+				
+				DIVIDE (
+				    [verzuim_actief_alles],
+				    [telling_aantal_leerlingen_po_sbo_vo_laatste_teldatum]
+				) * 1000
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: ee42fa6c-517b-4c7b-9f82-78e5b2cf6d4c
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal unieke afgegeven tlvs op datum_besluit...
+		/// kopie van aantal_aanvragen_afgegeven_tlv_besluitdatum
+		measure aantal_afgegeven_tlv_datum_besluit = CALCULATE(DISTINCTCOUNT(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[sleutel_beschikking_gebdat]), USERELATIONSHIP(psql_datumtabel[datum], indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[datum_besluit]))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 72dae14b-b1d2-446e-90bb-a27659a44b91
+
+		/// Aantal unieke afgegeven tlvs op datum_besluit +
+		measure aantal_afgegeven_tlv_datum_besluit_optel_openstaand_zonder_arr = [aantal_aanvragen_afgegeven_tlv_besluitdatum]+[tlv_openstaand_inspectierap_exc_arr_mw]
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 9c82b093-2417-4702-aa79-1f176aba61fe
+
+		/// Telt het aantal unieke tlvs...
+		/// kopie
+		measure aantal_afgegeven_tlv_datum_ontvangst = DISTINCTCOUNT(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[sleutel_beschikking_gebdat])
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: f3df412b-5e6b-43fd-ac75-91254d80816c
+
+		measure aantal_afgegeven_tlv_jaren = SUM(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[duur_in_jaren])
+			lineageTag: 51d4b015-6abe-4cb8-8c96-f0adead58b27
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal unieke bsn van bekostigde leerlingen...
+		measure aantal_bekostigde_ll_povo =
+				
+				DISTINCTCOUNT ( duok_bekostigde_leerlingen_po_vo[bsn_own] )
+			displayFolder: measures_grensverkeer
+			lineageTag: 2996038a-717f-4ebd-ad2c-e7f8330fe0d9
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// telt het aantal ingevulde besluiten...
+		/// (oftewel hoeveel regels de insprap tabel heeft)
+		measure aantal_besluit =
+				
+				COUNT ( 'indigo_inspectierapportage_povo'[besluit] )
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 559e1516-e7c9-4471-91fd-b534f92cff17
+
+		/// Aantal ondersteuningbekostigd leerlingen uit ander swv...
+		measure aantal_grens_inkomend =
+				
+				SUM ( duok_totaal_aantal_sbo_so_vso[ondersteuningsbekost_ander_swv] )
+			displayFolder: measures_grensverkeer
+			lineageTag: 846b1653-11f1-405e-92d0-87cc1eb01685
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal ondersteuningbekostigd leerlingen uit ander swv...
+		/// waarbij: schoolsoort = SBO
+		measure aantal_grens_inkomend_sbo =
+				
+				CALCULATE (
+				    [aantal_grens_inkomend],
+				    duok_totaal_aantal_sbo_so_vso[schoolsoort] = "SBO"
+				)
+			formatString: 0
+			displayFolder: measures_grensverkeer
+			lineageTag: aa85160c-12a2-4b49-8a40-2fda0a079da1
+
+		/// Aantal ondersteuningbekostigd leerlingen uit ander swv...
+		/// waarbij: schoolsoort = SO
+		measure aantal_grens_inkomend_so =
+				
+				CALCULATE (
+				    [aantal_grens_inkomend],
+				    duok_totaal_aantal_sbo_so_vso[schoolsoort] = "SO"
+				)
+			formatString: 0
+			displayFolder: measures_grensverkeer
+			lineageTag: c31d5e69-1a57-4da7-8e94-673a25997d8c
+
+		/// Aantal ondersteuningbekostigd leerlingen uit ander swv...
+		/// waarbij: schoolsoort = VSO
+		measure aantal_grens_inkomend_vso =
+				
+				CALCULATE (
+				    [aantal_grens_inkomend],
+				    duok_totaal_aantal_sbo_so_vso[schoolsoort] = "VSO"
+				)
+			formatString: 0
+			displayFolder: measures_grensverkeer
+			lineageTag: cd000845-6f9a-487b-8cbd-e4b5ed9b3566
+
+		/// Aantal bsn nummers van bekostigde leerlingen...
+		/// waarbij: vestigingsnummer NIET po2401 en vo2401 is
+		measure aantal_grens_uitgaand =
+				
+				CALCULATE (
+				    COUNT ( duok_bekostigde_leerlingen_po_vo[bsn_own] ),
+				    FILTER (
+				        duok_bekostigde_leerlingen_po_vo,
+				        NOT duok_bekostigde_leerlingen_po_vo[vestiging_swvnummer] IN { "PO2401", "VO2401" }
+				    )
+				)
+			displayFolder: measures_grensverkeer
+			lineageTag: b793a081-bd68-4b1e-8807-518806b3dce8
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal unieke bsn nummers van bekostigde leerlingen...
+		/// waarbij: vestigingsnummer NIET po2401 en vo2401 is
+		measure aantal_grens_uitgaand_distinct =
+				
+				CALCULATE (
+				    DISTINCTCOUNT ( duok_bekostigde_leerlingen_po_vo[bsn_own] ),
+				    FILTER (
+				        duok_bekostigde_leerlingen_po_vo,
+				        NOT duok_bekostigde_leerlingen_po_vo[vestiging_swvnummer] IN { "PO2401", "VO2401" }
+				    )
+				)
+			displayFolder: measures_grensverkeer
+			lineageTag: 80ab77b3-1a72-4d21-8206-c3f7a0e897e0
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal bsn nummers van bekostigde leerlingen...
+		/// waarbij: vestigingsnummer NIET po2401 en vo2401 is EN schoolsoort = SBO
+		measure aantal_grens_uitgaand_sbo =
+				
+				CALCULATE ( [aantal_grens_uitgaand], pgad_dimscholen[povo] = "SBO" )
+			formatString: 0
+			displayFolder: measures_grensverkeer
+			lineageTag: d8af86fe-87da-4df1-9884-1dc71c84e4b1
+
+		/// Aantal bsn nummers van bekostigde leerlingen...
+		/// waarbij: vestigingsnummer NIET po2401 en vo2401 is EN schoolsoort = SO
+		measure aantal_grens_uitgaand_so =
+				
+				CALCULATE ( [aantal_grens_uitgaand], pgad_dimscholen[povo] = "SO" )
+			formatString: 0
+			displayFolder: measures_grensverkeer
+			lineageTag: d5d54e18-38f7-425e-8df0-4695b6f6885b
+
+		/// Aantal bsn nummers van bekostigde leerlingen...
+		/// waarbij: vestigingsnummer NIET po2401 en vo2401 is EN schoolsoort = VSO
+		measure aantal_grens_uitgaand_vso =
+				
+				CALCULATE ( [aantal_grens_uitgaand], pgad_dimscholen[povo] = "VSO" )
+			formatString: 0
+			displayFolder: measures_grensverkeer
+			lineageTag: 13594628-d699-4301-9870-cac595e6221c
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo...
+		/// waarvan schooltype niet SBO, SO en VSO
+		measure aantal_leerlingen_exclusief_sbo_so_vso =
+				
+				CALCULATE([aantal_leerlingen_po_sbo_vo], NOT pgad_dimscholen[povo] IN {"SBO", "SO", "VSO"})
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 37169b33-7fe8-426b-a214-497718f64766
+
+		measure aantal_leerlingen_met_tlv_swv_base = SUM(duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal])
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: 36f31892-7a73-4c44-bcb9-f04762f34eca
+
+		measure aantal_leerlingen_met_tlv_swv_sbo =
+				
+				CALCULATE ( [aantal_leerlingen_met_tlv_swv_base], pgad_dimscholen[povo] = "SBO" )
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: 11fe758f-ebc6-418c-942a-71189ef24536
+
+		measure aantal_leerlingen_met_tlv_swv_so =
+				
+				CALCULATE ( [aantal_leerlingen_met_tlv_swv_base], pgad_dimscholen[povo] = "SO" )
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: 81c027a8-dea6-4dfe-bd81-84704e26eee3
+
+		measure aantal_leerlingen_met_tlv_swv_vso =
+				
+				CALCULATE ( [aantal_leerlingen_met_tlv_swv_base], pgad_dimscholen[povo] = "VSO" )
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: 557e5b19-0bc7-4d43-8f7e-1027ba3b3b12
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo...
+		/// waarvan schooltype is PO
+		measure aantal_leerlingen_po =
+				
+				CALCULATE ( [aantal_leerlingen_po_sbo_vo], pgad_dimscholen[povo] = "PO" )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 060d1999-7510-4a94-b499-0b94a64f1623
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo...
+		/// Dit zijn alleen leerlingen op vestigingen binnen ons eigen SWV. De tabel bevat alleen onze scholen. Inclusief inkomende SBO, dus met TLV ander SWV.
+		/// kopie van aantal_leerlingen_sbo_po_vo en kopie van telling_aantal_leerlingen_sbo_po_vo
+		measure aantal_leerlingen_po_sbo_vo =
+				
+				SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] )
+				--Dit zijn alleen leerlingen op vestigingen binnen ons eigen SWV. De tabel bevat alleen onze scholen. Inclusief inkomende SBO, dus met TLV ander SWV.
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 06bc577d-bec0-4ca2-b1b7-9ee174a23bf3
+
+		/// Aantal leerlingen op Teldatum 1 feb die niet in de toekomst ligt (≤ CurrentDate) en niet leeg is...
+		measure aantal_leerlingen_po_sbo_vo_laatste_per_datum =
+				
+				VAR CurrentDate =
+				    MAX ( psql_datumtabel[datum] ) // Laatste tellingdatum vinden, maar andere filters (zoals dimscholen) behouden
+				VAR LaatsteTeldatum =
+				    CALCULATE (
+				        MAX ( duok_aantallen_vestigingen_bo_sbo_vo[Teldatum_universeel] ),
+				        FILTER (
+				            ALL ( duok_aantallen_vestigingen_bo_sbo_vo[Teldatum_universeel] ),
+				            // filter alleen Teldatum kolom
+				            duok_aantallen_vestigingen_bo_sbo_vo[Teldatum_universeel] <= CurrentDate
+				                && NOT ( ISBLANK ( duok_aantallen_vestigingen_bo_sbo_vo[Teldatum_universeel] ) )
+				        )
+				    ) // Nu de telling zelf ophalen op die LaatsteTeldatum, met alle andere actieve filters (zoals bevoegd)
+				VAR Resultaat =
+				    CALCULATE (
+				        SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] ),
+				        duok_aantallen_vestigingen_bo_sbo_vo[Teldatum_universeel] = LaatsteTeldatum
+				    )
+				RETURN
+				    Resultaat
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 375e894c-0d7b-489e-a89f-8dfd0cb2ae81
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo op de meest recente februaritel-datum, ongeacht welke filters er actief zijn in het rapport...
+		measure aantal_leerlingen_po_sbo_vo_laatste_teldatum =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po_sbo_vo],
+				    FILTER (
+				        ALL ( psql_datumtabel ),
+				        psql_datumtabel[februaritelling]
+				            = CALCULATE ( MAX ( psql_datumtabel[februaritelling] ), ALL ( psql_datumtabel ) )
+				    )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 5effbea0-9241-4379-9d48-3976778985ad
+
+		/// Aantal leerlingen van dezelfde periode vorig jaar binnen ons eigen samenwerkingsverband...
+		/// waarvan schooltype is PO
+		measure aantal_leerlingen_po_sply =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 978c7185-4119-4ce3-99f3-a6cce29ea17a
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband op PRO scholen...
+		measure aantal_leerlingen_pro =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po_sbo_vo],
+				    duok_aantallen_vestigingen_bo_sbo_vo[vestigingscode]
+				        IN { "28BU00", "17JI00", "30UD00" }
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 5d009cc3-0041-4a63-bc2b-9978a096a5eb
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband op SBO scholen...
+		measure aantal_leerlingen_sbo =
+				
+				CALCULATE ( [aantal_leerlingen_po_sbo_vo], pgad_dimscholen[povo] = "SBO" )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 25e519a0-2717-49d4-851d-80be19adc4b6
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo...
+		/// Dit zijn alleen leerlingen op vestigingen binnen ons eigen SWV. De tabel bevat alleen onze scholen. Inclusief inkomende SBO, dus met TLV ander SWV.
+		/// Kopie van aantal_leerlingen_po_sbo_vo en kopie van telling_aantal_leerlingen_sbo_po_vo
+		measure aantal_leerlingen_sbo_po_vo =
+				
+				SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: e3cda308-e33e-41f1-8b09-6f24663376fd
+
+		/// Aantal leerlingen binnen ons eigen samenwerkingsverband in het po, sbo en vo
+		/// Aantal PO SBO en VO leerlingen een jaar eerder
+		/// bijna kopie aantal_leerlingen_sply
+		measure aantal_leerlingen_sbo_po_vo_voorgaand_jaar =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po_sbo_vo],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 34f7d1b8-09a7-4c94-bb94-44620c1e6030
+
+		measure aantal_leerlingen_sbo_so_vso = ```
+				SUM(duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal])
+				//De gegevens uit de tabel die gebruikt wordt hebben betrekking op het aantal bekostigde leerlingen met tlv van ons swv dat binnen of buiten ons swv naar school gaat. 
+				```
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 25bddccb-706d-41a2-94af-29448c36e4b7
+
+		/// Aantal leerlingen SBO van een jaar eerder
+		measure aantal_leerlingen_sbo_sply =
+				
+				CALCULATE (
+				    [aantal_leerlingen_sbo],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 056ed067-9683-4598-b721-d9c2fb401386
+
+		/// deze berekening bevat alle SO leerlingen van SWV Almere die binnen en buiten ons SWV naar school gaan
+		measure aantal_leerlingen_so =
+				
+				CALCULATE (
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				    pgad_dimscholen[povo] = "SO"
+				)
+				--deze berekening bevat alle SO leerlingen van SWV Almere die binnen en buiten ons SWV naar school gaan
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: e5ad9c95-b337-4efa-916f-44e831fde1bc
+
+		/// Alle SO leerlingen binnen swv.
+		measure aantal_leerlingen_so_binnen_swv =
+				
+				CALCULATE ( [aantal_leerlingen_so], pgad_dimscholen[binnenswv] = "Ja" )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: be2ce797-36f6-4f85-91c9-32cdc68437f9
+
+		/// Aantal leerlingen van een jaar eerder zonder datum filter
+		/// Bijna kopie aantal_leerlingen_sbo_po_vo_voorgaand_jaar
+		measure aantal_leerlingen_sply =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po_sbo_vo],
+				    ALL ( psql_datumtabel[jaar] ),
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: ec76d688-787b-439f-970e-baecca9ad2e8
+
+		/// Aantal VO leerlingen die niet op PRO zitten
+		measure aantal_leerlingen_vo_exc_pro =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po_sbo_vo],
+				    pgad_dimscholen[povo] = "VO"
+				        && NOT pgad_dimscholen[vestigingsnummer] IN { "28BU00", "17JI00", "30UD00" }
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 80a55e56-ba5a-4479-9db6-d9d28aa80f18
+
+		/// aantal VO leerlingen
+		measure aantal_leerlingen_vo_inc_pro =
+				
+				CALCULATE ( [aantal_leerlingen_po_sbo_vo], pgad_dimscholen[povo] = "VO" )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 96e8caca-ac3a-4eb1-9879-821c650a3184
+
+		/// Aantal VSO leerlingen in bekostiging tabel binnen en buiten swv
+		measure aantal_leerlingen_vso =
+				
+				CALCULATE (
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				    pgad_dimscholen[povo] = "VSO"
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: e28a546d-ebf7-4ef5-b30b-2b388d62d429
+
+		/// Aantal VSO leerlingen binnen swv
+		measure aantal_leerlingen_vso_binnen_swv =
+				
+				CALCULATE (
+				    [aantal_leerlingen_vso],
+				    duok_aantallen_ondersteuningsbekost_swv_po_vo[deelnemende_vestiging] = "1"
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 722319db-9ae0-4338-8c86-abfef0fe5b15
+
+		measure aantal_lokaal_leerlingnummers_count = COUNT(indigo_pos_export_povo[lokaal_leerlingnummer])
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: ff4451b7-7854-4beb-a678-b1522ee5a31f
+
+		measure aantal_lokaal_leerlingnummers_uniek = DISTINCTCOUNT(indigo_pos_export_povo[lokaal_leerlingnummer])
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: cbf2ebf3-14f6-4a7b-8744-7fa193ffb736
+
+		measure aantal_met_tlv_sbo_binnen_en_buiten_almere =
+				
+				[aantal_met_tlv_sbo_binnen_swv] + [aantal_grens_uitgaand_sbo]
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 7024ea87-a52b-4a04-9895-7401891efbad
+
+		/// Aantal SBO leerlingen binnen het swv volgens dimscholen tabel
+		measure aantal_met_tlv_sbo_binnen_swv =
+				
+				CALCULATE (
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				    pgad_dimscholen[binnenswv] = "Ja"
+				        && pgad_dimscholen[povo] = "SBO"
+				)
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 8d8d4276-01de-49e8-90e9-0d78ec9297ff
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal SBO leerlingen met tlv binnen het swv van een jaar eerder
+		measure aantal_met_tlv_sbo_binnen_swv_sply =
+				
+				CALCULATE (
+				    [aantal_met_tlv_sbo_binnen_swv],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 7db29564-56b1-4b76-9c04-6bebb54728af
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal SO leerlingen met tlv binnen het swv
+		measure aantal_met_tlv_so_binnen_swv =
+				
+				CALCULATE (
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				    pgad_dimscholen[binnenswv] = "Ja"
+				        && pgad_dimscholen[povo] = "SO"
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 98ca8d52-888d-4871-8dd5-79d22f99fc13
+
+		/// Aantal VSO leerlingen met tlv binnen het swv
+		measure aantal_met_tlv_vso_binnen_swv =
+				
+				CALCULATE (
+				    SUM ( duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal] ),
+				    pgad_dimscholen[binnenswv] = "Ja"
+				        && pgad_dimscholen[povo] = "VSO"
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: aa3414f7-ae86-4c25-b4a2-eb6b575eb8c1
+
+		/// Aantal onderwijs arrangementen dosiers (inspectierapport)
+		measure aantal_ondwarr =
+				
+				CALCULATE (
+				    COUNT ( 'indigo_inspectierapportage_povo'[dosnr] ),
+				    'indigo_inspectierapportage_povo'[soort] = "ONDWARR"
+				)
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 9ddd03fa-52df-4b94-959d-583621d5e1cd
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal onderwijs arrangementen dosiers waarbij beoogde school NEO bevat (inspectierapport)
+		measure aantal_ondwarr_neo =
+				
+				CALCULATE (
+				    [aantal_ondwarr],
+				    FILTER (
+				        'indigo_inspectierapportage_povo',
+				        CONTAINSSTRING ( 'indigo_inspectierapportage_povo'[beoogde_school], "NEO" )
+				    )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: dcaff417-912e-4c5c-88de-2cc1d4092577
+
+		/// Aantal onderwijs arrangementen dosiers waarbij beoogde school NIET NEO bevat (inspectierapport)
+		measure aantal_ondwarr_niet_neo =
+				
+				CALCULATE (
+				    [aantal_ondwarr],
+				    FILTER (
+				        'indigo_inspectierapportage_povo',
+				        NOT CONTAINSSTRING ( 'indigo_inspectierapportage_povo'[beoogde_school], "NEO" )
+				    )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 9db996ae-f932-43ec-8e7a-0a214429de2a
+
+		/// Aantal unieke scholen
+		measure aantal_scholen_dimscholen =
+				
+				DISTINCTCOUNT ( pgad_dimscholen[indigonaam] )
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 738db435-d3b2-43d6-bb6a-7389cf955a6e
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Telt het aantal regels van actief verzuim als current date (max psql_datumtabel) kleiner of gelijk is aan vandaag EN current date groter is dan verzuim start (min indigo_verzuim).
+		/// 
+		/// Toegepaste filters:
+		/// - Het datum filter wordt verwijderd,
+		/// - Verzuim sinds moet kleiner of gelijk zijn aan current date
+		/// - Einde verzuim moet groter zijn dat current date OF einde verzuim moet leeg zijn.
+		/// 
+		/// Note: current_date gaat niet hoger dan 24-4-2024
+		measure actief_verzuim_dax =
+				
+				VAR current_date=MAX(psql_datumtabel[datum])
+				VAR verzuim_start=MIN(indigo_verzuim_povo[verzuim_sinds])
+				VAR actief_verzuim=
+				CALCULATE(COUNTROWS(indigo_verzuim_povo),
+				ALL(psql_datumtabel[datum]),
+				indigo_verzuim_povo[verzuim_sinds]<=current_date,
+				indigo_verzuim_povo[einde_verzuim]>current_date
+				||
+				ISBLANK(indigo_verzuim_povo[einde_verzuim]))
+				VAR result =
+				IF(current_date<=TODAY() && current_date>=verzuim_start,actief_verzuim)
+				RETURN result
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 8d237450-5f98-40f5-9dbf-5fb7a9bd9c5f
+
+		measure actief_verzuim_thuiszitter_ja =
+				
+				VAR current_date = MAX(psql_datumtabel[datum])
+				VAR verzuim_start = MIN(indigo_verzuim_povo[verzuim_sinds])
+				
+				VAR actief_verzuim =
+				CALCULATE(
+				    COUNTROWS(indigo_verzuim_povo),
+				    ALL(psql_datumtabel[datum]),
+				    indigo_verzuim_povo[verzuim_sinds] <= current_date,
+				    indigo_verzuim_povo[einde_verzuim] > current_date
+				        || ISBLANK(indigo_verzuim_povo[einde_verzuim]),
+				    indigo_verzuim_povo[thuiszitter] = "Ja"
+				)
+				
+				VAR result =
+				IF(
+				    current_date <= TODAY() &&
+				    current_date >= verzuim_start,
+				    actief_verzuim
+				)
+				
+				RETURN result
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: fc557e1d-971b-4076-a33e-4dc2d826aabb
+
+		measure actief_verzuim_thuiszitter_ja_en_nee =
+				
+				VAR thuiszitter_ja = [actief_verzuim_thuiszitter_ja]
+				VAR thuiszitter_nee = [actief_verzuim_thuiszitter_nee]
+				VAR result = thuiszitter_ja + thuiszitter_nee
+				RETURN result
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: e3b36977-0bae-4d76-be51-8344289bf317
+
+		measure actief_verzuim_thuiszitter_nee =
+				
+				VAR current_date = MAX(psql_datumtabel[datum])
+				VAR verzuim_start = MIN(indigo_verzuim_povo[verzuim_sinds])
+				
+				VAR actief_verzuim =
+				CALCULATE(
+				    COUNTROWS(indigo_verzuim_povo),
+				    ALL(psql_datumtabel[datum]),
+				    indigo_verzuim_povo[verzuim_sinds] <= current_date,
+				    indigo_verzuim_povo[einde_verzuim] > current_date
+				        || ISBLANK(indigo_verzuim_povo[einde_verzuim]),
+				    indigo_verzuim_povo[thuiszitter] = "Nee"
+				)
+				
+				VAR result =
+				IF(
+				    current_date <= TODAY() &&
+				    current_date >= verzuim_start,
+				    actief_verzuim
+				)
+				
+				RETURN result
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: daa58bcf-941b-4e49-b2f3-0d8fb9e95c3d
+
+		measure afdekvak_zichtbaar_afgegeven_tlv_verklaringen =
+				
+				IF(
+				    ISFILTERED(pgad_dimscholen[bevoegd]) ||
+				    ISFILTERED(pgad_dimscholen[povo]) ||
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort]) ||
+				    ISFILTERED(pgad_dimscholen[binnenswv]) ||
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[leeftijd_op_datum_besluit]) ||
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort_overgang]),
+				    "#FFFFFF00",
+				    "#79B542"
+				)
+			displayFolder: measures_opmaak\afdekvlakken
+			lineageTag: c6f3ce71-d215-4da5-bf45-e42708c961cd
+
+		/// resultaat is een zin: bestuur (sommatie van aantal leerlingen)
+		/// 
+		measure 'Bestuur (incl. aantal)' =
+				
+				VAR Bestuur =
+				    SELECTEDVALUE ( pgad_dimscholen[bevoegd] )
+				VAR Aantal =
+				    CALCULATE (
+				        SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] ),
+				        RELATEDTABLE ( duok_aantallen_vestigingen_bo_sbo_vo )
+				    )
+				RETURN
+				    Bestuur & " (" & Aantal & ")"
+			displayFolder: measures_tlv
+			lineageTag: 5ab89526-7df7-45d3-bc04-392a0b344dbe
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure Cascading_afgegeven_tlv = INT ( NOT ( ISEMPTY (indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo)))
+			formatString: 0
+			lineageTag: 49cd020a-0640-416d-847d-aeadb725e5b3
+
+		measure Cascading_bekostigde_leerlingen = INT ( NOT ( ISEMPTY (duok_bekostigde_leerlingen_po_vo)))
+			formatString: 0
+			lineageTag: 7805036f-30d4-4856-bef8-5346b91d26f1
+
+		measure Cascading_inspectierapportage = INT ( NOT ( ISEMPTY (indigo_inspectierapportage_povo)))
+			formatString: 0
+			lineageTag: 8f6c277f-b7ee-4273-b652-917095ef9260
+
+		measure Cascading_lokaal_leerlingnummer = INT ( NOT ( ISEMPTY (lokaal_leerlingnummer_distinct)))
+			formatString: 0
+			lineageTag: 0fa7472d-d303-4015-ad9c-705692bdf606
+
+		/// Format om kleur aan te passen:
+		/// - wit als percentage sbo vorig jaar niet bestaat
+		/// - groen als percentage sbo tov totaal dit jaar groter is dan vorig jaar
+		/// - rood als percentage sbo tov totaal dit jaar kleiner is dan vorig jaar
+		/// -  neutraal als percentage sbo tov totaal dit jaar gelijk is aan vorig jaar
+		measure cf_deelnamepercentage_sbo =
+				
+				SWITCH (
+				    TRUE (),
+				    ISBLANK ( [deelnamepercentage_sbo_sply] ), "rgba(255, 255, 255, 1)",
+				    -- wit bij ontbrekende waarde
+				    [deelnamepercentage_sbo] > [deelnamepercentage_sbo_sply], "rgba(121, 181, 66, 0.4)",
+				    -- groen
+				    [deelnamepercentage_sbo] < [deelnamepercentage_sbo_sply], "rgba(193, 45, 38, 0.4)",
+				    -- rood
+				    [deelnamepercentage_sbo] = [deelnamepercentage_sbo_sply], "rgba(222, 234, 233, 0.4)" -- neutraal
+				)
+			displayFolder: measures_opmaak\conditional
+			lineageTag: e9340a6f-f935-418d-babb-aab7ebd6e930
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Format om kleur aan te passen:
+		/// - wit als landelijk percentage sbo dit jaar OF vorig jaar niet bestaat
+		/// - groen als landelijk percentage sbo tov totaal dit jaar groter is dan vorig jaar
+		/// - rood als landelijk percentage sbo tov totaal dit jaar kleiner is dan vorig jaar
+		/// -  neutraal als landelijk percentage sbo tov totaal dit jaar gelijk is aan vorig jaar
+		measure cf_deelnamepercentage_sbo_landelijk =
+				
+				SWITCH (
+				    TRUE (),
+				    ISBLANK ( [landelijk_deelnamepercentage_sbo] )
+				        || ISBLANK ( [landelijk_deelnamepercentage_sbo_sply] ), "rgba(255, 255, 255, 1)",
+				    -- wit bij ontbrekende waarde
+				    [landelijk_deelnamepercentage_sbo] > [landelijk_deelnamepercentage_sbo_sply], "rgba(121, 181, 66, 0.4)",
+				    -- groen
+				    [landelijk_deelnamepercentage_sbo] < [landelijk_deelnamepercentage_sbo_sply], "rgba(193, 45, 38, 0.4)",
+				    -- rood
+				    [landelijk_deelnamepercentage_sbo] = [landelijk_deelnamepercentage_sbo_sply], "rgba(222, 234, 233, 0.4)" -- neutraal
+				)
+			displayFolder: measures_opmaak\conditional
+			lineageTag: 64580c2b-8ac1-48b9-85c4-300005fc9474
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_deelnamepercentage_sbo_tlv =
+				
+				SWITCH (
+				    TRUE (),
+				    ISBLANK ( [deelnamepercentage_sbo_tlv_sply] ), "rgba(255, 255, 255, 1)",
+				    -- wit bij ontbrekende waarde
+				    [deelnamepercentage_sbo_tlv] > [deelnamepercentage_sbo_tlv_sply], "rgba(121, 181, 66, 0.4)",
+				    -- groen
+				    [deelnamepercentage_sbo_tlv] < [deelnamepercentage_sbo_tlv_sply], "rgba(193, 45, 38, 0.4)",
+				    -- rood
+				    [deelnamepercentage_sbo_tlv] = [deelnamepercentage_sbo_tlv_sply], "rgba(222, 234, 233, 0.4)" -- neutraal
+				)
+			displayFolder: measures_opmaak\conditional
+			lineageTag: d072ba42-d29a-4903-92cd-af103cef23b4
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_kleur_max_balk = ```
+				
+				VAR heeft_filter_teldatum = ISFILTERED(duok_bekostigde_leerlingen_po_vo[teldatum])
+				VAR max_aantal =
+				    IF(
+				        heeft_filter_teldatum,
+				        MAXX(
+				            ALLSELECTED(
+				                duok_bekostigde_leerlingen_po_vo[leeftijd_afgeleid],
+				                duok_bekostigde_leerlingen_po_vo[teldatum]
+				            ),
+				            [uniek_aantal_bekostigd_bsn_geb]
+				        ),
+				        MAXX(
+				            ALL(
+				                duok_bekostigde_leerlingen_po_vo[leeftijd_afgeleid],
+				                duok_bekostigde_leerlingen_po_vo[teldatum]
+				            ),
+				            [uniek_aantal_bekostigd_bsn_geb]
+				        )
+				    )
+				VAR kleur =
+				    IF(
+				        [uniek_aantal_bekostigd_bsn_geb] = max_aantal,
+				        "#E66C37",
+				        "#79B542"
+				    )
+				RETURN
+				kleur
+				
+				```
+			displayFolder: measures_tlv
+			lineageTag: 8de420ab-83d4-4ea1-a291-3c29baafe040
+
+		measure cf_leerlingaantal =
+				
+				SWITCH (
+				    TRUE (),
+				    ISBLANK ( [aantal_leerlingen_sbo_po_vo_voorgaand_jaar] ), "rgba(255, 255, 255, 1)",
+				    -- wit bij ontbrekende waarde
+				    [aantal_leerlingen_po_sbo_vo] > [aantal_leerlingen_sbo_po_vo_voorgaand_jaar], "rgba(121, 181, 66, 0.4)",
+				    -- groen
+				    [aantal_leerlingen_po_sbo_vo] < [aantal_leerlingen_sbo_po_vo_voorgaand_jaar], "rgba(193, 45, 38, 0.4)",
+				    -- rood
+				    [aantal_leerlingen_po_sbo_vo] = [aantal_leerlingen_sbo_po_vo_voorgaand_jaar], "rgba(222, 234, 233, 0.4)" -- neutraal
+				)
+			displayFolder: measures_opmaak\conditional
+			lineageTag: 46ba3c64-8b2c-4df3-a2d8-dc4f0c4c64a7
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_leerlingaantal_% =
+				
+				IF ( [%_groei_aantal_leerlingen_tov_vorig_jaar] > 1, 00, "#deeae9" )
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 94d3d128-1715-4b19-9571-cbc1021d3970
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_leerlingaantal_po =
+				
+				SWITCH (
+				    TRUE (),
+				    ISBLANK ( [aantal_leerlingen_po_sply] ), "rgba(255, 255, 255, 1)",
+				    -- wit bij ontbrekende waarde
+				    [aantal_leerlingen_po] > [aantal_leerlingen_po_sply], "rgba(121, 181, 66, 0.4)",
+				    -- groen
+				    [aantal_leerlingen_po] < [aantal_leerlingen_po_sply], "rgba(193, 45, 38, 0.4)",
+				    -- rood
+				    [aantal_leerlingen_po] = [aantal_leerlingen_po_sply], "rgba(222, 234, 233, 0.4)" -- neutraal
+				)
+			displayFolder: measures_opmaak\conditional
+			lineageTag: 0bfeb822-38bb-4f42-b8d3-3b437d94a962
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_leerlingaantal_sbo =
+				
+				SWITCH (
+				    TRUE (),
+				    ISBLANK ( [aantal_leerlingen_sbo_sply] ), "rgba(255, 255, 255, 1)",
+				    -- wit bij ontbrekende waarde
+				    [aantal_leerlingen_sbo] > [aantal_leerlingen_sbo_sply], "rgba(121, 181, 66, 0.4)",
+				    -- groen
+				    [aantal_leerlingen_sbo] < [aantal_leerlingen_sbo_sply], "rgba(193, 45, 38, 0.4)",
+				    -- rood
+				    [aantal_leerlingen_sbo] = [aantal_leerlingen_sbo_sply], "rgba(222, 234, 233, 0.4)" -- neutraal
+				)
+			displayFolder: measures_opmaak\conditional
+			lineageTag: 5f8a4672-f831-436b-bf8f-9298a8b21644
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_verzuim_bladwijzer_po =
+				
+				IF ( SELECTEDVALUE ( pgad_dimscholen[povo] ) = "PO", "#eb7923", "#79b542" )
+			displayFolder: measures_verzuim\measures_verzuim_opmaak
+			lineageTag: 691f2589-b339-42da-8aad-33a3ffc88897
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_verzuim_bladwijzer_sbo_so =
+				
+				IF (
+				    CONTAINS ( VALUES ( pgad_dimscholen[povo] ), pgad_dimscholen[povo], "SBO" )
+				        || CONTAINS ( VALUES ( pgad_dimscholen[povo] ), pgad_dimscholen[povo], "SO" ),
+				    "#eb7923",
+				    "#79b542"
+				)
+			displayFolder: measures_verzuim\measures_verzuim_opmaak
+			lineageTag: 2ea704c4-273f-407e-8a24-f5f0e3db01d3
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_verzuim_bladwijzer_vo_pro =
+				
+				IF ( SELECTEDVALUE ( pgad_dimscholen[povo] ) = "VO", "#eb7923", "#79b542" )
+			displayFolder: measures_verzuim\measures_verzuim_opmaak
+			lineageTag: a3908bd3-9b75-4e16-ba16-5e7dfc5c9e05
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure cf_verzuim_bladwijzer_vso =
+				
+				IF ( SELECTEDVALUE ( pgad_dimscholen[povo] ) = "VSO", "#eb7923", "#79b542" )
+			displayFolder: measures_verzuim\measures_verzuim_opmaak
+			lineageTag: aad01200-9598-4814-b76f-ac2bc551c54d
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure count_vragen =
+				
+				COUNT ( 'spl_categorieën_doelmatigheid'[Titel] )
+			displayFolder: measures_doelmatigheid
+			lineageTag: e15de1ba-72b3-471d-bfde-1a6370dc2247
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure datum_update_bekostigde_leerlingen = MAX(duok_bekostigde_leerlingen_po_vo[datum_update])
+			formatString: General Date
+			displayFolder: measures_update_datums
+			lineageTag: 8223c0a3-bf7a-43d4-9010-fb05c78cfc85
+
+		/// alleen dagdeel opslaan van indigo rapport update datum
+		measure datum_update_indigo_afgegeven_tlv =
+				
+				LEFT(
+				    MAX(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[datum_update]),
+				    SEARCH(" ", MAX(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[datum_update])) - 1
+				)
+			displayFolder: measures_algemeen
+			lineageTag: 21a2712f-cf56-4415-8ac4-5c5939d4c523
+
+		measure datum_update_indigo_verzuim =
+				
+				VAR RawText =
+				    MAX(indigo_verzuim_povo[datum_update])
+				
+				-- alles vóór de spatie pakken
+				VAR DateOnlyText =
+				    LEFT(RawText, FIND(" ", RawText) - 1)
+				
+				-- tekst → datum laten interpreteren door Power BI
+				VAR ParsedDate =
+				    DATEVALUE(DateOnlyText)
+				
+				RETURN
+				    FORMAT(ParsedDate, "dd-MM-yyyy")
+			displayFolder: measures_update_datums
+			lineageTag: 0cd4de67-0021-4562-8804-82292f65ebf8
+
+		/// Maximale indigo onderzoek update datum
+		measure datum_update_onderzoeken =
+				
+				MAX ( indigo_overzicht_onderzoeken[datum_update] )
+			displayFolder: measures_onderzoeken
+			lineageTag: fca14cd9-5fff-4c71-ad64-efe3e61e6138
+
+		measure datum_update_pos_export = ```
+				
+				VAR RawText =
+				    MAX(indigo_pos_export_povo[datum_update])
+				
+				-- alles vóór de spatie pakken
+				VAR DateOnlyText =
+				    LEFT(RawText, FIND(" ", RawText) - 1)
+				
+				-- tekst → datum laten interpreteren door Power BI
+				VAR ParsedDate =
+				    DATEVALUE(DateOnlyText)
+				
+				RETURN
+				    FORMAT(ParsedDate, "dd-MM-yyyy")
+				
+				```
+			displayFolder: measures_update_datums
+			lineageTag: 1665f187-f989-4d45-b7c4-dd3407b00074
+
+		/// Aantal leerlingen SBO tov aantal leerlingen SBO EN PO
+		measure deelnamepercentage_sbo =
+				
+				VAR aantal_sbo = [aantal_leerlingen_sbo]
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR totaal = aantal_sbo + aantal_po
+				VAR result =
+				    DIVIDE ( aantal_sbo, totaal )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: c8121ec3-f8ed-4fc5-b9f7-4eb8c5a8520e
+
+		/// Kopie van deelnamepercentage_sbo maar decimaal
+		/// Aantal leerlingen SBO tov aantal leerlingen SBO EN PO
+		measure deelnamepercentage_sbo_decimaal =
+				
+				VAR aantal_sbo = [aantal_leerlingen_sbo]
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR totaal = aantal_sbo + aantal_po
+				VAR result =
+				    DIVIDE ( aantal_sbo, totaal )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 5e2e1d55-beef-4af0-851d-26cff9d4bc04
+
+		measure deelnamepercentage_sbo_leerlingen_met_tlv_swv =
+				
+				VAR aantal_sbo = [aantal_leerlingen_met_tlv_swv_sbo]
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR totaal = aantal_sbo + aantal_po
+				VAR result =
+				    DIVIDE ( aantal_sbo, totaal )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: Dekkend Netwerk
+			lineageTag: b05212a3-b382-4898-bd94-b4f1b88a8d76
+
+		/// Aantal leerlingen SBO van vorig jaar tov aantal leerlingen SBO EN PO van vorig jaar
+		measure deelnamepercentage_sbo_sply =
+				
+				VAR aantal_sbo_sply =
+				    CALCULATE (
+				        [aantal_leerlingen_sbo],
+				        SAMEPERIODLASTYEAR ( psql_datumtabel[Datum] )
+				    )
+				VAR aantal_po_sply =
+				    CALCULATE (
+				        [aantal_leerlingen_po],
+				        SAMEPERIODLASTYEAR ( psql_datumtabel[Datum] )
+				    )
+				VAR totaal_sply = aantal_sbo_sply + aantal_po_sply
+				RETURN
+				    DIVIDE ( aantal_sbo_sply, totaal_sply )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 13bc0d99-3022-4cb6-883b-b39cacbdb0e2
+
+		/// aantal ondersteunings bekostigde tov totaal
+		measure deelnamepercentage_sbo_tlv =
+				
+				VAR aantal_sbo_tlv_eigen_swv = [aantal_met_tlv_sbo_binnen_swv]
+				VAR uitgaand_SBO = [aantal_grens_uitgaand_sbo]
+				VAR totaal_SBO_SWV_Almere = aantal_sbo_tlv_eigen_swv + uitgaand_SBO
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR SBO_PO_opgeteld = totaal_SBO_SWV_Almere + aantal_po
+				VAR result =
+				    DIVIDE ( totaal_SBO_SWV_Almere, SBO_PO_opgeteld )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: e2ec86b7-1faf-4b46-aa75-344c528b135b
+
+		/// Aantal SBO leerlingen met tlv binnen en buiten Almere tov aantal leerlingen in het PO
+		measure deelnamepercentage_sbo_tlv_binnen_en_buiten =
+				
+				VAR aantal_sbo_tlv_binnen_en_buiten = [aantal_met_tlv_sbo_binnen_en_buiten_almere]
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR totaal = aantal_sbo_tlv_binnen_en_buiten + aantal_po
+				VAR result =
+				    DIVIDE ( aantal_sbo_tlv_binnen_en_buiten, totaal )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 72e6addb-f6fb-4448-aae3-e0a223b88e98
+
+		/// deelnamepercentage_sbo_tlv van vorig jaar
+		measure deelnamepercentage_sbo_tlv_sply =
+				
+				CALCULATE (
+				    [deelnamepercentage_sbo_tlv],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 69dbd70f-3db8-40a4-9b17-780e9ae74c5f
+
+		/// Aantal leerlingen SO tov aantal leerlingen SBO EN PO
+		measure deelnamepercentage_so =
+				
+				VAR aantal_so = [aantal_leerlingen_so]
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR aantal_sbo = [aantal_leerlingen_sbo]
+				VAR aantal_po_sbo = aantal_po + aantal_sbo
+				VAR result =
+				    DIVIDE ( aantal_so, aantal_po_sbo )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: b4ff92ac-bbcf-45d1-b380-ed01e53219af
+
+		measure deelnamepercentage_so_leerlingen_met_tlv_swv =
+				
+				VAR aantal_so = [aantal_leerlingen_met_tlv_swv_so]
+				VAR aantal_sbo = [aantal_leerlingen_sbo]
+				VAR aantal_po = [aantal_leerlingen_po]
+				VAR po_plus_sbo = aantal_sbo + aantal_po
+				VAR result =
+				    DIVIDE ( aantal_so, po_plus_sbo )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: Dekkend Netwerk
+			lineageTag: 95a68caa-4b30-44e0-9722-fb3eb74d0197
+
+		/// Aantal leerlingen vso tov vo
+		measure deelnamepercentage_vso =
+				
+				VAR aantal_vo_inc_pro = [aantal_leerlingen_vo_inc_pro]
+				VAR aantal_vso = [aantal_leerlingen_vso]
+				VAR result =
+				    DIVIDE ( aantal_vso, aantal_vo_inc_pro )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 6a535fed-1de3-43ae-8aea-dc1419c04c36
+
+		measure deelnamepercentage_vso_leerlingen_met_tlv_swv =
+				
+				VAR aantal_vso = [aantal_leerlingen_met_tlv_swv_vso]
+				VAR aantal_vo = [aantal_leerlingen_vo_inc_pro]
+				VAR result =
+				    DIVIDE ( aantal_vso, aantal_vo )
+				RETURN
+				    result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: Dekkend Netwerk
+			lineageTag: b926451e-377e-4005-ad12-d8934a6e0840
+
+		/// De maximale waarde waaronder 100% van de duur weken valt.
+		measure duur_weken_100% = PERCENTILE.INC(indigo_verzuim_povo[duur_weken], 1)
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: 09c0dbf5-ee92-472a-89d9-bd350ef96f1d
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// De maximale waarde waaronder 25% van de duur weken valt.
+		measure duur_weken_25% = PERCENTILE.INC(indigo_verzuim_povo[duur_weken], 0.25)
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: 65ac551f-0856-4f70-aa11-99286673fd6c
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// De maximale waarde waaronder 50% van de duur weken valt.
+		measure duur_weken_50% = PERCENTILE.INC(indigo_verzuim_povo[duur_weken], 0.50)
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: 78467652-fe2f-48f1-a19a-a22d5c822f4e
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// De maximale waarde waaronder 75% van de duur weken valt.
+		measure duur_weken_75% = PERCENTILE.INC(indigo_verzuim_povo[duur_weken], 0.75)
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: ec627881-6f29-4a3c-9af6-dd2fa1726285
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Ze berekent het verschil tussen het 75e percentiel en het 25e percentiel van de verzuimduur in weken.
+		measure duur_weken_IQR = ```
+				[duur_weken_75%] - [duur_weken_25%]
+				
+				```
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: d1e9a666-0e25-4b93-8121-202a3ec3b28b
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// maximaal verzuim duur in de dataset in weken
+		measure duur_weken_max = MAX(indigo_verzuim_povo[duur_weken])
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: b41578c5-0f26-41cd-9788-e667795c5629
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Minimaal verzuim duur in de dataset in weken
+		measure duur_weken_min = MIN(indigo_verzuim_povo[duur_weken])
+			formatString: 0.00
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: f540f86a-739f-4fc2-b284-bcb76d386be4
+
+		/// - Als datum gefilterd is, laat de vanaf en tot en met datum zien
+		/// - EN als schoolsoort gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// - EN als schoolnaam gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// - EN als wijk gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// - EN als binnen swv gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// - EN als bevoegd gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// - EN als aanvraagtype gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// 
+		/// tegenhanger van: waarde Algemeen measure
+		measure 'Filter Algemeen' = ```
+				
+				IF(
+				    ISFILTERED(psql_datumtabel[datum]),
+				    "Vanaf:" & UNICHAR(10) &
+				    "Tot en met:" & UNICHAR(10)
+				)
+				&
+				IF(
+				    ISFILTERED(psql_datumtabel[jaar]),
+				    "Jaar:" & REPT(UNICHAR(10), COUNTROWS(VALUES(psql_datumtabel[jaar]))) 
+				)
+				&
+				IF(
+				    ISFILTERED(pgad_dimscholen[povo]),
+				    "Type onderwijs: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[povo])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[indigonaam]),
+				    "Schoolnaam: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[indigonaam])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[wijk]),
+				    "SDT: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[wijk])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[binnenswv]),
+				    "Binnen SWV: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[binnenswv])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[bevoegd]),
+				    "Bevoegd: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[bevoegd])))
+				)&
+				IF(
+				    ISFILTERED(indigo_pos_export_povo[aanvraagtype]),
+				    "Aanvraagtype: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_pos_export_povo[aanvraagtype])))
+				)
+				```
+			displayFolder: measures_algemeen
+			lineageTag: d98358f1-3f3c-492d-80e8-2a31e58450ef
+
+		/// blank()
+		/// tegenhanger van: Waarde onderzoeken_rapportspecifiek measure
+		measure 'Filter Onderzoeken_rapportspecifiek' = blank()
+			formatString: 0
+			displayFolder: measures_algemeen
+			lineageTag: e5ead74e-9d3a-4ec0-84f7-07a52b913c1f
+
+		/// Als aanvrager gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// tegenhanger van: Waarde steunpunt_rapportspecifiek measure
+		measure 'Filter Steunpunt_rapportspecifiek' =
+				
+				IF(
+				    ISFILTERED(indigo_overzicht_steunpunt[aanvrager]),
+				    "Aanvrager: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_overzicht_steunpunt[aanvrager])))
+				)
+			displayFolder: measures_algemeen
+			lineageTag: 61f675fd-a345-483c-b674-2592dc5c3bc9
+
+		/// Als aanvraag soort gefilterd is, laat lege regels zien
+		/// tegenhanger van: Waarde TLV measure
+		measure 'Filter TLV' =
+				
+				
+				IF(
+				    ISFILTERED(indigo_inspectierapportage_povo[soort]),
+				    "Soort aanvraag:" & UNICHAR(10)
+				)
+			displayFolder: measures_algemeen
+			lineageTag: fd4fa925-f3bc-4d45-888b-7dad6db5cdfb
+
+		measure Filter_alv_2025 = ```
+				
+				
+				IF(
+				    ISFILTERED(psql_datumtabel[jaar]),
+				    "Jaar:" & REPT(UNICHAR(10), COUNTROWS(VALUES(psql_datumtabel[jaar]))) 
+				)
+				&
+				IF(
+				    ISFILTERED(pgad_dimscholen[bevoegd]),
+				    "Bevoegd: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[bevoegd])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[povo]),
+				    "Type onderwijs: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[povo])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[binnenswv]),
+				    "Binnen SWV: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[binnenswv])))
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[categorie]),
+				    "Categorie: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[categorie])))
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[overgang]),
+				    "Overgang: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[overgang])))
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort]),
+				    "Soort: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort])))
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[indigonaam]),
+				    "Schoolnaam: " & REPT(UNICHAR(10), COUNTROWS(VALUES(pgad_dimscholen[indigonaam])))
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[leeftijd_op_datum_besluit]),
+				    "Lftd besldat: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[leeftijd_op_datum_besluit])))
+				)
+				```
+			displayFolder: measures_algemeen
+			lineageTag: f4af95a3-8564-42f8-904c-da696efb8cfc
+
+		/// Als thuiszitter gefilterd is, laat lege regels zien voor elke unieke waarde
+		/// tegenhanger van: Waarde verzuim_rapportspecifiek measure
+		measure Filter_Verzuim_rapportspecifiek =
+				
+				IF(
+				    ISFILTERED(indigo_verzuim_povo[thuiszitter]),
+				    "Thuiszitter: " & REPT(UNICHAR(10), COUNTROWS(VALUES(indigo_verzuim_povo[thuiszitter])))
+				)
+			displayFolder: measures_algemeen
+			lineageTag: ac70838e-4523-4498-82a0-3dd714634025
+
+		/// Als
+		/// - filter actief is op jaar, laat de unieke waardes van jaar zien
+		/// - EN filter actief is op het schooltype, laat de unieke waardes van jaar zien
+		measure filterwaarden_voor_bij_visuals = ```
+				IF(
+				    ISFILTERED(psql_datumtabel[jaar]),
+				    VAR items = VALUES(psql_datumtabel[jaar]) 
+				    VAR itemscombined=CONCATENATEX(items, psql_datumtabel[jaar], UNICHAR(32))
+				    Return itemscombined & " || "
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[povo]),
+				    VAR items = VALUES(pgad_dimscholen[povo]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[povo], UNICHAR(32))
+				    Return itemscombined & UNICHAR(32)
+				)
+				```
+			displayFolder: measures_algemeen
+			lineageTag: 36e89a64-01d5-408e-bc1e-4a5e776fe407
+
+		/// gemiddeld aantal weken compleet besluit zonder "ITA", "ondwarr", "MWover"
+		measure gem_compleet_besluit_exc_mw_ondarr =
+				
+				CALCULATE (
+				    [GemiddeldAantalWekenCompleetBesluit],
+				    NOT 'indigo_inspectierapportage_povo'[soort] IN { "ITA", "ONDWARR", "MWOVER" }
+				)
+			displayFolder: measures_tlv
+			lineageTag: 590df75f-3fd6-48e3-bb1d-90ebd520a021
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// gemiddeld aantal weken compleet besluit zonder "ITA", "ondwarr", "MWover" plus
+		/// gemiddeld aantal weken ontvangst  compleet zonder "ITA", "ondwarr", "MWover"
+		measure gem_duur_ontvangst_besluit =
+				
+				[gem_ontvangst_compleet_exc_mw_ondarr] + [gem_compleet_besluit_exc_mw_ondarr]
+			formatString: 0.00
+			displayFolder: measures_tlv
+			lineageTag: f2a76f43-f3e2-45aa-96d1-47450b29ea7c
+
+		/// gemiddeld aantal weken compleet ontvangst zonder "ITA", "ondwarr", "MWover"
+		measure gem_ontvangst_compleet_exc_mw_ondarr =
+				
+				CALCULATE (
+				    [GemiddeldAantalWekenOntvangstCompleet],
+				    NOT 'indigo_inspectierapportage_povo'[soort] IN { "ITA", "ONDWARR", "MWOVER" }
+				)
+			displayFolder: measures_tlv
+			lineageTag: 2620e384-7891-47ee-980a-85d8da7708c2
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Gemiddeld landelijk percentage SO van PO scholen
+		measure gem_so_percentage_landelijk =
+				
+				AVERAGE ( 'ocw_1_onderwijstype_aandelen_po___bo_sbo_so'[so] ) / 100
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 787473b7-b486-4c04-9a23-0999d21a86df
+
+		/// Gemiddeld aantal weken compleet besluit
+		measure GemiddeldAantalWekenCompleetBesluit =
+				
+				AVERAGEX (
+				    'indigo_inspectierapportage_povo',
+				    'indigo_inspectierapportage_povo'[behandelduur_dossier_afgehandeld] / 7
+				)
+			displayFolder: measures_tlv
+			lineageTag: 7d17dd5b-e315-4171-b6ae-cfa582931ac0
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Gemiddeld aantal weken ontvangst compleet
+		measure GemiddeldAantalWekenOntvangstCompleet =
+				
+				AVERAGEX (
+				    'indigo_inspectierapportage_povo',
+				    'indigo_inspectierapportage_povo'[behandelduur_dossier_compleet] / 7
+				)
+			displayFolder: measures_tlv
+			lineageTag: d4f7f253-4eba-4c53-887b-1eb17f4a2cc0
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Laat het geselecteerde bestuur zien
+		measure geselecteerd_bestuur = SELECTEDVALUE(pgad_dimscholen[bevoegd])
+			displayFolder: measures_algemeen
+			lineageTag: c0d0b3f5-90a0-4b15-ae8f-5955eb958a6c
+
+		/// Sommatie van totaal aantal ondersteuningbekostigd leerlingen
+		/// MIN
+		/// aantal bsn nummers van bekostigde leerlingen waarbij:
+		/// -vestigingsnummer NIET po2401 en vo2401 is
+		measure grens_in_grens_uit =
+				
+				[aantal_grens_inkomend] - [aantal_grens_uitgaand]
+			displayFolder: measures_grensverkeer
+			lineageTag: 935aa5ba-b9ee-40e9-91ad-3cf4a79380ff
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Aantal leerlingen tov aantal leerlingen van een jaar eerder
+		measure groei_aantal_leerlingen_tov_vorig_jaar =
+				
+				VAR huidig =
+				    SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] )
+				VAR vorig_jaar =
+				    CALCULATE (
+				        SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] ),
+				        PREVIOUSYEAR ( duok_aantallen_vestigingen_bo_sbo_vo[Teldatum_universeel] )
+				    )
+				RETURN
+				    IF ( ISBLANK ( vorig_jaar ), BLANK (), DIVIDE ( huidig, vorig_jaar ) )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: bacd31e4-6403-4aaf-9ade-d0f8efde7e4c
+
+		measure html_groen_vak = ```
+				
+				"<div style='
+				  position:absolute;
+				  top:0;
+				  left:0;
+				  right:0;
+				  bottom:0;
+				  background:linear-gradient(135deg, #79b542 0%, #a8d08d 100%);
+				  border-radius:10px;
+				  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+				  padding:0;
+				  margin:0;
+				'>
+				</div>"
+				
+				```
+			displayFolder: measures_opmaak\html
+			lineageTag: 76a2cef1-b0d8-460b-80b8-aaf4f376d341
+
+		
+
+		measure html_groen_vak_transparant = ```
+				"
+				<div style='
+				  position:absolute;
+				  top:0;
+				  left:0;
+				  right:0;
+				  bottom:0;
+				  border-radius:10px;
+				  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+				  padding:0;
+				  margin:0;
+				'>
+				"
+				
+				
+				```
+			lineageTag: 24674834-440d-4346-9dc0-88a9bc7cc7e5
+
+		measure html_oranje_vak = ```
+				
+				"<div style='
+				  position:absolute;
+				  top:0;
+				  left:0;
+				  right:0;
+				  bottom:0;
+				  background:linear-gradient(135deg, #E66C37 0%, #F4A475 100%);
+				  border-radius:10px;
+				  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+				  padding:0;
+				  margin:0;
+				'>
+				</div>"
+				
+				```
+			displayFolder: measures_opmaak\html
+			lineageTag: fb5e7bbe-afa2-42db-a3b6-c0f31aa1190a
+
+		measure html_switch_knop = ```
+				
+				"<div style='
+				  position:absolute; top:0; left:0; right:0; bottom:0;
+				  display:flex; align-items:center; justify-content:center;
+				  background:linear-gradient(135deg, #79b542 0%, #a8d08d 100%);
+				  border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+				  padding:0; margin:0;
+				'>
+				  <button aria-label='Switch visual' title='Switch visual' style='
+				    width:40px; height:40px; border-radius:50%;
+				    border:none; outline:none; cursor:pointer;
+				    background:rgba(0,0,0,0.38);           /* donkerder voor beter contrast */
+				    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+				    display:flex; align-items:center; justify-content:center;
+				    color:#fff;
+				  '>
+				    <span style='display:inline-block; width:60%; height:60%;'>
+				      <svg viewBox='0 0 24 24' width='100%' height='100%' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true' preserveAspectRatio='xMidYMid meet'
+				           style='filter:drop-shadow(0 1px 1px rgba(0,0,0,0.35))'>
+				        <path d='M7 7h9l-2.2-2.2a1 1 0 0 1 1.4-1.4l4 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-1.4-1.4L16 9H7a3 3 0 0 0 0 6h2a1 1 0 1 1 0 2H7a5 5 0 1 1 0-10Z' fill='#ffffff'></path>
+				        <path d='M17 17H8l2.2 2.2a1 1 0 1 1-1.4 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 1 1 1.4 1.4L8 15h9a3 3 0 0 0 0-6h-2a1 1 0 1 1 0-2h2a5 5 0 1 1 0 10Z' fill='#ffffff'></path>
+				      </svg>
+				    </span>
+				  </button>
+				</div>"
+				
+				```
+			displayFolder: measures_opmaak\html
+			lineageTag: 9db90a7f-6962-4dbc-8583-ed7cf0fd16b3
+
+		/// Max Update datum uit indigo inspectierapport
+		measure inspectierapportage_datum_update =
+				
+				MAX ( indigo_inspectierapportage_povo[datum_update] )
+			formatString: dd/mm/yyyy
+			displayFolder: measures_tlv
+			lineageTag: 17690e49-1999-4463-b6db-474da22c2e33
+
+			annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+		/// Aantal inwoners Almere
+		measure inwoners_almere =
+				
+				SUM ( inwonersaantal_almere[aantal] )
+			displayFolder: measures_Almere
+			lineageTag: 3b179a2a-f202-4cc2-8741-c18f8db33339
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Sommatie landelijk percentage SBO van PO scholen
+		measure landelijk_deelnamepercentage_sbo =
+				
+				SUM ( 'ocw_1_onderwijstype_aandelen_po___bo_sbo_so'[sbo] ) / 100
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 1615044a-2860-4041-b429-28dcb7b76149
+
+		/// Sommatie landelijk percentage SBO van PO scholen vorig jaar
+		measure landelijk_deelnamepercentage_sbo_sply =
+				
+				CALCULATE (
+				    [landelijk_deelnamepercentage_sbo],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 49f88bd7-1df7-4956-b70e-44a0dd4a3b38
+
+		/// Sommatie landelijk percentage SO van PO scholen
+		measure landelijk_deelnamepercentage_so =
+				
+				SUM ( 'ocw_1_onderwijstype_aandelen_po___bo_sbo_so'[so] ) / 100
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: e8dc471c-bdb9-4be0-96ca-d864fdc61596
+
+		/// Sommatie landelijk percentage SO van PO scholen vorig jaar
+		measure landelijk_deelnamepercentage_so_sply =
+				
+				CALCULATE (
+				    [landelijk_deelnamepercentage_so],
+				    SAMEPERIODLASTYEAR ( psql_datumtabel[datum] )
+				)
+			displayFolder: measures_deelnamepercentages
+			lineageTag: 477b249d-542a-4960-8256-e07f389ed064
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Sommatie landelijk percentage VSO van VO scholen
+		measure landelijk_deelnamepercentage_vso =
+				
+				SUM ( 'ocw_4a_onderwijstype_aandelen_vo___reg_vo_vso'[vso] ) / 100
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_deelnamepercentages
+			lineageTag: ec95ba10-e5ed-4df1-8152-6866cf6d460e
+
+		measure ondersteuningsbekostiging_ander_swv = SUM(duok_totaal_aantal_sbo_so_vso[ondersteuningsbekost_ander_swv])
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: 24f60b1f-ef89-429f-be49-26420d23a535
+
+		measure ondersteuningsbekostiging_dit_swv = sum(duok_totaal_aantal_sbo_so_vso[ondersteuningsbekost_dit_swv])
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: e6d39a8b-e985-47f5-b51e-f0a41138f90e
+
+		measure ondersteuningsbekostiging_totaal = SUM(duok_totaal_aantal_sbo_so_vso[totaal])
+			formatString: 0
+			displayFolder: Dekkend Netwerk
+			lineageTag: 6a1efb6e-6dd8-43a8-b473-a2eb5541410e
+
+		/// Tel het aantal indigo onderzoek dosiernummer
+		measure onderzoeken_aantal =
+				
+				COUNT ( indigo_overzicht_onderzoeken[dosnr] )
+			formatString: 0
+			displayFolder: measures_onderzoeken
+			lineageTag: 69f57a61-4003-4072-9fc9-a427b66ad378
+
+		/// Aantal dosiernummers va indigo onderzoek waar de aanvraagstatus NIET afgesloten, ingetrokken, niet behandelbaar etc. is
+		measure onderzoeken_openstaand =
+				
+				COALESCE (
+				    CALCULATE (
+				        [onderzoeken_aantal],
+				        NOT indigo_overzicht_onderzoeken[aanvraagstatus]
+				            IN {
+				                "Afgesloten - Archief",
+				                "Afgesloten",
+				                "Ingetrokken",
+				                "Ingetrokken - Archief",
+				                "Niet behandelbaar",
+				                "Niet behandelbaar - Archief",
+				                "Verslag sturen - Archief"
+				            }
+				    ),
+				    0
+				)
+			formatString: 0
+			displayFolder: measures_onderzoeken
+			lineageTag: 915c08bb-fad9-49cd-8db7-fe0a28dea965
+
+		measure percentage_actief_verzuim_op_populatie =
+				
+				VAR verzuim_actief_alles = [verzuim_actief_alles]
+				VAR populatie = [aantal_leerlingen_po_sbo_vo_laatste_per_datum]
+				VAR result = DIVIDE(verzuim_actief_alles, populatie,0)
+				RETURN result
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_verzuim
+			lineageTag: 3f0802e6-2fd5-4069-b55f-12daab3ce875
+
+		measure percentage_afgegeven_mei-juli_vs_totaal = DIVIDE([aantal_aanvragen_afgegeven_tlv_mei_juli] ,[aantal_afgegeven_tlv_datum_besluit])
+			formatString: 0.00%;-0.00%;0.00%
+			lineageTag: 9e4bb8d7-8b1c-4499-9d87-62cca49a54ac
+
+		measure rating_op_maximaal =
+				
+				VAR gemiddelde =
+				    AVERAGE ( 'spl_categorieën_doelmatigheid'[score_rating] )
+				VAR maximaal =
+				    MAX ( spl_ratingvragen_codering[Score_rating] )
+				RETURN
+				    IF (
+				        ISBLANK ( gemiddelde ),
+				        BLANK (),
+				        FORMAT ( gemiddelde, "0.0" ) & " / "
+				            & FORMAT ( maximaal, "0.0" )
+				    )
+			displayFolder: measures_doelmatigheid
+			lineageTag: 97b933fb-b578-4f0e-9b11-0df77fb55663
+
+		/// Berekend het aantal aanvragen binnen 1 jaar
+		measure 'rolling 12 month' =
+				
+				VAR StartDay =
+				    NEXTDAY ( LASTDATE ( DATEADD ( 'psql_datumtabel'[datum], -12, MONTH ) ) )
+				VAR EndDay =
+				    LASTDATE ( 'psql_datumtabel'[datum] )
+				RETURN
+				    CALCULATE (
+				        [Aantal aanvragen],
+				        DATESBETWEEN ( 'psql_datumtabel'[datum], StartDay, EndDay )
+				    )
+			displayFolder: measures_tlv
+			lineageTag: aa9d9f20-cb4f-4eee-adb4-c5e0081d87db
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Berekend het percentage aantal aanvragen per aantal leerlingen binnen 1 jaar
+		measure 'rolling 12 month %' =
+				
+				VAR StartDay =
+				    NEXTDAY ( LASTDATE ( DATEADD ( 'psql_datumtabel'[datum], -12, MONTH ) ) )
+				VAR EndDay =
+				    LASTDATE ( 'psql_datumtabel'[datum] )
+				RETURN
+				    CALCULATE (
+				        [Aantal aanvragen] / [rolling 12 month average],
+				        DATESBETWEEN ( 'psql_datumtabel'[datum], StartDay, EndDay )
+				    )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 7dedc17d-fcb8-4cfd-a112-781db3880e9b
+
+		/// Berekend het aantal leerlingen binnen 1 jaar
+		measure 'rolling 12 month average' =
+				
+				VAR StartDay =
+				    NEXTDAY ( LASTDATE ( DATEADD ( 'psql_datumtabel'[datum], -12, MONTH ) ) )
+				VAR EndDay =
+				    LASTDATE ( 'psql_datumtabel'[datum] )
+				RETURN
+				    CALCULATE (
+				        [Totaal aantal leerlingen],
+				        DATESBETWEEN ( 'psql_datumtabel'[datum], StartDay, EndDay )
+				    )
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 2b0e1cdc-cae0-4a84-ab6d-d04de2342d6b
+
+		measure 'rolling 12 month_afgegeven_tlv' =
+				
+				VAR StartDay =
+				    NEXTDAY ( LASTDATE ( DATEADD ( 'psql_datumtabel'[datum], -12, MONTH ) ) )
+				VAR EndDay =
+				    LASTDATE ( 'psql_datumtabel'[datum] )
+				RETURN
+				    CALCULATE (
+				        [aantal_aanvragen_afgegeven_tlv_besluitdatum],
+				        DATESBETWEEN ( 'psql_datumtabel'[datum], StartDay, EndDay )
+				    )
+			formatString: 0
+			lineageTag: 818531eb-5c9a-4a9d-a4f7-0bf00604d557
+
+		measure rolling_12_if_isfiltered_bevoegd = IF(ISFILTERED(pgad_dimscholen[bevoegd]), [test_rolling 12 month_uniek_aantal_afgegeven_tlv_besluitdatum], BLANK())
+			formatString: 0
+			lineageTag: b3bc3ee3-02aa-4313-8e22-793d76d536a8
+
+		measure rolling_12_month_%_afgegeven_tlv =
+				
+				VAR StartDay =
+				    NEXTDAY ( LASTDATE ( DATEADD ( 'psql_datumtabel'[datum], -12, MONTH ) ) )
+				VAR EndDay =
+				    LASTDATE ( 'psql_datumtabel'[datum] )
+				RETURN
+				    CALCULATE (
+				        [%afgegeven_tlv_eigen_pop],
+				        DATESBETWEEN ( 'psql_datumtabel'[datum], StartDay, EndDay ))
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 2b767eee-62b5-4a08-9e0c-362669c88fd7
+
+		/// leeg
+		measure SBO_totaal
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 40df987c-164e-4158-a11f-504f48605466
+
+		measure selected_bestuur_wijk_school = SELECTEDVALUE(prm_bestuur_wijk_school[prm_bestuur_wijk_school_voor_slicer])
+			lineageTag: 06c03daa-bc62-466e-a631-6076f95517f5
+
+		measure selected_teldatum_bekostigde_leerlingen = SELECTEDVALUE(duok_bekostigde_leerlingen_po_vo[teldatum])
+			formatString: d-m-yyyy
+			displayFolder: measures_tlv
+			lineageTag: 878bc67e-5f57-48e4-97c8-96348c136845
+
+			annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+		measure selected_wijk_bestuur = SELECTEDVALUE(Verzuim_wijk_bestuur[naam_voor_slicers])
+			lineageTag: c154ffbe-c4fc-4a3a-9a2a-5a7cd8b71bf8
+
+		/// telt dosiernummer indigo overzicht steunpunt
+		measure steunpunt_aantal =
+				
+				COUNT ( indigo_overzicht_steunpunt[dosnr] )
+			formatString: 0
+			displayFolder: measures_steunpunt
+			lineageTag: f8cce1d8-75d2-40a4-9ad7-d32bfe9dc450
+
+		/// Maximale indigo overzicht steunpunt update datum
+		measure steunpunt_datum_update =
+				
+				MAX ( indigo_overzicht_steunpunt[datum_update] )
+			displayFolder: measures_steunpunt
+			lineageTag: 4b0db300-0527-4db6-bd9c-1e67d064b61f
+
+		/// steunpunt aantal measure waarbij:
+		/// - indigo aanvrager niet ouders, school onbekend etc. is
+		/// - EN aanvraagstatus niet afgesloten, archief etc. is
+		measure steunpunt_openstaand =
+				
+				COALESCE (
+				    CALCULATE (
+				        [steunpunt_aantal],
+				        NOT indigo_overzicht_steunpunt[aanvrager]
+				            IN {
+				                "Ouders",
+				                "--- School onbekend ---",
+				                "--- School onbekend --- (buiten regio)",
+				                "--- Voorschools ---",
+				                "onbekend",
+				                "Professional"
+				            }
+				                && NOT indigo_overzicht_steunpunt[aanvraagstatus]
+				                IN {
+				                    "Afgesloten - Archief",
+				                    "Afgesloten",
+				                    "Archief",
+				                    "Ingetrokken - Archief",
+				                    "Niet behandelbaar - Archief",
+				                    "Besluit - Archief",
+				                    "Ontbrekende gegevens - Archief"
+				                }
+				    ),
+				    0
+				)
+			formatString: 0
+			displayFolder: measures_steunpunt
+			lineageTag: 95048108-13b6-4c62-bbda-226d1d108ffe
+
+		/// Aantal leerlingen op de meest recente teldatum in februari, ongeacht welke filters er op de datumtabel staan in je rapport.
+		measure telling_aantal_leerlingen_po_sbo_vo_laatste_teldatum =
+				
+				CALCULATE (
+				    [aantal_leerlingen_po_sbo_vo],
+				    FILTER (
+				        ALL ( psql_datumtabel ),
+				        psql_datumtabel[februaritelling]
+				            = CALCULATE ( MAX ( psql_datumtabel[februaritelling] ), ALL ( psql_datumtabel ) )
+				    )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: a37a952c-314b-49fc-88cd-c7596fbbe3ff
+
+		/// Aantal leerlingen SBO, PO, VO
+		/// kopie aantal leerling sbo po vo
+		measure telling_aantal_leerlingen_sbo_po_vo =
+				
+				SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] )
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 40812e21-a3d8-4a34-a87b-095679c9ef59
+
+		/// meest recente aantal leerlingen op sbo-, po- en vo-scholen, zonder jaarfilter, waarvan povo en bevoegde is ingevuld
+		measure telling_aantal_leerlingen_sbo_po_vo_meest_recent = ```
+				
+				CALCULATE(
+				    SUM(duok_aantallen_vestigingen_bo_sbo_vo[totaal]),
+				    REMOVEFILTERS(psql_datumtabel[jaar]),
+				    KEEPFILTERS(
+				        FILTER(
+				            pgad_dimscholen,
+				            pgad_dimscholen[povo] = TRUE() && pgad_dimscholen[bevoegd] = TRUE()
+				        )
+				    )
+				)
+				
+				```
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: d29266ff-d4bf-4396-8050-000b58a3d922
+
+		measure test = ```
+				
+				VAR duur=[verzuimduur]
+				
+				RETURN
+				
+				DIVIDE(
+				CALCULATE(COUNTROWS(indigo_verzuim_povo), 
+				FILTER(ALLEXCEPT(indigo_verzuim_povo,indigo_verzuim_povo[bestuur]),indigo_verzuim_povo[duur_weken]<duur)),
+				
+				CALCULATE(COUNTROWS(indigo_verzuim_povo),ALLEXCEPT(indigo_verzuim_povo,indigo_verzuim_povo[bestuur])))
+				```
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_verzuim
+			lineageTag: 64ec8298-bd85-4e19-8ee0-1bb9be643b23
+
+		measure test_backwards = CALCULATE(COUNT(indigo_pos_export_povo[lokaal_leerlingnummer]),lokaal_leerlingnummer_distinct)
+			formatString: 0
+			lineageTag: e06031ee-c07a-4a7a-9a70-c662c3ef5a0a
+
+		measure test_bekostigd_count = COUNT(duok_bekostigde_leerlingen_po_vo[begin_datum_tlv])
+			formatString: 0
+			lineageTag: 0cbff174-d035-47c3-97bc-d75714307663
+
+		measure test_bekostigd_distinctcount = DISTINCTCOUNT(duok_bekostigde_leerlingen_po_vo[bsn_geboortedatum_sleutel])
+			formatString: 0
+			lineageTag: 81b9f411-3615-4629-b3da-0c8691a3dcbe
+
+		measure test_cf_leerlingaantal =
+				
+				IF (
+				    [test_groei_aantal_leerlingen_tov_vorig_jaar] > [test_groei_aantal_leerlingen_tov_vorig_jaar],
+				    "#deeae9"
+				)
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 134681d7-4163-4ef4-a7d8-5dd889746f86
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure test_dummy_bekostigde_leerlingen = 300
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 531dc155-c248-480f-8251-9c3fd8f88201
+
+		measure test_glass = ```
+				"
+				.glass-card {
+				  width: 240px;
+				  height: 360px;
+				  background: rgba(255, 255, 255, 0.15);
+				  backdrop-filter: blur(20px);
+				  -webkit-backdrop-filter: blur(20px);
+				  border-radius: 20px;
+				  border: 1px solid rgba(255, 255, 255, 0.3);
+				  box-shadow: 
+				    0 8px 32px rgba(0, 0, 0, 0.1),
+				    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+				    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+				    inset 0 0 20px 10px rgba(255, 255, 255, 1);
+				  position: relative;
+				  overflow: hidden;
+				}
+				
+				.glass-card::before {
+				  content: '';
+				  position: absolute;
+				  top: 0;
+				  left: 0;
+				  right: 0;
+				  height: 1px;
+				  background: linear-gradient(
+				    90deg,
+				    transparent,
+				    rgba(255, 255, 255, 0.8),
+				    transparent
+				  );
+				}
+				
+				.glass-card::after {
+				  content: '';
+				  position: absolute;
+				  top: 0;
+				  left: 0;
+				  width: 1px;
+				  height: 100%;
+				  background: linear-gradient(
+				    180deg,
+				    rgba(255, 255, 255, 0.8),
+				    transparent,
+				    rgba(255, 255, 255, 0.3)
+				  );
+				}"
+				```
+			lineageTag: ed26fe94-1162-411a-977c-5fde160fe7bd
+
+		measure test_groei_aantal_leerlingen_tov_vorig_jaar =
+				
+				VAR huidig =
+				    SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] )
+				VAR vorig_jaar =
+				    CALCULATE (
+				        SUM ( duok_aantallen_vestigingen_bo_sbo_vo[totaal] ),
+				        PREVIOUSYEAR ( psql_datumtabel[datum] )
+				    )
+				RETURN
+				    IF ( ISBLANK ( vorig_jaar ), BLANK (), DIVIDE ( huidig, vorig_jaar ) - 1 )
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 5da25c36-efbd-4fa4-9327-a7050253f13f
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure test_html_vragen = ```
+				
+				
+				"<div style='
+				  font-family:Segoe UI, Arial, sans-serif;
+				  color:#333;
+				  padding:16px;
+				'>
+				  <h2 style='margin:0 0 12px 0; font-size:20px; color:#2f4f4f;'>Overzicht Leerlingstromen</h2>
+				
+				  <div style='margin-bottom:16px;'>
+				    <h3 style='margin:0 0 6px 0; font-size:16px; color:#79b542;'>Verwijzingen vanuit regulier naar speciaal</h3>
+				    <p style='margin:0; font-size:14px;'>
+				      N leerlingen regulier &rarr; speciaal onderwijs <br>
+				      <span style='color:#555;'>Per bestuur / school / jaren</span>
+				    </p>
+				  </div>
+				
+				  <div style='margin-bottom:16px;'>
+				    <h3 style='margin:0 0 6px 0; font-size:16px; color:#79b542;'>Overig naar gespecialiseerd</h3>
+				    <p style='margin:0; font-size:14px;'>
+				      Instroom anders dan uit regulier, bijvoorbeeld onderinstroom en uit regio <br>
+				      <span style='color:#555;'>Per categorie / per jaren</span>
+				    </p>
+				  </div>
+				
+				  <div>
+				    <h3 style='margin:0 0 6px 0; font-size:16px; color:#79b542;'>Aantal leerlingen binnen gespecialiseerd</h3>
+				    <p style='margin:0; font-size:14px;'>
+				      Aantal leerlingen en eventuele terugstroom <br>
+				      <span style='color:#555;'>Per categorie / per jaren</span>
+				    </p>
+				  </div>
+				</div>"
+				
+				```
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 7dfd23f6-2e68-464e-9284-7744546c83c6
+
+		measure test_selval =
+				
+				SELECTEDVALUE ( pgad_dimscholen[povo] )
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: a4ed8a1e-1b88-414e-968a-5f8f7a839805
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Telt aantal unieke beschikkingnummers van bekostigde leerlingen
+		measure test_unieke_beschikkingsnrs =
+				
+				DISTINCTCOUNT ( duok_bekostigde_leerlingen_po_vo[beschikkingsnummer] )
+			displayFolder: measures_grensverkeer
+			lineageTag: b4268d7f-06e9-44be-bb2f-24f970dca853
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure test_verzuim_actief_thuis_tov_eigen_bestuur_pct =
+				
+				DIVIDE (
+				    [verzuim_actieve_thuiszitters],
+				    [aantal_leerlingen_po_sbo_vo_laatste_per_datum]
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_verzuim
+			lineageTag: a944057e-eb3c-4141-958d-00a2941aa323
+
+		measure test_verzuim_unieke_telling_melding_nummer = DISTINCTCOUNT(indigo_verzuim_povo[melding_nummer])
+			formatString: 0
+			lineageTag: b41fdab8-79a6-4598-9c11-64bf2d2bb8e9
+
+		/// Laat huidige (NOW) datum zien
+		measure TimeStamp =
+				
+				FORMAT ( NOW (), "dd-Mmm-yyyy" )
+			displayFolder: measures_algemeen
+			lineageTag: 28fd5f7e-2fe5-4d37-90f1-7c136c849484
+
+		/// Tel het leerlingnummer die beschikken over een beschikkingsnummer van 2 jaar terug
+		/// dit is ook gekoppeld aan de datum tabel
+		measure tlv_aanvragen_2jaar_terug = ```
+				
+				CALCULATE(
+				    [tlv_aanvragen_pos_export_datum_aanvraag],
+				    DATEADD(psql_datumtabel[datum], -2, YEAR)
+				)
+				
+				```
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: da00f4c1-6be2-48ab-b64c-a4e406aad37d
+
+		measure tlv_aanvragen_pos_export_besluitdatum =
+				
+				CALCULATE (
+				    DISTINCTCOUNT( indigo_pos_export_povo[lokaal_leerlingnummer] ),
+				    USERELATIONSHIP ( psql_datumtabel[datum], indigo_pos_export_povo[besluitdatum] ))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 6543510a-396b-4458-af7e-b473f6958d84
+
+		measure tlv_aanvragen_pos_export_besluitdatum_sply = CALCULATE([tlv_aanvragen_pos_export_besluitdatum], SAMEPERIODLASTYEAR(psql_datumtabel[datum]))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 4269ff61-3f0c-422c-82ce-005044e8f514
+
+		measure tlv_aanvragen_pos_export_besluitdatum_verschil_vorig = [tlv_aanvragen_pos_export_besluitdatum]-[tlv_aanvragen_pos_export_besluitdatum_sply]
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 58e9ac28-6134-49fb-98d5-e873a18568ac
+
+		/// Tel het leerlingnummer die beschikken over een beschikkingsnummer
+		/// dit is ook gekoppeld aan de datum tabel met aanvraag datum
+		measure tlv_aanvragen_pos_export_datum_aanvraag =
+				
+				CALCULATE (
+				    COUNT( indigo_pos_export_povo[lokaal_leerlingnummer] ),
+				    USERELATIONSHIP ( psql_datumtabel[datum], indigo_pos_export_povo[datum_aanvraag] ))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 3c1d56ff-65ef-46eb-9275-d017787e5cf3
+
+		/// Tel het leerlingnummer die beschikken over een beschikkingsnummer van 1 jaar terug
+		/// dit is ook gekoppeld aan de datum tabel
+		measure tlv_aanvragen_sply_pos_export =
+				
+				CALCULATE([tlv_aanvragen_pos_export_datum_aanvraag],SAMEPERIODLASTYEAR(psql_datumtabel[datum]))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 2610021b-16d1-4eb4-b245-a6b204b3d4a1
+
+		measure tlv_afgegeven_opgeteld_openstaand = [tlv_afgegeven_pos_export]+[tlv_openstaand_inspectierap]
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: c8ac3915-1806-4610-b31d-56f8d3462fe2
+
+		/// Aantal afgegeven TLV's. Telt het aantal beschikkingsnummers.
+		/// Dit is ook gekoppeld aan de datum tabel met besluitdatum
+		measure tlv_afgegeven_pos_export =
+				
+				CALCULATE(
+				COUNT(indigo_pos_export_povo[lokaal_leerlingnummer] ),
+				USERELATIONSHIP(psql_datumtabel[datum],indigo_pos_export_povo[besluitdatum]))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: e1834eb3-557d-4454-8987-dac04d65b91e
+
+		/// Aantal afgegeven TLV's. Telt het aantal beschikkingsnummers van 2 jaar terug.
+		/// Dit is ook gekoppeld aan de datum tabel met besluitdatum
+		measure tlv_afgegeven_pos_export_2_jaar_geleden =
+				
+				CALCULATE(
+				[tlv_afgegeven_pos_export],DATEADD(psql_datumtabel[datum], -2, YEAR))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 032fd22e-5b40-4146-9c0e-b2d33f79b4e2
+
+		measure tlv_afgegeven_pos_export_base =
+				
+				COUNT(indigo_pos_export_povo[lokaal_leerlingnummer] )
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: ec11418d-b7fc-480d-9f57-fb08ecc46170
+
+		/// Aantal afgegeven TLV's. Telt het aantal beschikkingsnummers van 1 jaar terug.
+		/// Dit is ook gekoppeld aan de datum tabel met besluitdatum
+		measure tlv_afgegeven_pos_export_sply =
+				
+				CALCULATE(
+				[tlv_afgegeven_pos_export],SAMEPERIODLASTYEAR(psql_datumtabel[datum]))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 8fb5cc6b-e49b-40ce-8496-69deaa5a6dd0
+
+		/// tlv_doorloop_compleet_besluit
+		measure tlv_doorloop_compleet_besluit_100% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld], 1) / 7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: 7a6231d1-d5cc-4742-b97f-95d1d2025875
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_25% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld], 0.25)/7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: bc560e86-70d2-417a-a725-83d31ded8751
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_50% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld], 0.50)/7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: 3fb60c52-ae61-4d7a-ba46-e2702cb3892b
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_75% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld], 0.75)/7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: d4b9cc5a-620e-495b-ae52-ecbfd7f97cf9
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_IQR = ```
+				([tlv_doorloop_compleet_besluit_75%] - [tlv_doorloop_compleet_besluit_25%])
+				
+				```
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: aec8c4fe-59af-40c9-98db-c82157163c4d
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_weken_max = MAX(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld])/7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: 0ae1d243-1e50-4fc7-a79c-dc31e046c0d9
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_weken_min = MIN(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld])/7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: 20f2960e-71fc-4611-ac25-acc9c9a93e5c
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_compleet_besluit_y_as_max = [tlv_doorloop_compleet_besluit_weken_max] * 1.1
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: 4cca9d98-aade-4c3e-a94e-0a14e9f7b5b1
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_ontvangst_compleet_100% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_compleet], 1) / 7
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: b520eb42-9e2d-48de-907c-e94356bbefa7
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_ontvangst_compleet_25% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_compleet], 0.25)/7
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: f5d52bf1-8d33-44e9-81f0-9036bf96eef4
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_ontvangst_compleet_50% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_compleet], 0.50)/7
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: fc77f4ea-1d5e-4db8-ba24-8c0002100e98
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_ontvangst_compleet_75% = PERCENTILE.INC(indigo_inspectierapportage_povo[behandelduur_dossier_compleet], 0.75)/7
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: 1aa0ae04-fec6-42f5-bbd5-9087c6b6cb79
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_ontvangst_compleet_IQR = ```
+				([tlv_doorloop_ontvangst_compleet_75%] - [tlv_doorloop_ontvangst_compleet_25%])
+				
+				```
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: 23314bf7-e29b-4678-b8f1-f9d827335439
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_doorloop_ontvangst_compleet_weken_max = MAX(indigo_inspectierapportage_povo[behandelduur_dossier_compleet])/7
+			formatString: 0
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: 8dc4a8e7-ad63-4f8e-93ba-3bb167e04b31
+
+		measure tlv_doorloop_ontvangst_compleet_weken_min = MIN(indigo_inspectierapportage_povo[behandelduur_dossier_compleet])/7
+			formatString: 0
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: 66bc77d7-fd5a-4be8-899e-ebc7196b8bbe
+
+		measure tlv_doorloop_ontvangst_compleet_y_as_max = [tlv_doorloop_ontvangst_compleet_weken_max] * 1.1
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: a1bad304-5044-448d-adad-cbc458316579
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// gemiddelde doorlooptijd tot besluit in weken
+		measure tlv_gem_doorloop_aanvraag_tot_besluit = ```
+				
+				        AVERAGEX(
+				            'indigo_pos_export_povo',
+				             'indigo_pos_export_povo'[ontvangst_tot_besluit]/7)
+				
+				```
+			formatString: 0.0000
+			displayFolder: measures_tlv
+			lineageTag: 4328ecea-4fd5-4634-b9a9-46d68497b484
+
+		/// gemiddelde doorlooptijd tot besluit in weken  van 1 jaar terug
+		measure tlv_gem_doorloop_aanvraag_tot_besluit_sply = ```
+				
+				        CALCULATE(
+				       [tlv_gem_doorloop_aanvraag_tot_besluit],SAMEPERIODLASTYEAR(psql_datumtabel[datum]))
+				```
+			formatString: 0.00
+			displayFolder: measures_tlv
+			lineageTag: 6d806ee7-bc3d-47db-8d82-3fc50b115f67
+
+		/// gemiddelde doorlooptijd tot besluit in weken van 2 jaar terug
+		measure tlv_gem_doorloop_aanvraag_tot_besluit_verg_2_jaar_geleden = ```
+				
+				        CALCULATE(
+				       [tlv_gem_doorloop_aanvraag_tot_besluit],DATEADD(psql_datumtabel[datum],-2,YEAR))
+				```
+			formatString: 0.0000
+			displayFolder: measures_tlv
+			lineageTag: 740d1e01-ffa9-4e73-adb5-4dcc08bcc7d5
+
+		measure tlv_gem_doorloop_compleet_besluit = average(indigo_inspectierapportage_povo[behandelduur_dossier_afgehandeld])/7
+			displayFolder: TLV_doorloop_compleet_besluit
+			lineageTag: 1d6089a9-2c60-4b7a-ba71-6d3d80e5ad96
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_gem_doorloop_ontvangst_compleet = average(indigo_inspectierapportage_povo[behandelduur_dossier_compleet])/7
+			displayFolder: TLV_doorloop ontvangst-compleet
+			lineageTag: b61025a1-1e01-49c7-b458-a3685196c2f2
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// gemiddelde doorlooptijd tot besluit in weken tov een jaar eerder
+		measure tlv_gem_doorlooptijd_groei = DIVIDE([tlv_gem_doorloop_aanvraag_tot_besluit],[tlv_gem_doorloop_aanvraag_tot_besluit_sply])-1
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 8bc587e9-9002-4959-9c12-f70fadd07b5b
+
+		/// gemiddelde doorlooptijd tot besluit in weken tov 2 jaar terug
+		measure tlv_gem_doorlooptijd_groei_verg_2_jaar_geleden =
+				
+				IF([tlv_gem_doorloop_aanvraag_tot_besluit] && [tlv_gem_doorloop_aanvraag_tot_besluit_verg_2_jaar_geleden],
+				DIVIDE([tlv_gem_doorloop_aanvraag_tot_besluit],[tlv_gem_doorloop_aanvraag_tot_besluit_verg_2_jaar_geleden])-1,"")
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 076ff423-25d9-457e-9bb0-72dbd19e77e4
+
+		measure tlv_groeipercentage_aanvragen_pos_export =
+				
+				CALCULATE(
+				    IF(
+				        NOT(ISBLANK([tlv_aanvragen_pos_export_datum_aanvraag])) && NOT(ISBLANK([TLV_aanvragen_sply_pos_export])),
+				        DIVIDE([tlv_aanvragen_pos_export_datum_aanvraag], [TLV_aanvragen_sply_pos_export])-1,
+				        BLANK()
+				    )
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: abc436d0-6361-4841-acdf-f5b5acf066e5
+
+		measure tlv_groeipercentage_afgegeven_sply_pos_export =
+				
+				CALCULATE(
+				    IF(
+				        NOT(ISBLANK([TLV_afgegeven_pos_export])) && NOT(ISBLANK([TLV_afgegeven_pos_export_sply])),
+				        DIVIDE([TLV_afgegeven_pos_export], [TLV_afgegeven_pos_export_sply])-1,
+				        BLANK()
+				    ),
+				    USERELATIONSHIP(psql_datumtabel[datum], indigo_pos_export_povo[besluitdatum])
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 90e6cff4-1456-4808-b793-79f3dd6c0b28
+
+		measure tlv_groeipercentage_afgegeven_verg_2_jaar_geleden_pos_export =
+				
+				
+				CALCULATE(
+				    IF(
+				        NOT(ISBLANK([TLV_afgegeven_pos_export])) && NOT(ISBLANK([tlv_afgegeven_pos_export_2_jaar_geleden])),
+				        DIVIDE([TLV_afgegeven_pos_export], [tlv_afgegeven_pos_export_2_jaar_geleden])-1,
+				        BLANK()
+				    ),
+				    USERELATIONSHIP(psql_datumtabel[datum], indigo_pos_export_povo[besluitdatum])
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 49d50651-0918-478d-9b34-98df165c15c0
+
+		measure tlv_lijstvergelijking_except = COUNTROWS(EXCEPT(VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[beschikkingsnummer]),VALUES(duok_bekostigde_leerlingen_po_vo[beschikkingsnummer]) ))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: ee13f298-0559-4bb4-b2d0-4399c137b225
+
+		measure tlv_lijstvergelijking_intersect = COUNTROWS(INTERSECT(VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[beschikkingsnummer]),VALUES(duok_bekostigde_leerlingen_po_vo[beschikkingsnummer]) ))
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 21eb52d2-df1d-4e35-a39b-1292f054f6cc
+
+		/// tel het aantal dossiernummers waarvan:
+		/// - besl_datum leeg is
+		/// - EN soort is niet "ITA"
+		/// - EN aanvraagstuk is niet "afgesloten" ... (7 categorien)
+		measure tlv_openstaand_inspectierap =
+				
+				CALCULATE (
+				    [aantal_aanvragen_inspectierap],
+				    ISBLANK ( indigo_inspectierapportage_povo[besl_datum] )
+				        && NOT indigo_inspectierapportage_povo[soort]
+				        IN { "ITA" }
+				            && NOT indigo_inspectierapportage_povo[aanvraagstatus]
+				            IN {
+				                "Afgesloten",
+				                "Afgesloten volgende fase- Archief",
+				                "Afgesloten- Archief",
+				                "Ingetrokken",
+				                "Ingetrokken- Archief",
+				                "Niet behandelbaar",
+				                "Niet behandelbaar- Archief"
+				            }
+				)
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 19beae74-b2e7-45ea-93a4-f74a540aa5ce
+
+		/// tel het aantal dossiernummers waarvan:
+		/// - besl_datum leeg is
+		/// - EN soort is niet "ITA", "ONDWARR", "MWOVER"
+		/// - EN aanvraagstuk is niet "afgesloten" ... (7 categorien)
+		/// - EN besluit is "Nog geen besluit genomen"
+		/// - EN schoolnaam is niet leeg
+		measure tlv_openstaand_inspectierap_exc_arr_mw = ```
+				
+				COALESCE (
+				    CALCULATE (
+				        [aantal_aanvragen_inspectierap],
+				        FILTER (
+				            'indigo_inspectierapportage_povo',
+				            ISBLANK ( 'indigo_inspectierapportage_povo'[besl_datum] )
+				                && NOT 'indigo_inspectierapportage_povo'[soort]
+				                    IN { "ITA", "ONDWARR", "MWOVER" }
+				                && NOT 'indigo_inspectierapportage_povo'[aanvraagstatus]
+				                    IN {
+				                        "Afgesloten",
+				                        "Afgesloten volgende fase- Archief",
+				                        "Afgesloten- Archief",
+				                        "Ingetrokken",
+				                        "Ingetrokken- Archief",
+				                        "Niet behandelbaar",
+				                        "Niet behandelbaar- Archief"
+				                    }
+				                && 'indigo_inspectierapportage_povo'[besluit] = "Nog geen besluit genomen"
+				                && NOT ISBLANK (
+				                    LOOKUPVALUE (
+				                        pgad_dimscholen[indigonaam],
+				                        pgad_dimscholen[indigonaam], 'indigo_inspectierapportage_povo'[aanvrager]
+				                    )
+				                )
+				        )
+				    ),
+				    0
+				)
+				
+				
+				```
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 75cfefef-d539-4d57-b6ac-02fc0ab88db6
+
+		/// tel het aantal dossiernummers waarvan:
+		/// - besl_datum leeg is
+		/// - EN soort is niet "ITA"
+		/// - EN aanvraagstuk is niet "afgesloten" ... (7 categorien)
+		/// - EN besluit is "Nog geen besluit genomen"
+		/// - EN schoolnaam is niet leeg
+		measure tlv_openstaand_inspectierap_inc_arr_mw = ```
+				
+				COALESCE (
+				    CALCULATE (
+				        [aantal_aanvragen_inspectierap],
+				        FILTER (
+				            'indigo_inspectierapportage_povo',
+				            ISBLANK ( 'indigo_inspectierapportage_povo'[besl_datum] )
+				                && NOT 'indigo_inspectierapportage_povo'[soort]
+				                    IN { "ITA" }
+				                && NOT 'indigo_inspectierapportage_povo'[aanvraagstatus]
+				                    IN {
+				                        "Afgesloten",
+				                        "Afgesloten volgende fase- Archief",
+				                        "Afgesloten- Archief",
+				                        "Ingetrokken",
+				                        "Ingetrokken- Archief",
+				                        "Niet behandelbaar",
+				                        "Niet behandelbaar- Archief"
+				                    }
+				                && 'indigo_inspectierapportage_povo'[besluit] = "Nog geen besluit genomen"
+				                && NOT ISBLANK (
+				                    LOOKUPVALUE (
+				                        pgad_dimscholen[indigonaam],
+				                        pgad_dimscholen[indigonaam], 'indigo_inspectierapportage_povo'[aanvrager]
+				                    )
+				                )
+				        )
+				    ),
+				    0
+				)
+				
+				```
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 98deeae3-dee7-405b-8b8c-259ebd22878d
+
+		/// Tel dosnummers en koppel datum besluit aan de datumtabel
+		/// PLUS
+		/// tel het aantal dossiernummers waarvan:
+		/// - besl_datum leeg is
+		/// - EN soort is niet "ITA", "ONDWARR", "MWOVER"
+		/// - EN aanvraagstuk is niet "afgesloten" ... (7 categorien)
+		/// - EN besluit is "Nog geen besluit genomen"
+		/// - EN schoolnaam is niet leeg
+		measure tlv_prognose_afgegeven_en_openstaand =
+				
+				[aantal_afgegeven_tlv_datum_besluit] + [tlv_openstaand_inspectierap_exc_arr_mw]
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 431fdb94-62f9-4615-8225-de35cc7de9b3
+
+		measure top_3_verzuimredenen = ```
+				
+				VAR Top3 =
+				    TOPN(
+				        3,
+				        FILTER(
+				            VALUES(indigo_verzuim_povo[reden_verzuim]),
+				            [verzuim_actief_alles] > 0
+				        ),
+				        [verzuim_actief_alles],
+				        DESC
+				    )
+				RETURN
+				CONCATENATEX(
+				    Top3,
+				    indigo_verzuim_povo[reden_verzuim] & " " & [verzuim_actief_alles],
+				    UNICHAR(10),
+				    [verzuim_actief_alles],
+				    DESC
+				)
+				
+				```
+			displayFolder: measures_verzuim
+			lineageTag: eb4ec382-3155-4d89-b286-bef8f32fd1de
+
+		/// het totaal aantal leerlingen per combinatie van bevoegd gezag en wijk, en telt die totalen vervolgens op.
+		measure 'Totaal aantal leerlingen' =
+				
+				SUMX (
+				    ALLEXCEPT ( pgad_dimscholen, pgad_dimscholen[bevoegd], pgad_dimscholen[wijk] ),
+				    CALCULATE ( SUM ( 'duok_aantallen_vestigingen_bo_sbo_vo'[totaal] ) )
+				)
+			displayFolder: measures_tlv
+			lineageTag: 25d39d54-6af5-4845-9545-8ddf966a7cca
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure uniek_aantal_bekostigd_bsn_geb = DISTINCTCOUNT(duok_bekostigde_leerlingen_po_vo[bsn_geboortedatum_sleutel])
+			lineageTag: 3c31a666-9041-4901-a82e-4877589ca57e
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure uniek_aantal_bekostigd_bsn_geb_sply = CALCULATE([uniek_aantal_bekostigd_bsn_geb], SAMEPERIODLASTYEAR(psql_datumtabel[datum]))
+			formatString: 0
+			lineageTag: 9f57829a-8155-4917-84c1-8de3430199ae
+
+		measure uniek_aantal_bekostigd_bsn_geb_verschil_vorig = [uniek_aantal_bekostigd_bsn_geb]-[uniek_aantal_bekostigd_bsn_geb_sply]
+			formatString: 0
+			lineageTag: 44d05158-2a6e-43e8-b990-86dd4536abed
+
+		/// Kopie van aantal_bekostigde_ll_povo
+		/// Telt aantal unieke bsn van bekostigde leerlingen
+		measure uniek_aantal_bekostigde_ll_povo =
+				
+				DISTINCTCOUNT ( duok_bekostigde_leerlingen_po_vo[bsn_own] )
+			displayFolder: measures_grensverkeer
+			lineageTag: 3e27b9e6-d980-4bc7-9b3f-06ac73359f0e
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// aantal meldingsnummers uit de verzuimtabel
+		measure verzuim_aantal_meldingen = COALESCE ( COUNT ( indigo_verzuim_povo[melding_nummer] ), 0 )
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 2c166e5e-fe43-4213-b77a-0c14db8cd95d
+
+		/// aantal meldingsnummers van 2 jaar eerder uit de verzuimtabel
+		measure verzuim_aantal_meldingen_2_jaar_geleden = ```
+				
+				COALESCE ( 
+				    CALCULATE(
+				    COUNT ( indigo_verzuim_povo[melding_nummer] ),DATEADD(psql_datumtabel[datum],-2,YEAR))
+				    , 0 )
+				```
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 9994fa22-1862-4c93-be5e-930074c18227
+
+		/// aantal leerlingen die geregistreerd stonden of staan als formele thuiszitter
+		measure verzuim_aantal_thuiszitters_ja =
+				
+				COALESCE (
+				    CALCULATE (
+				        COUNT ( indigo_verzuim_povo[melding_nummer] ),
+				        indigo_verzuim_povo[thuiszitter] = "Ja"
+				    ),
+				    0
+				)
+			displayFolder: measures_verzuim
+			lineageTag: a572d2e3-438d-430e-9cd3-df359a65858b
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Het aantal formele thuiszitters tov het aantal thuiszitters van 2 jaar eerder
+		measure verzuim_aantal_thuiszitters_ja_groei_tov_2_jaar_geleden =
+				
+				DIVIDE([verzuim_aantal_thuiszitters_ja],[verzuim_aantal_thuiszitters_ja_verg_2_jaar_geleden],BLANK())
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_verzuim
+			lineageTag: 078d17cb-454d-4751-a12d-899a823237e6
+
+		/// aantal leerlingen die geregistreerd stonden of staan als formele thuiszitter van 2 jaar eerder
+		measure verzuim_aantal_thuiszitters_ja_verg_2_jaar_geleden = ```
+				
+				    CALCULATE (
+				        COUNT ( indigo_verzuim_povo[melding_nummer] ),
+				        indigo_verzuim_povo[thuiszitter] = "Ja",
+				        DATEADD(psql_datumtabel[datum],-2,YEAR)
+				    )
+				```
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 1b7ca1b5-9e65-449d-9f5a-d90569330091
+
+		/// aantal actieve verzuimgevallen op een geselecteerde datum, mits die datum geldig is (tussen eerste verzuim en vandaag)
+		measure verzuim_actief =
+				
+				VAR current_date =
+				    MAX ( psql_datumtabel[datum] )
+				VAR verzuim_start =
+				    MIN ( indigo_verzuim_povo[verzuim_sinds] )
+				VAR actief_verzuim =
+				    CALCULATE (
+				        COUNTROWS ( indigo_verzuim_povo ),
+				        ALL ( psql_datumtabel[datum] ),
+				        indigo_verzuim_povo[verzuim_sinds] <= current_date,
+				        indigo_verzuim_povo[einde_verzuim] > current_date
+				            || ISBLANK ( indigo_verzuim_povo[einde_verzuim] ),
+				            indigo_verzuim_povo[aanvraagstatus] IN {"Aangemeld", "Invoer school"}
+				    )
+				VAR result =
+				    COALESCE (
+				        IF ( current_date <= TODAY () && current_date >= verzuim_start, actief_verzuim ),
+				        0
+				    )
+				RETURN
+				    result
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: d9313240-5821-4cbf-802b-f7ffba6bf51d
+
+		/// alle actief verzuim zonder ingevuld eind datum, over alle jaren
+		measure verzuim_actief_alles =
+				
+				COALESCE(
+				CALCULATE (
+				    COUNTROWS ( indigo_verzuim_povo ),
+				    ALL ( psql_datumtabel[jaar] ),
+				    ISBLANK ( indigo_verzuim_povo[einde_verzuim] )
+				),0)
+			displayFolder: measures_verzuim
+			lineageTag: e5bac9e4-9ccc-4535-b246-9cb66ee6970f
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// aantal actieve verzuim zonder ingevuld eind datum die thuiszitter is over alle jaren
+		measure verzuim_actief_alles_thuiszitter_ja =
+				
+				CALCULATE (
+				    COUNTROWS ( indigo_verzuim_povo ),
+				    ALL ( psql_datumtabel[jaar] ),
+				    ISBLANK ( indigo_verzuim_povo[einde_verzuim] ),
+				    indigo_verzuim_povo[thuiszitter]="Ja"
+				)
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 371f1881-3fd7-4225-9bdf-a96b14fe1437
+
+		/// aantal actieve verzuimgevallen toont op een geselecteerde datum, mits die datum geldig is (tussen eerste verzuim en vandaag).
+		/// 
+		/// Kopie van (bijna) Actief_verzuim_dax maar deze functie kijkt ook naar aanvraagstatus
+		measure verzuim_actief_filter = ```
+				
+				VAR current_date =
+				    MAX ( psql_datumtabel[datum] )
+				VAR verzuim_start =
+				    MIN ( indigo_verzuim_povo[verzuim_sinds] )
+				VAR actief_verzuim =
+				    CALCULATE (
+				        COUNTROWS ( indigo_verzuim_povo ),
+				        ALL ( psql_datumtabel[datum] ),
+				        FILTER (
+				            indigo_verzuim_povo,
+				            indigo_verzuim_povo[verzuim_sinds] <= current_date
+				                && (
+				                    indigo_verzuim_povo[einde_verzuim] > current_date
+				                    || ISBLANK ( indigo_verzuim_povo[einde_verzuim] )
+				                )
+				                && indigo_verzuim_povo[aanvraagstatus] IN { "Aangemeld", "Invoer school" }
+				        )
+				    )
+				VAR result =
+				    COALESCE (
+				        IF ( current_date <= TODAY () && current_date >= verzuim_start, actief_verzuim ),
+				        0
+				    )
+				RETURN
+				    result
+				
+				```
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 5ee5c0bc-2ced-40ef-ab24-d5bdd07371bd
+
+		/// Aantal actief verzuim die ook thuiszitter is
+		measure verzuim_actief_filter_thuiszitter_ja =
+				
+				CALCULATE([verzuim_actief_filter],indigo_verzuim_povo[thuiszitter]="Ja")
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 7299d7fe-9146-47f7-92f9-798414e169a5
+
+		/// Wat meet deze measure:
+		/// Het aantal rijen uit de verzuimtabel waar:
+		/// 
+		/// - start van verzuim ligt voor of is gelijk aan de einddatum van het schooljaar.
+		/// 
+		/// - Einde verzuim is na de startdatum van dat schooljaar of staat nog open.
+		/// Het gaat dus om alle leerlingen die in een bepaald schooljaar actief aangemeld zijn of zijn geweest.
+		/// 
+		measure verzuim_actief_geweest = ```
+				
+				VAR StartSchooljaar = MIN ( psql_datumtabel[Datum] )
+				VAR EindSchooljaar  = MAX ( psql_datumtabel[Datum] )
+				VAR ActieveMeldingen =
+				    FILTER (
+				        CALCULATETABLE (
+				            indigo_verzuim_povo,
+				            REMOVEFILTERS ( psql_datumtabel ),   -- reset alleen datumfilters
+				            KEEPFILTERS ( pgad_dimscholen )      -- laat filters vanuit scholen door
+				        ),
+				        indigo_verzuim_povo[verzuim_sinds] <= EindSchooljaar
+				            && (
+				                ISBLANK ( indigo_verzuim_povo[einde_verzuim] )
+				                || indigo_verzuim_povo[einde_verzuim] >= StartSchooljaar
+				            )
+				    )
+				RETURN
+				COALESCE(COUNTROWS ( ActieveMeldingen ),0)
+				
+				```
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 24639230-18e1-40f0-bcc0-909e94a803bf
+
+		/// verzuim actieve thuiszitters tov telling aantal leerlingen
+		measure verzuim_actief_thuis_tov_eigen_bestuur_pct =
+				
+				DIVIDE (
+				    [verzuim_actieve_thuiszitters],
+				    [aantal_leerlingen_po_sbo_vo_laatste_per_datum]
+				)
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_verzuim
+			lineageTag: e867847a-1e78-4f5a-a479-b80e1d2476ba
+
+		/// Gebruikt verzuim_actief met een thuiszitters filter er aan toegevoegd.
+		measure verzuim_actief_thuiszitter_ja =
+				
+				CALCULATE ( [verzuim_actief], thuiszitter_ja_nee_uniek[thuiszitter] = "Ja" )
+			displayFolder: measures_verzuim
+			lineageTag: efe56459-a33a-4d90-bde7-fdb88901518e
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Telt van de groep actieve verzuimers het aantal niet thuiszitters.
+		measure verzuim_actief_thuiszitter_nee =
+				
+				CALCULATE ( [verzuim_actief], thuiszitter_ja_nee_uniek[thuiszitter] = "Nee" )
+			displayFolder: measures_verzuim
+			lineageTag: c1003876-cb42-4844-bc2f-db08a9f6a163
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Telt het aantal actieve verzuim zonder ingevuld eind datum die ook thuiszitters zijn.
+		measure verzuim_actieve_thuiszitters =
+				
+				CALCULATE ( [verzuim_actief_alles], indigo_verzuim_povo[thuiszitter] = "Ja" )
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 671406e9-a332-43ba-b737-520829aced5c
+
+		/// berekend het gemiddeld aantal verzuim weken, waarvan:
+		/// - Alles over de tijd wordt meegenomen
+		/// - Einde verzuim niet is ingevuld
+		/// - En thuiszitters zijn
+		measure verzuim_actieve_thuiszitters_gem_weken =
+				
+				CALCULATE (
+				    AVERAGE ( indigo_verzuim_povo[duur_weken] ),
+				    ALL ( psql_datumtabel[jaar] ),
+				    ISBLANK ( indigo_verzuim_povo[einde_verzuim] ),
+				    indigo_verzuim_povo[thuiszitter] = "Ja"
+				)
+			displayFolder: measures_verzuim
+			lineageTag: ea75c42b-810c-4fa2-bcd6-e3e48aca7435
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Verzuim van actieve thuiszitters tov totaal aantal leerlingen per 1000 leerlingen
+		measure verzuim_actieve_thuiszitters_per_1000_leerlingen =
+				
+				DIVIDE (
+				    [verzuim_actieve_thuiszitters],
+				    [aantal_leerlingen_po_sbo_vo_laatste_per_datum]
+				) * 1000
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 90fb7828-7e70-4af0-bac1-be5a21ba6f9b
+
+		/// Telt hoeveel verzuimgevallen op een bepaalde datum zijn geëindigd.
+		measure verzuim_afgesloten = ```
+				
+				 COALESCE(
+				CALCULATE (
+				    COUNTROWS ( indigo_verzuim_povo ),
+				    USERELATIONSHIP ( psql_datumtabel[datum], indigo_verzuim_povo[einde_verzuim] )
+				),0)
+				```
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 259f96a8-b24f-47cc-90ba-8ca524b13106
+
+		/// Telt hoeveel verzuimgevallen op een bepaalde datum 2 jaar eerder zijn geëindigd.
+		measure verzuim_afgesloten_2_jaar_geleden =
+				
+				CALCULATE (
+				    COUNTROWS ( indigo_verzuim_povo ),
+				    USERELATIONSHIP ( psql_datumtabel[datum], indigo_verzuim_povo[einde_verzuim] ),
+				    DATEADD(psql_datumtabel[datum],-2,YEAR)
+				)
+			formatString: 0
+			displayFolder: measures_verzuim
+			lineageTag: 05795f43-580a-402d-8b68-a74714e8ef0b
+
+		/// Laatste update datum
+		measure verzuim_laatste_update = ```
+				
+				FORMAT (
+				    DATEVALUE ( LEFT ( MAX ( indigo_verzuim_povo[datum_update] ), 10 ) ),
+				    "DD-MM-YYYY"
+				)
+				
+				```
+			displayFolder: measures_verzuim
+			lineageTag: ea0cd69a-08f9-46f6-9a20-1c379e200218
+
+		/// gemiddeld verzuim duur van de dataset in weken
+		measure verzuimduur = ```
+				average(indigo_verzuim_povo[duur_weken])
+				
+				```
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: ef950d87-0331-47ed-9cd0-b85608247fd2
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// kopie verzuimduur measure
+		measure verzuimduur_ref = [verzuimduur]
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: ff0618a0-adfc-4413-adea-405bf59846c8
+
+		/// duur weken max measure vermenigvuldigd met 1.1
+		measure verzuimduur_y_as_max = [duur_weken_max] * 1.1
+			displayFolder: measures_verzuim\verzuimduur
+			lineageTag: f3ab0e9b-59ed-4197-82db-bdeb060b3a21
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// - Als de datum filter actief is, laat de min en max datum zien.
+		/// - EN als schooltype filter actief is, laat de schooltype zien
+		/// - EN als schoolnaam filter actief is, laat de schoolnaam zien
+		/// - EN als wijk filter actief is, laat de wijk zien
+		/// - EN als binnen swv filter actief is, laat de binnen swv zien
+		/// - EN als bevoegd filter actief is, laat de bevoegd zien
+		/// 
+		/// tegenhanger van: Filter Algemeen measure
+		measure 'Waarde Algemeen' = ```
+				
+				IF(
+				    ISFILTERED(psql_DatumTabel[Datum]),
+				    VAR MinDatum = MINX(VALUES(psql_DatumTabel[Datum]), psql_DatumTabel[Datum])
+				    VAR MaxDatum = MAXX(VALUES(psql_DatumTabel[Datum]), psql_DatumTabel[Datum])
+				    RETURN
+				        FORMAT(MinDatum, "dd-MM-yyyy") & UNICHAR(10) &
+				        FORMAT(MaxDatum, "dd-MM-yyyy") & UNICHAR(10)
+				)
+				&
+				IF(
+				    ISFILTERED(psql_datumtabel[jaar]),
+				    VAR items = VALUES(psql_datumtabel[jaar]) 
+				    VAR itemscombined=CONCATENATEX(items, psql_datumtabel[jaar], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[povo]),
+				    VAR items = VALUES(pgad_dimscholen[povo]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[povo], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[indigonaam]),
+				    VAR items = VALUES(pgad_dimscholen[indigonaam])    
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[indigonaam], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[wijk]),
+				    VAR items = VALUES(pgad_dimscholen[wijk]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[wijk], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[binnenswv]),
+				    VAR items = VALUES(pgad_dimscholen[binnenswv]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[binnenswv], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[bevoegd]),
+				    VAR items = VALUES(pgad_dimscholen[bevoegd]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[bevoegd], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)
+				```
+			displayFolder: measures_algemeen
+			lineageTag: b3b28971-1873-461d-aafb-3e21f026881c
+
+		/// blank()
+		/// tegenhanger van: filter onderzoeken_rapportspecifiek measure
+		measure 'Waarde Onderzoeken_rapportspecifiek' = blank()
+			formatString: 0
+			displayFolder: measures_algemeen
+			lineageTag: 6df69321-a4a6-492b-bf49-1359955634e2
+
+		/// Als aanvrager filter actief is, laat de unieke waardes zien.
+		/// tegenhanger van: Filter steunpunt_rapportspecifiek measure
+		measure 'Waarde Steunpunt_rapportspecifiek' = ```
+				
+				IF(
+				    ISFILTERED(indigo_overzicht_steunpunt[aanvrager]),
+				    VAR items = VALUES(indigo_overzicht_steunpunt[aanvrager]) 
+				    VAR itemscombined=CONCATENATEX(items, indigo_overzicht_steunpunt[aanvrager], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10))
+				```
+			displayFolder: measures_algemeen
+			lineageTag: ca63d0bf-9a95-4a09-bf5a-438de50c34e7
+
+		/// Als aanvraagtype filter actief is, laat de unieke aanvraagtypes zien
+		/// tegenhanger van: Filter TLV measure
+		measure 'Waarde TLV' = ```
+				
+				IF(
+				    ISFILTERED(indigo_pos_export_povo[aanvraagtype]),
+				    VAR items = VALUES(indigo_pos_export_povo[aanvraagtype]) 
+				    VAR itemscombined=CONCATENATEX(items, indigo_pos_export_povo[aanvraagtype], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)
+				```
+			displayFolder: measures_algemeen
+			lineageTag: afed2a1e-ab86-47e8-b5ec-acbb2ce5ce8b
+
+		/// Als thuiszitter filter actief is, laat unieke thuiszitter waarde zien
+		/// tegenhanger van: filter Verzuim_rapportspecifiek measure
+		measure 'Waarde Verzuim rapporspecifiek' = ```
+				
+				IF(
+				    ISFILTERED(indigo_verzuim_povo[thuiszitter]),
+				    VAR items = VALUES(indigo_verzuim_povo[thuiszitter]) 
+				    VAR itemscombined=CONCATENATEX(items, indigo_verzuim_povo[thuiszitter], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)
+				```
+			displayFolder: measures_algemeen
+			lineageTag: 95f1ba07-8cca-41a0-8e15-9e353960a213
+
+		measure Waarde_alv_2025 = ```
+				
+				IF(
+				    ISFILTERED(psql_datumtabel[jaar]),
+				    VAR items = VALUES(psql_datumtabel[jaar]) 
+				    VAR itemscombined=CONCATENATEX(items, psql_datumtabel[jaar], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[bevoegd]),
+				    VAR items = VALUES(pgad_dimscholen[bevoegd]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[bevoegd], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[povo]),
+				    VAR items = VALUES(pgad_dimscholen[povo]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[povo], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(pgad_dimscholen[binnenswv]),
+				    VAR items = VALUES(pgad_dimscholen[binnenswv]) 
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[binnenswv], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[categorie]),
+				    VAR items = VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[categorie]) 
+				    VAR itemscombined=CONCATENATEX(items, indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[categorie], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[overgang]),
+				    VAR items = VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[overgang]) 
+				    VAR itemscombined=CONCATENATEX(items, indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[overgang], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort]),
+				    VAR items = VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort]) 
+				    VAR itemscombined=CONCATENATEX(items, indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort], UNICHAR(10))
+				    Return IF(ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[soort]), itemscombined & UNICHAR(10), BLANK())
+				)
+				&
+				IF(
+				    ISFILTERED(pgad_dimscholen[indigonaam]),
+				    VAR items = VALUES(pgad_dimscholen[indigonaam])    
+				    VAR itemscombined=CONCATENATEX(items, pgad_dimscholen[indigonaam], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)
+				&
+				IF(
+				    ISFILTERED(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[leeftijd_op_datum_besluit]),
+				    VAR items = VALUES(indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[leeftijd_op_datum_besluit])    
+				    VAR itemscombined=CONCATENATEX(items, indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[leeftijd_op_datum_besluit], UNICHAR(10))
+				    Return itemscombined & UNICHAR(10)
+				)
+				
+				
+				
+				
+				```
+			displayFolder: measures_algemeen
+			lineageTag: 8f5b9ef8-3218-4697-8262-b936fe432c45
+
+	ref table duok_aantallen_ondersteuningsbekost_swv_po_vo
+
+		measure tlv_%_binnen_swv_totaal = DIVIDE([tlv_aantal_leerlingen_tlv_binnen_SWV],[tlv_aantal_leerlingen_totaal])
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: measures_tlv
+			lineageTag: 9435f7ca-ea52-4424-9a93-3d57d91195fb
+
+		measure tlv_aantal_leerlingen_tlv_binnen_SWV =
+				
+				CALCULATE(
+				SUM(duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal]), duok_aantallen_ondersteuningsbekost_swv_po_vo[deelnemende_vestiging]="1")
+			displayFolder: measures_tlv
+			lineageTag: fa0c6b8f-b724-424e-bbf0-178288b529f4
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure tlv_aantal_leerlingen_totaal = ```
+				
+				    SUM(duok_aantallen_ondersteuningsbekost_swv_po_vo[totaal])
+				```
+			formatString: 0
+			displayFolder: measures_tlv
+			lineageTag: 6ce61192-cec3-4739-8a6f-3eb4b3872ac9
+
+	ref table indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo
+
+		/// telt dosiernummers binnen de indigo rapportage tlv tabel
+		/// kopie van aantal_afgegeven_tlv_datum_ontvangst
+		measure aantal_aanvragen_afgegeven_tlv =
+				
+				DISTINCTCOUNT( indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[sleutel_beschikking_gebdat] )
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 9b118568-3137-4c15-821e-60d8e03db968
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure aantal_aanvragen_afgegeven_tlv_besluitdatum =
+				CALCULATE(
+				DISTINCTCOUNT( indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[sleutel_beschikking_gebdat] ), USERELATIONSHIP(psql_datumtabel[datum], indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[datum_besluit]))
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 21f252d3-12f1-4394-8cca-c71e7440a79d
+
+		/// Tel dosnummers en koppelt datum besluit aan de datumtabel
+		/// 
+		measure aantal_tlv_afgegeven_datum_besluit =
+				
+				CALCULATE (
+				    DISTINCTCOUNT( indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[sleutel_beschikking_gebdat] ),
+				    USERELATIONSHIP ( psql_datumtabel[datum], indigo_rapportage_afgegeven_toelaatbaarheidsverklaringen_po_vo[datum_besluit] )
+				)
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: ffa00fe6-e539-4398-8da0-36cb6c45e875
+
+		measure aantal_tlv_afgegeven_datum_besluit_sply = CALCULATE([aantal_tlv_afgegeven_datum_besluit], SAMEPERIODLASTYEAR(psql_datumtabel[datum]))
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 59e7b706-b59d-41f1-98e5-38364c0c8511
+
+		measure aantal_tlv_afgegeven_datum_besluit_verschil_vorig = [aantal_tlv_afgegeven_datum_besluit] - [aantal_tlv_afgegeven_datum_besluit_sply]
+			formatString: 0
+			displayFolder: measures_aantallen leerlingen
+			lineageTag: 83c05214-a104-4d45-b1e9-03bf2b61d109
+
+	ref table pro_landelijk_percentage
+
+		measure aantal_leerlingen_pro_landelijk =
+				
+				CALCULATE (
+				    SUMX (
+				        pro_landelijk_percentage,
+				        SUM ( pro_landelijk_percentage[aantal_leerlingen_pro] )
+				    )
+				)
+			lineageTag: 18b0c809-1d2f-4de4-8a15-4e27ef19c5f0
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure gem_percentage_pro_landelijk =
+				
+				AVERAGE ( pro_landelijk_percentage[percentage] ) / 100
+			formatString: 0.00%;-0.00%;0.00%
+			lineageTag: 0ec90b4b-31e9-40bf-9e32-cc7a5ac1fe35
+
+	ref table rolling_tlv
+
+		measure 'test_rolling 12 month_uniek_aantal_afgegeven_tlv' = ```
+				
+				VAR CurrentDate =
+				    MAX ( 'psql_datumtabel'[datum] )
+				VAR StartOfDisplay =
+				    DATE ( 2022, 8, 1 )
+				VAR TodayDate =
+				    TODAY ()
+				
+				// CurrentDate mag niet verder gaan dan vandaag
+				VAR EffectiveDate =
+				    IF ( CurrentDate > TodayDate, TodayDate, CurrentDate )
+				
+				// Rolling-12 window
+				VAR StartDay =
+				    EffectiveDate - 365       // of: EDATE(EffectiveDate, -12)
+				VAR EndDay =
+				    EffectiveDate
+				
+				VAR Result =
+				    CALCULATE (
+				        [aantal_aanvragen_afgegeven_tlv],
+				        DATESBETWEEN (
+				            'psql_datumtabel'[datum],
+				            StartDay,
+				            EndDay
+				        )
+				    )
+				
+				RETURN
+				    IF ( EffectiveDate < StartOfDisplay, BLANK(), Result )
+				
+				```
+			formatString: 0
+			lineageTag: e3511dd1-6c89-4b9f-9fe0-d7fffffd1795
+
+		measure 'test_rolling 12 month_uniek_aantal_afgegeven_tlv_besluitdatum' =
+				
+				VAR CurrentDate =
+				    MAX ( 'psql_datumtabel'[datum] )
+				VAR StartOfDisplay =
+				    DATE ( 2023, 8, 1 )
+				VAR TodayDate =
+				    TODAY ()
+				
+				// CurrentDate mag niet verder gaan dan vandaag
+				VAR EffectiveDate =
+				    IF ( CurrentDate > TodayDate, TodayDate, CurrentDate )
+				
+				// Rolling-12 window
+				VAR StartDay =
+				    EffectiveDate - 365       // of: EDATE(EffectiveDate, -12)
+				VAR EndDay =
+				    EffectiveDate
+				
+				VAR Result =
+				    CALCULATE (
+				        [aantal_aanvragen_afgegeven_tlv_besluitdatum],
+				        DATESBETWEEN (
+				            'psql_datumtabel'[datum],
+				            StartDay,
+				            EndDay
+				        )
+				    )
+				
+				RETURN
+				    IF ( EffectiveDate < StartOfDisplay, BLANK(), Result )
+			formatString: 0
+			lineageTag: 0fd743ba-0b58-4376-93ae-ffe5502710de
+
+		measure 'test_rolling 12 month_uniek_aantal_bekostigd_bsn_geb' =
+				
+				VAR StartDay =
+				    NEXTDAY ( LASTDATE ( DATEADD ( 'psql_datumtabel'[datum], -12, DAY ) ) )
+				VAR EndDay =
+				    LASTDATE ( 'psql_datumtabel'[datum] )
+				RETURN
+				    CALCULATE (
+				        [uniek_aantal_bekostigd_bsn_geb],
+				        DATESBETWEEN ( 'psql_datumtabel'[datum], StartDay, EndDay )
+				    )
+			formatString: 0
+			lineageTag: 977fdd1f-e0d3-4db3-bc71-76286d5940ee
+
