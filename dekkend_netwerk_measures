@@ -1,0 +1,120 @@
+createOrReplace
+
+	ref table 0_measures
+
+		measure avg_cosy =
+				
+				AVERAGE('almeerse_matrix_v1 0'[cosy_rating])
+			formatString: 0.00
+			displayFolder: 0_measures
+			lineageTag: 4313f987-edf5-43b9-9579-cc05c7c09b00
+
+		measure avg_cota =
+				
+				AVERAGE('almeerse_matrix_v1 0'[cota_rating])
+			formatString: 0.00
+			displayFolder: 0_measures
+			lineageTag: 2b8a1af9-b55a-49df-9d4c-5d1f4a609e9d
+
+		measure avg_fymo =
+				
+				AVERAGE('almeerse_matrix_v1 0'[fymo_rating])
+			formatString: 0.00
+			displayFolder: 0_measures
+			lineageTag: a96eb1de-4894-462c-ac98-429ff944259a
+
+		measure avg_leco =
+				
+				AVERAGE('almeerse_matrix_v1 0'[leco_rating])
+			formatString: 0.00
+			displayFolder: 0_measures
+			lineageTag: c277b9da-44c0-4b26-8707-ecef45818a30
+
+		measure avg_soge =
+				
+				AVERAGE('almeerse_matrix_v1 0'[soge_rating])
+			formatString: 0.00
+			displayFolder: 0_measures
+			lineageTag: 6e6f53ac-6388-4669-9ee8-5dc2050a1633
+
+		measure avg_weta =
+				
+				AVERAGE('almeerse_matrix_v1 0'[weta_rating])
+			formatString: 0.00
+			displayFolder: 0_measures
+			lineageTag: 55b256f0-3109-4353-9847-ce97950ed089
+
+		measure indexering_t2 =
+				
+				VAR jaarbedrag_t1 = [jaarbedrag_oorspronkelijk]
+				VAR jaarbedrag_t2 = [jaarbedrag_t2]
+				VAR result = DIVIDE(jaarbedrag_t2, jaarbedrag_t1)
+				RETURN result
+			displayFolder: 0_measures\berekeningen\t2
+			lineageTag: 1e3a2103-cf47-44d1-9f01-fff41f201bbb
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure jaarbedrag_aug_dec = [jaarbedrag_oorspronkelijk]*5/12
+			formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\oorspronkelijk
+			lineageTag: 94f39038-0f87-4e8e-98a2-7c031ae9e3f5
+
+			annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+		measure jaarbedrag_jan_jul = [jaarbedrag_oorspronkelijk]*7/12
+			formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\oorspronkelijk
+			lineageTag: 35371979-bec8-464b-8779-f694d882cd73
+
+			annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+		measure jaarbedrag_oorspronkelijk = ```
+				
+				CALCULATE(
+				SUMX(dekkend_netwerk_stacked, 
+				    dekkend_netwerk_stacked[dekkend_netwerk_tarieven.tarief]*dekkend_netwerk_stacked[aantal]
+				    ))
+				```
+			formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\oorspronkelijk
+			lineageTag: c91bbac1-2192-4742-b9bf-e3606973985c
+
+		measure jaarbedrag_t2 = CALCULATE(SUMX(dekkend_netwerk_stacked, dekkend_netwerk_stacked[dekkend_netwerk_tarieven.t2]*dekkend_netwerk_stacked[aantal]))
+			formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\t2
+			lineageTag: 3c141495-a05b-4a84-8e1a-3ef6dfe4ac01
+
+			annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+		measure jaarbedrag_t2_aug_dec = [jaarbedrag_t2]*5/12
+			formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\t2
+			lineageTag: 1b0b4667-a5a2-46af-9751-33baf670a444
+
+			annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+		measure jaarbedrag_t2_jan_jul = [jaarbedrag_t2]*7/12
+			formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\t2
+			lineageTag: d6d65166-151c-400d-9ff1-ede3c0aae2b4
+
+			annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+		measure jan_jul_verschil_t1_t2 =
+				
+				VAR t1_jan_jul = [jaarbedrag_jan_jul]
+				VAR t2_jan_jul = [jaarbedrag_t2_jan_jul]
+				VAR result = t2_jan_jul - t1_jan_jul
+				RETURN result
+			formatString: "€"\ #,0.00;#,0.00\ -"€";"€"\ #,0.00
+			displayFolder: 0_measures\berekeningen\t2
+			lineageTag: c755dce6-e5bb-46e5-970d-08836a5dd86a
+
+			annotation PBI_FormatHint = {"currencyCulture":"nl-NL"}
+
+		measure sum_plaatsen = SUM(dekkend_netwerk_stacked[aantal])
+			formatString: 0
+			displayFolder: 0_measures
+			lineageTag: 26b6abef-9280-4d3e-ad79-3df27b82a102
+
