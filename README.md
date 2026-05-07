@@ -1,3 +1,7 @@
 Ik heb de TMDL‑script in Copilot geplakt en gevraagd of hiervan een overzichtelijke tabel kon worden gemaakt met de kolommen Domein, Naam measure, Eenheid, Bron, Power BI‑aantekeningen (wat er tot nu toe in de power BI beschrijving staat), Beschrijving (AI gegenereerd) en Formule. Deze tabel is vervolgens als Markdown‑bestand opgesteld.
 Om de measures logisch te ordenen en beter leesbaar te maken, met name op GitHub, is het Markdown‑bestand in Excel geplakt. Met behulp van Power Query is de tabel eerst gesplits op " | " en daar gesorteerd op domein in aflopende volgorde, zodat samenhangende measures gegroepeerd bij elkaar staan. Met de Excel formule =&A2&" | "&B2&" | "&C2&" | "&D2&" | "&E2&" | "&F2&" | "&G2 is alles weer in een md bestand geplakt.
 Tot slot is de informatie uit het Markdown‑bestand met behulp van een Python‑script automatisch teruggeschreven naar de TMDL‑script, waarbij de domein‑indeling (en overige documentatie) als comments is toegevoegd. Hiermee fungeert de Markdown‑tabel als centrale documentatiebron en blijft de TMDL‑script technisch consistent en actueel, zonder handmatig onderhoud.
+
+
+> [!WARNING]
+> NOTE: Het python script kan niet goed omgaan met measures die een spatie bevatten. 
