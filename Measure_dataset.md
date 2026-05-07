@@ -1,7 +1,6 @@
-| Domein                | Naam measure                         | Eenheid            | Bron                                      | Formule |
-|----------------------|--------------------------------------|--------------------|-------------------------------------------|---------|
-| Algemeen             | TimeStamp                            | Datum              | Power BI systeemdatum                     | Toont de huidige datum (NOW), geformatteerd als dag-maand-jaar. |
-| Grensverkeer         | uniek_aantal_bekostigde_ll_povo      | Aantal (uniek)     | duok_bekostigde_leerlingen_po_vo          | Telt het aantal unieke BSN-nummers van bekostigde leerlingen in po en vo. |
-| Grensverkeer         | aantal_grens_inkomend                | Aantal             | duok_totaal_aantal_sbo_so_vso              | Som van het aantal leerlingen dat ondersteuningsbekostiging ontvangt vanuit een ander samenwerkingsverband. |
-| Grensverkeer         | aantal_grens_uitgaand_distinct       | Aantal (uniek)     | duok_bekostigde_leerlingen_po_vo          | Telt het aantal unieke BSN-nummers van bekostigde leerlingen waarvan het vestigingsnummer niet gelijk is aan PO2401 of VO2401. |
-``
+| Domein          | Naam measure                   | Eenheid        | Bron                                     | Beschrijving                                                                 | Formule |
+|-----------------|--------------------------------|----------------|------------------------------------------|------------------------------------------------------------------------------|---------|
+| Algemeen        | TimeStamp                      | Datum          | Power BI systeemdatum                    | Geeft de datum weer waarop het Power BI‑rapport of model is ververst.        | Toont de huidige datum (NOW), weergegeven in het formaat dag‑maand‑jaar. |
+| Grensverkeer    | uniek_aantal_bekostigde_ll_povo| Aantal (uniek) | duok_bekostigde_leerlingen_po_vo         | Aantal unieke leerlingen dat bekostigd wordt binnen het primair en voortgezet onderwijs. | Telt het aantal unieke BSN‑nummers van bekostigde leerlingen. |
+| Grensverkeer    | aantal_grens_inkomend          | Aantal         | duok_totaal_aantal_sbo_so_vso             | Aantal leerlingen dat ondersteuningsbekostiging ontvangt vanuit een ander samenwerkingsverband. | Berekent de som van leerlingen met ondersteuningsbekostiging uit een ander SWV. |
+| Grensverkeer    | aantal_grens_uitgaand_distinct | Aantal (uniek) | duok_bekostigde_leerlingen_po_vo         | Aantal unieke bekostigde leerlingen dat onderwijs volgt buiten het eigen samenwerkingsverband. | Telt unieke BSN‑nummers waarbij het vestigingsnummer niet PO2401 of VO2401 is. |
