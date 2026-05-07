@@ -1,5 +1,5 @@
 | Domein | Naam measure | Eenheid | Bron | Power BI aantekeningen | Beschrijving | Formule |
-|------|-------------|--------|------|------------------------|--------------|---------| |  |  |  |  |  | 
+|------|-------------|--------|------|------------------------|--------------|---------|
 | Verzuimduur | verzuimduur_ref | Weken | indigo_verzuim_povo | Referentie gemiddelde | Referentie‑measure die gelijk is aan de gemiddelde verzuimduur. | [verzuimduur] |
 | Verzuimduur | verzuimduur_y_as_max | Weken | indigo_verzuim_povo | Max aswaarde (110%) | Geeft de maximale verzuimduur maal 1,1 weer voor gebruik als y‑asgrens. | [duur_weken_max] * 1.1 |
 | Verzuimduur | duur_weken_IQR | Weken | indigo_verzuim_povo | Interkwartielafstand | Geeft het verschil weer tussen het 75e en 25e percentiel van de verzuimduur (IQR). | [duur_weken_75%] - [duur_weken_25%] |
